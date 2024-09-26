@@ -1,0 +1,179 @@
+class CoolSupplies
+{
+  
+  Date currYear;
+  1 -- * UserAccount;
+  1 -- * Student;
+  1 -- * SchoolSupply;
+  1 -- * Order;
+}
+
+enum OrderType { Mandatory, MandatoryAndOptional, All }
+associationClass BundleDetail{
+  * Bundle;
+  * Item;
+  
+	int suppliesPerBundle;
+  
+  OrderType orderType;
+  
+}
+
+
+class UserAccount
+{
+  unique accountName;
+  password;
+  abstract;
+}
+
+class SchoolSupply
+{
+  abstract;
+}
+
+class ParentAccount
+{
+  isA UserAccount;
+  unique phoneNumber;
+  name;
+  1 parent -- * Student Children ;
+}
+
+class Item
+{
+  isA SchoolSupply;
+  enum Requirement{Mandatory, Optional, Recommended}
+  name;
+  Requirement requirement;
+  int price;
+}
+
+
+class AdminAccount
+{
+  isA UserAccount;
+  defaulted accountName = "admin@cool.ca";
+  defaulted password = "admin";
+}
+
+class Student
+{
+  name;
+  unique studentID;
+}
+
+class Bundle
+{
+  isA SchoolSupply;
+  int discount;
+  * bundles -- * Item items;
+  * -- 1 Grade;
+}
+
+class Order
+{
+  date dateCreated;
+  unique int orderNumber;
+  boolean isFinalized;
+  boolean isPaid;
+  boolean isReceived;
+  boolean isPickedUp;
+  regularAuthorizationCode;
+  penaltyAuthorizationCode;
+  * orders-- 1 ParentAccount payer;
+  * orders -- * SchoolSupply supplies ;
+}
+
+class Grade
+{
+  gradeNumber;
+  gradeSystem;
+  * grades -- * Student students;
+}
+
+
+
+
+
+//$?[End_of_model]$?
+
+namespace -;
+
+
+class CoolSupplies
+{
+  position 320 53 121.75 58.3667;
+  position.association CoolSupplies__UserAccount 7,58 89,0;
+  position.association CoolSupplies__Student 46,58 83,0;
+  position.association CoolSupplies__SchoolSupply 103,58 34,0;
+  position.association CoolSupplies__Order 123,58 83,0;
+}
+
+class UserAccount
+{
+  position 48 161 164.75 91.3667;
+}
+
+class SchoolSupply
+{
+  position 479 151 109 57.3667;
+}
+
+class ParentAccount
+{
+  position 228 398 163.75 75.3667;
+  position.association ParentAccount__Student 99,0 93,75;
+  position.association ParentAccount:parent__Student:children 2,0 0,10;
+  position.association ParentAccount:Parent__Student:Children 2,0 0,10;
+  position.association ParentAccount:parent__Student:Children 2,0 0,10;
+}
+
+class Item
+{
+  position 256 576 152.75 92.3667;
+}
+
+class AdminAccount
+{
+  position 1 385 164.75 75.3667;
+  }
+
+class Student
+{
+  position 278 163 139.75 75.3667;
+}
+
+class Bundle
+{
+  position 547 601 109 58.3667;
+  position.association Bundle__Item 0,48 196,45;
+  position.association Bundle:bundles__Item 0,10 196,27;
+  position.association Bundle:bundles__Item:items 0,10 196,27;
+  position.association Bundle__Grade 23,3 46,115;
+}
+
+class Order
+{
+  position 729 151 243.75 177.367;
+  position.association Order__ParentAccount 0,99 165,3;
+  position.association Order__SchoolSupply 0,5 110,19;
+  position.association Order:orders__ParentAccount:payer 0,10 20,0;
+  position.association Order:orders__SchoolSupply 0,10 110,10;
+  position.association Order:orders__SchoolSupply:supplies 0,10 110,10;
+}
+
+class Grade
+{
+  position 516 382 160.75 75.3667;
+  position.association Grade__Student 50,0 141,67;
+  position.association Grade:grades__Student 0,10 71,75;
+  position.association Grade:grades__Student:students 0,10 71,75;
+}
+
+class BundleDetail
+{
+  position 50 130 109 45;
+  position.association Bundle__BundleDetail 171,71 0,10;
+  position.association BundleDetail__Item 18,75 30,0;
+}
