@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 71 "model.ump"
-// line 153 "model.ump"
+// line 74 "model.ump"
+// line 157 "model.ump"
 public class Student
 {
 
@@ -26,13 +26,13 @@ public class Student
   //Student Associations
   private CoolSupplies coolSupplies;
   private ParentAccount parent;
-  private List<Grade> grades;
+  private Grade grade;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Student(String aName, int aStudentID, CoolSupplies aCoolSupplies, ParentAccount aParent)
+  public Student(String aName, int aStudentID, CoolSupplies aCoolSupplies, ParentAccount aParent, Grade aGrade)
   {
     name = aName;
     if (!setStudentID(aStudentID))
@@ -49,7 +49,11 @@ public class Student
     {
       throw new RuntimeException("Unable to create Children due to parent. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    grades = new ArrayList<Grade>();
+    boolean didAddGrade = setGrade(aGrade);
+    if (!didAddGrade)
+    {
+      throw new RuntimeException("Unable to create student due to grade. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
+    }
   }
 
   //------------------------
@@ -112,35 +116,10 @@ public class Student
   {
     return parent;
   }
-  /* Code from template association_GetMany */
-  public Grade getGrade(int index)
+  /* Code from template association_GetOne */
+  public Grade getGrade()
   {
-    Grade aGrade = grades.get(index);
-    return aGrade;
-  }
-
-  public List<Grade> getGrades()
-  {
-    List<Grade> newGrades = Collections.unmodifiableList(grades);
-    return newGrades;
-  }
-
-  public int numberOfGrades()
-  {
-    int number = grades.size();
-    return number;
-  }
-
-  public boolean hasGrades()
-  {
-    boolean has = grades.size() > 0;
-    return has;
-  }
-
-  public int indexOfGrade(Grade aGrade)
-  {
-    int index = grades.indexOf(aGrade);
-    return index;
+    return grade;
   }
   /* Code from template association_SetOneToMany */
   public boolean setCoolSupplies(CoolSupplies aCoolSupplies)
@@ -180,87 +159,24 @@ public class Student
     wasSet = true;
     return wasSet;
   }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfGrades()
+  /* Code from template association_SetOneToMany */
+  public boolean setGrade(Grade aGrade)
   {
-    return 0;
-  }
-  /* Code from template association_AddManyToManyMethod */
-  public boolean addGrade(Grade aGrade)
-  {
-    boolean wasAdded = false;
-    if (grades.contains(aGrade)) { return false; }
-    grades.add(aGrade);
-    if (aGrade.indexOfStudent(this) != -1)
+    boolean wasSet = false;
+    if (aGrade == null)
     {
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = aGrade.addStudent(this);
-      if (!wasAdded)
-      {
-        grades.remove(aGrade);
-      }
-    }
-    return wasAdded;
-  }
-  /* Code from template association_RemoveMany */
-  public boolean removeGrade(Grade aGrade)
-  {
-    boolean wasRemoved = false;
-    if (!grades.contains(aGrade))
-    {
-      return wasRemoved;
+      return wasSet;
     }
 
-    int oldIndex = grades.indexOf(aGrade);
-    grades.remove(oldIndex);
-    if (aGrade.indexOfStudent(this) == -1)
+    Grade existingGrade = grade;
+    grade = aGrade;
+    if (existingGrade != null && !existingGrade.equals(aGrade))
     {
-      wasRemoved = true;
+      existingGrade.removeStudent(this);
     }
-    else
-    {
-      wasRemoved = aGrade.removeStudent(this);
-      if (!wasRemoved)
-      {
-        grades.add(oldIndex,aGrade);
-      }
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addGradeAt(Grade aGrade, int index)
-  {  
-    boolean wasAdded = false;
-    if(addGrade(aGrade))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfGrades()) { index = numberOfGrades() - 1; }
-      grades.remove(aGrade);
-      grades.add(index, aGrade);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveGradeAt(Grade aGrade, int index)
-  {
-    boolean wasAdded = false;
-    if(grades.contains(aGrade))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfGrades()) { index = numberOfGrades() - 1; }
-      grades.remove(aGrade);
-      grades.add(index, aGrade);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addGradeAt(aGrade, index);
-    }
-    return wasAdded;
+    grade.addStudent(this);
+    wasSet = true;
+    return wasSet;
   }
 
   public void delete()
@@ -278,11 +194,11 @@ public class Student
     {
       placeholderParent.removeChildren(this);
     }
-    ArrayList<Grade> copyOfGrades = new ArrayList<Grade>(grades);
-    grades.clear();
-    for(Grade aGrade : copyOfGrades)
+    Grade placeholderGrade = grade;
+    this.grade = null;
+    if(placeholderGrade != null)
     {
-      aGrade.removeStudent(this);
+      placeholderGrade.removeStudent(this);
     }
   }
 
@@ -293,6 +209,7 @@ public class Student
             "name" + ":" + getName()+ "," +
             "studentID" + ":" + getStudentID()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "coolSupplies = "+(getCoolSupplies()!=null?Integer.toHexString(System.identityHashCode(getCoolSupplies())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "parent = "+(getParent()!=null?Integer.toHexString(System.identityHashCode(getParent())):"null");
+            "  " + "parent = "+(getParent()!=null?Integer.toHexString(System.identityHashCode(getParent())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "grade = "+(getGrade()!=null?Integer.toHexString(System.identityHashCode(getGrade())):"null");
   }
 }

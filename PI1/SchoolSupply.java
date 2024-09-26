@@ -4,14 +4,23 @@
 
 import java.util.*;
 
-// line 41 "model.ump"
-// line 133 "model.ump"
+// line 43 "model.ump"
+// line 137 "model.ump"
 public abstract class SchoolSupply
 {
 
   //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<String, SchoolSupply> schoolsupplysByName = new HashMap<String, SchoolSupply>();
+
+  //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //SchoolSupply Attributes
+  private String name;
 
   //SchoolSupply Associations
   private CoolSupplies coolSupplies;
@@ -22,8 +31,12 @@ public abstract class SchoolSupply
   // CONSTRUCTOR
   //------------------------
 
-  public SchoolSupply(CoolSupplies aCoolSupplies)
+  public SchoolSupply(String aName, CoolSupplies aCoolSupplies)
   {
+    if (!setName(aName))
+    {
+      throw new RuntimeException("Cannot create due to duplicate name. See https://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     boolean didAddCoolSupplies = setCoolSupplies(aCoolSupplies);
     if (!didAddCoolSupplies)
     {
@@ -36,6 +49,40 @@ public abstract class SchoolSupply
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setName(String aName)
+  {
+    boolean wasSet = false;
+    String anOldName = getName();
+    if (anOldName != null && anOldName.equals(aName)) {
+      return true;
+    }
+    if (hasWithName(aName)) {
+      return wasSet;
+    }
+    name = aName;
+    wasSet = true;
+    if (anOldName != null) {
+      schoolsupplysByName.remove(anOldName);
+    }
+    schoolsupplysByName.put(aName, this);
+    return wasSet;
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+  /* Code from template attribute_GetUnique */
+  public static SchoolSupply getWithName(String aName)
+  {
+    return schoolsupplysByName.get(aName);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithName(String aName)
+  {
+    return getWithName(aName) != null;
+  }
   /* Code from template association_GetOne */
   public CoolSupplies getCoolSupplies()
   {
@@ -277,6 +324,7 @@ public abstract class SchoolSupply
 
   public void delete()
   {
+    schoolsupplysByName.remove(getName());
     CoolSupplies placeholderCoolSupplies = coolSupplies;
     this.coolSupplies = null;
     if(placeholderCoolSupplies != null)
@@ -296,4 +344,11 @@ public abstract class SchoolSupply
     }
   }
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "name" + ":" + getName()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "coolSupplies = "+(getCoolSupplies()!=null?Integer.toHexString(System.identityHashCode(getCoolSupplies())):"null");
+  }
 }

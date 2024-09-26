@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 100 "model.ump"
-// line 171 "model.ump"
+// line 103 "model.ump"
+// line 175 "model.ump"
 public class Grade
 {
 
@@ -127,48 +127,38 @@ public class Grade
   {
     return 0;
   }
-  /* Code from template association_AddManyToManyMethod */
+  /* Code from template association_AddManyToOne */
+  public Student addStudent(String aName, int aStudentID, CoolSupplies aCoolSupplies, ParentAccount aParent)
+  {
+    return new Student(aName, aStudentID, aCoolSupplies, aParent, this);
+  }
+
   public boolean addStudent(Student aStudent)
   {
     boolean wasAdded = false;
     if (students.contains(aStudent)) { return false; }
-    students.add(aStudent);
-    if (aStudent.indexOfGrade(this) != -1)
+    Grade existingGrade = aStudent.getGrade();
+    boolean isNewGrade = existingGrade != null && !this.equals(existingGrade);
+    if (isNewGrade)
     {
-      wasAdded = true;
+      aStudent.setGrade(this);
     }
     else
     {
-      wasAdded = aStudent.addGrade(this);
-      if (!wasAdded)
-      {
-        students.remove(aStudent);
-      }
+      students.add(aStudent);
     }
+    wasAdded = true;
     return wasAdded;
   }
-  /* Code from template association_RemoveMany */
+
   public boolean removeStudent(Student aStudent)
   {
     boolean wasRemoved = false;
-    if (!students.contains(aStudent))
+    //Unable to remove aStudent, as it must always have a grade
+    if (!this.equals(aStudent.getGrade()))
     {
-      return wasRemoved;
-    }
-
-    int oldIndex = students.indexOf(aStudent);
-    students.remove(oldIndex);
-    if (aStudent.indexOfGrade(this) == -1)
-    {
+      students.remove(aStudent);
       wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aStudent.removeGrade(this);
-      if (!wasRemoved)
-      {
-        students.add(oldIndex,aStudent);
-      }
     }
     return wasRemoved;
   }
@@ -210,9 +200,9 @@ public class Grade
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Bundle addBundle(CoolSupplies aCoolSupplies, int aDiscount)
+  public Bundle addBundle(String aName, CoolSupplies aCoolSupplies, int aDiscount)
   {
-    return new Bundle(aCoolSupplies, aDiscount, this);
+    return new Bundle(aName, aCoolSupplies, aDiscount, this);
   }
 
   public boolean addBundle(Bundle aBundle)
@@ -279,11 +269,10 @@ public class Grade
 
   public void delete()
   {
-    ArrayList<Student> copyOfStudents = new ArrayList<Student>(students);
-    students.clear();
-    for(Student aStudent : copyOfStudents)
+    for(int i=students.size(); i > 0; i--)
     {
-      aStudent.removeGrade(this);
+      Student aStudent = students.get(i - 1);
+      aStudent.delete();
     }
     for(int i=bundles.size(); i > 0; i--)
     {

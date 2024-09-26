@@ -3,8 +3,8 @@
 
 
 
-// line 13 "model.ump"
-// line 117 "model.ump"
+// line 15 "model.ump"
+// line 121 "model.ump"
 public class BundleDetail
 {
 

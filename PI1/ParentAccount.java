@@ -4,10 +4,16 @@
 
 import java.util.*;
 
-// line 46 "model.ump"
-// line 138 "model.ump"
+// line 49 "model.ump"
+// line 142 "model.ump"
 public class ParentAccount extends UserAccount
 {
+
+  //------------------------
+  // STATIC VARIABLES
+  //------------------------
+
+  private static Map<int, ParentAccount> parentaccountsByPhoneNumber = new HashMap<int, ParentAccount>();
 
   //------------------------
   // MEMBER VARIABLES
@@ -25,10 +31,14 @@ public class ParentAccount extends UserAccount
   // CONSTRUCTOR
   //------------------------
 
-  public ParentAccount(String aAccountName, String aPassword, CoolSupplies aCoolSupplies, String aName)
+  public ParentAccount(String aAccountName, String aPassword, CoolSupplies aCoolSupplies)
   {
     super(aAccountName, aPassword, aCoolSupplies);
-    name = aName;
+    name = null;
+    if (!setPhoneNumber(aPhoneNumber))
+    {
+      throw new RuntimeException("Cannot create due to duplicate phoneNumber. See https://manual.umple.org?RE003ViolationofUniqueness.html");
+    }
     Children = new ArrayList<Student>();
     orders = new ArrayList<Order>();
   }
@@ -40,8 +50,19 @@ public class ParentAccount extends UserAccount
   public boolean setPhoneNumber(int aPhoneNumber)
   {
     boolean wasSet = false;
+    int anOldPhoneNumber = getPhoneNumber();
+    if (anOldPhoneNumber != null && anOldPhoneNumber.equals(aPhoneNumber)) {
+      return true;
+    }
+    if (hasWithPhoneNumber(aPhoneNumber)) {
+      return wasSet;
+    }
     phoneNumber = aPhoneNumber;
     wasSet = true;
+    if (anOldPhoneNumber != null) {
+      parentaccountsByPhoneNumber.remove(anOldPhoneNumber);
+    }
+    parentaccountsByPhoneNumber.put(aPhoneNumber, this);
     return wasSet;
   }
 
@@ -56,6 +77,16 @@ public class ParentAccount extends UserAccount
   public int getPhoneNumber()
   {
     return phoneNumber;
+  }
+  /* Code from template attribute_GetUnique */
+  public static ParentAccount getWithPhoneNumber(int aPhoneNumber)
+  {
+    return parentaccountsByPhoneNumber.get(aPhoneNumber);
+  }
+  /* Code from template attribute_HasUnique */
+  public static boolean hasWithPhoneNumber(int aPhoneNumber)
+  {
+    return getWithPhoneNumber(aPhoneNumber) != null;
   }
 
   public String getName()
@@ -128,9 +159,9 @@ public class ParentAccount extends UserAccount
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Student addChildren(String aName, int aStudentID, CoolSupplies aCoolSupplies)
+  public Student addChildren(String aName, int aStudentID, CoolSupplies aCoolSupplies, Grade aGrade)
   {
-    return new Student(aName, aStudentID, aCoolSupplies, this);
+    return new Student(aName, aStudentID, aCoolSupplies, this, aGrade);
   }
 
   public boolean addChildren(Student aChildren)
@@ -269,6 +300,7 @@ public class ParentAccount extends UserAccount
 
   public void delete()
   {
+    parentaccountsByPhoneNumber.remove(getPhoneNumber());
     for(int i=Children.size(); i > 0; i--)
     {
       Student aChildren = Children.get(i - 1);

@@ -3,8 +3,8 @@
 
 
 
-// line 23 "model.ump"
-// line 123 "model.ump"
+// line 25 "model.ump"
+// line 127 "model.ump"
 public class PurchasedItem
 {
 

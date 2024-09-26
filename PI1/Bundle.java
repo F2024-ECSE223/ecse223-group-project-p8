@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 78 "model.ump"
-// line 158 "model.ump"
+// line 81 "model.ump"
+// line 162 "model.ump"
 public class Bundle extends SchoolSupply
 {
 
@@ -31,9 +31,9 @@ public class Bundle extends SchoolSupply
   // CONSTRUCTOR
   //------------------------
 
-  public Bundle(CoolSupplies aCoolSupplies, int aDiscount, Grade aGrade)
+  public Bundle(String aName, CoolSupplies aCoolSupplies, int aDiscount, Grade aGrade)
   {
-    super(aCoolSupplies);
+    super(aName, aCoolSupplies);
     discount = aDiscount;
     items = new ArrayList<Item>();
     boolean didAddGrade = setGrade(aGrade);

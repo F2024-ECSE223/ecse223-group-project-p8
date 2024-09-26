@@ -5,8 +5,8 @@
 import java.sql.Date;
 import java.util.*;
 
-// line 2 "model.ump"
-// line 111 "model.ump"
+// line 4 "model.ump"
+// line 114 "model.ump"
 public class CoolSupplies
 {
 
@@ -247,9 +247,9 @@ public class CoolSupplies
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Student addStudent(String aName, int aStudentID, ParentAccount aParent)
+  public Student addStudent(String aName, int aStudentID, ParentAccount aParent, Grade aGrade)
   {
-    return new Student(aName, aStudentID, this, aParent);
+    return new Student(aName, aStudentID, this, aParent, aGrade);
   }
 
   public boolean addStudent(Student aStudent)

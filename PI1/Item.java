@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 54 "model.ump"
-// line 143 "model.ump"
+// line 57 "model.ump"
+// line 147 "model.ump"
 public class Item extends SchoolSupply
 {
 
@@ -21,7 +21,6 @@ public class Item extends SchoolSupply
   //------------------------
 
   //Item Attributes
-  private String name;
   private Requirement requirement;
   private int price;
 
@@ -33,10 +32,9 @@ public class Item extends SchoolSupply
   // CONSTRUCTOR
   //------------------------
 
-  public Item(CoolSupplies aCoolSupplies, String aName, Requirement aRequirement, int aPrice)
+  public Item(String aName, CoolSupplies aCoolSupplies, Requirement aRequirement, int aPrice)
   {
-    super(aCoolSupplies);
-    name = aName;
+    super(aName, aCoolSupplies);
     requirement = aRequirement;
     price = aPrice;
     bundles = new ArrayList<Bundle>();
@@ -46,14 +44,6 @@ public class Item extends SchoolSupply
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setRequirement(Requirement aRequirement)
   {
@@ -71,11 +61,9 @@ public class Item extends SchoolSupply
     return wasSet;
   }
 
-  public String getName()
-  {
-    return name;
-  }
-
+  /**
+   * name;
+   */
   public Requirement getRequirement()
   {
     return requirement;
@@ -320,7 +308,6 @@ public class Item extends SchoolSupply
   public String toString()
   {
     return super.toString() + "["+
-            "name" + ":" + getName()+ "," +
             "price" + ":" + getPrice()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "requirement" + "=" + (getRequirement() != null ? !getRequirement().equals(this)  ? getRequirement().toString().replaceAll("  ","    ") : "this" : "null");
   }
