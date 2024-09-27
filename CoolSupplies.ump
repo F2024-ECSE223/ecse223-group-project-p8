@@ -1,5 +1,3 @@
-use ca.mcgill.ecse.coolsupplies.model
-  
 class CoolSupplies
 {
   
@@ -103,7 +101,7 @@ class Grade
 {
   gradeNumber;
   gradeSystem;
-  1 grade -- * Student students;
+  0..1 grade -- * Student students;
 }
 //$?[End_of_model]$?
 
