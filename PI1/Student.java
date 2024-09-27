@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 74 "model.ump"
-// line 157 "model.ump"
+// line 72 "model.ump"
+// line 155 "model.ump"
 public class Student
 {
 
@@ -32,7 +32,7 @@ public class Student
   // CONSTRUCTOR
   //------------------------
 
-  public Student(String aName, int aStudentID, CoolSupplies aCoolSupplies, ParentAccount aParent, Grade aGrade)
+  public Student(String aName, int aStudentID, CoolSupplies aCoolSupplies, ParentAccount aParent)
   {
     name = aName;
     if (!setStudentID(aStudentID))
@@ -48,11 +48,6 @@ public class Student
     if (!didAddParent)
     {
       throw new RuntimeException("Unable to create Children due to parent. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    boolean didAddGrade = setGrade(aGrade);
-    if (!didAddGrade)
-    {
-      throw new RuntimeException("Unable to create student due to grade. See https://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
   }
 
@@ -121,6 +116,12 @@ public class Student
   {
     return grade;
   }
+
+  public boolean hasGrade()
+  {
+    boolean has = grade != null;
+    return has;
+  }
   /* Code from template association_SetOneToMany */
   public boolean setCoolSupplies(CoolSupplies aCoolSupplies)
   {
@@ -159,22 +160,20 @@ public class Student
     wasSet = true;
     return wasSet;
   }
-  /* Code from template association_SetOneToMany */
+  /* Code from template association_SetOptionalOneToMany */
   public boolean setGrade(Grade aGrade)
   {
     boolean wasSet = false;
-    if (aGrade == null)
-    {
-      return wasSet;
-    }
-
     Grade existingGrade = grade;
     grade = aGrade;
     if (existingGrade != null && !existingGrade.equals(aGrade))
     {
       existingGrade.removeStudent(this);
     }
-    grade.addStudent(this);
+    if (aGrade != null)
+    {
+      aGrade.addStudent(this);
+    }
     wasSet = true;
     return wasSet;
   }
@@ -194,10 +193,10 @@ public class Student
     {
       placeholderParent.removeChildren(this);
     }
-    Grade placeholderGrade = grade;
-    this.grade = null;
-    if(placeholderGrade != null)
+    if (grade != null)
     {
+      Grade placeholderGrade = grade;
+      this.grade = null;
       placeholderGrade.removeStudent(this);
     }
   }

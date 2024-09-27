@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 103 "model.ump"
-// line 175 "model.ump"
+// line 101 "model.ump"
+// line 173 "model.ump"
 public class Grade
 {
 
@@ -127,21 +127,20 @@ public class Grade
   {
     return 0;
   }
-  /* Code from template association_AddManyToOne */
-  public Student addStudent(String aName, int aStudentID, CoolSupplies aCoolSupplies, ParentAccount aParent)
-  {
-    return new Student(aName, aStudentID, aCoolSupplies, aParent, this);
-  }
-
+  /* Code from template association_AddManyToOptionalOne */
   public boolean addStudent(Student aStudent)
   {
     boolean wasAdded = false;
     if (students.contains(aStudent)) { return false; }
     Grade existingGrade = aStudent.getGrade();
-    boolean isNewGrade = existingGrade != null && !this.equals(existingGrade);
-    if (isNewGrade)
+    if (existingGrade == null)
     {
       aStudent.setGrade(this);
+    }
+    else if (!this.equals(existingGrade))
+    {
+      existingGrade.removeStudent(aStudent);
+      addStudent(aStudent);
     }
     else
     {
@@ -154,10 +153,10 @@ public class Grade
   public boolean removeStudent(Student aStudent)
   {
     boolean wasRemoved = false;
-    //Unable to remove aStudent, as it must always have a grade
-    if (!this.equals(aStudent.getGrade()))
+    if (students.contains(aStudent))
     {
       students.remove(aStudent);
+      aStudent.setGrade(null);
       wasRemoved = true;
     }
     return wasRemoved;
@@ -269,10 +268,9 @@ public class Grade
 
   public void delete()
   {
-    for(int i=students.size(); i > 0; i--)
+    while( !students.isEmpty() )
     {
-      Student aStudent = students.get(i - 1);
-      aStudent.delete();
+      students.get(0).setGrade(null);
     }
     for(int i=bundles.size(); i > 0; i--)
     {

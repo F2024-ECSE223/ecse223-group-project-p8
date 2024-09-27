@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 43 "model.ump"
-// line 137 "model.ump"
+// line 41 "model.ump"
+// line 135 "model.ump"
 public abstract class SchoolSupply
 {
 

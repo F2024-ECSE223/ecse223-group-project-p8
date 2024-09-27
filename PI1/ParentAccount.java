@@ -4,8 +4,8 @@
 
 import java.util.*;
 
-// line 49 "model.ump"
-// line 142 "model.ump"
+// line 47 "model.ump"
+// line 140 "model.ump"
 public class ParentAccount extends UserAccount
 {
 
@@ -159,9 +159,9 @@ public class ParentAccount extends UserAccount
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Student addChildren(String aName, int aStudentID, CoolSupplies aCoolSupplies, Grade aGrade)
+  public Student addChildren(String aName, int aStudentID, CoolSupplies aCoolSupplies)
   {
-    return new Student(aName, aStudentID, aCoolSupplies, this, aGrade);
+    return new Student(aName, aStudentID, aCoolSupplies, this);
   }
 
   public boolean addChildren(Student aChildren)
