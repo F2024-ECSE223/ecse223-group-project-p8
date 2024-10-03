@@ -15,7 +15,7 @@ public class CoolSuppliesFeatureSet1Controller {
   public static String addParent(String email, String password, String name, int phoneNumber) {
     TOParent newParent = new TOParent(email, password, name, phoneNumber);
     parents.add(newParent);
-    throw new UnsupportedOperationException("Not implemented yet.");
+    return "Parent has been added";
   }
 
   public static String updateParent(String email, String newPassword, String newName,
