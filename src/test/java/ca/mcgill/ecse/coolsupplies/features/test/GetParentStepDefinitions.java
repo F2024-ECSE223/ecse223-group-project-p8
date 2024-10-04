@@ -15,7 +15,7 @@ import static org.junit.Assert.assertNull;
 
 public class GetParentStepDefinitions {
 
-    List<TOParent> actualParent = new ArrayList<>();
+    List<TOParent> actualParentList = new ArrayList<>();
 
     @Given("the following parent entities exists in the system \\(p8)")
     public void the_following_parent_entities_exists_in_the_system_p8(io.cucumber.datatable.DataTable dataTable) {
@@ -26,6 +26,8 @@ public class GetParentStepDefinitions {
             String password = row.get("password");
             String name = row.get("name");
             int phoneNumber = Integer.parseInt(row.get("phoneNumber"));
+
+            //addParent() test
             CoolSuppliesFeatureSet1Controller.addParent(email, password, name, phoneNumber);
         }
     }
@@ -34,13 +36,17 @@ public class GetParentStepDefinitions {
     public void the_school_admin_attempts_to_get_from_the_system_the_parent_with_email_p8(
             String string) {
         // Write code here that turns the phrase above into concrete actions
-        actualParent.add(CoolSuppliesFeatureSet1Controller.getParent(string));
+
+        //getParent() test
+        actualParentList.add(CoolSuppliesFeatureSet1Controller.getParent(string));
     }
 
     @When("the school admin attempts to get from the system all the parents \\(p8)")
     public void the_school_admin_attempts_to_get_from_the_system_all_the_parents_p8() {
         // Write code here that turns the phrase above into concrete actions
-        actualParent.addAll(CoolSuppliesFeatureSet1Controller.getParents());
+
+        //getParents() test
+        actualParentList.addAll(CoolSuppliesFeatureSet1Controller.getParents());
     }
 
     @Then("the number of parent entities in the system shall be {string} \\(p8)")
@@ -60,13 +66,13 @@ public class GetParentStepDefinitions {
         //
         // For other transformations you can register a DataTableType.
 
-        List<Map<String, String>> expectedParents = dataTable.asMaps();
+        List<Map<String, String>> expectedParentList = dataTable.asMaps();
 
-        assertEquals(expectedParents.size(), actualParent.size());
+        assertEquals(expectedParentList.size(), actualParentList.size());
 
-        for (int i = 0; i < expectedParents.size(); i++) {
-            Map<String, String> e = expectedParents.get(i);
-            TOParent a = actualParent.get(i);
+        for (int i = 0; i < expectedParentList.size(); i++) {
+            Map<String, String> e = expectedParentList.get(i);
+            TOParent a = actualParentList.get(i);
             assertEquals(e.get("email"), a.getEmail());
             assertEquals(e.get("password"), a.getPassword());
             assertEquals(e.get("name"), a.getName());
@@ -77,7 +83,7 @@ public class GetParentStepDefinitions {
     @Then("no parent entities shall be presented \\(p8)")
     public void no_parent_entities_shall_be_presented_p8() {
         // Write code here that turns the phrase above into concrete actions
-        if (actualParent.isEmpty()) {
+        if (actualParentList.isEmpty()) {
             assertNull(null);
         }
     }

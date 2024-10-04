@@ -16,13 +16,15 @@ public class CoolSuppliesFeatureSet1Controller {
     }
 
     public static String addParent(String email, String password, String name, int phoneNumber) {
+
         try {
+            //catch the exception to duplication
             Parent newParent = new Parent(email, password, name, phoneNumber, coolSupplies);
             coolSupplies.addParent(newParent);
         } catch (Exception e) {
-            return "Parent has been already added";
+            return "Parent is already in the list";
         }
-        return "Parent has been added";
+        return "Parent has been successfully added";
     }
 
     public static String updateParent(String email, String newPassword, String newName,
@@ -50,7 +52,6 @@ public class CoolSuppliesFeatureSet1Controller {
     public static List<TOParent> getParents() {
         List<TOParent> parents = new ArrayList<>();
         for (Parent parent : coolSupplies.getParents()) {
-            System.out.println(parent);
             parents.add(new TOParent(parent.getEmail(),
                     parent.getPassword(),
                     parent.getName(),
