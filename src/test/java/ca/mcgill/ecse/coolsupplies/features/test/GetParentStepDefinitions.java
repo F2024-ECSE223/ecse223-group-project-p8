@@ -1,27 +1,24 @@
 package ca.mcgill.ecse.coolsupplies.features.test;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet1Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOParent;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 public class GetParentStepDefinitions {
 
     List<TOParent> actualParent = new ArrayList<>();
-    List<TOParent> data = new ArrayList<>();
 
     @Given("the following parent entities exists in the system \\(p8)")
     public void the_following_parent_entities_exists_in_the_system_p8(io.cucumber.datatable.DataTable dataTable) {
-
-        //remove all the instances from the database for each scenario
-        CoolSuppliesFeatureSet1Controller.getParents().clear();
 
         List<Map<String, String>> rows = dataTable.asMaps();
         for (var row : rows) {
@@ -29,7 +26,7 @@ public class GetParentStepDefinitions {
             String password = row.get("password");
             String name = row.get("name");
             int phoneNumber = Integer.parseInt(row.get("phoneNumber"));
-            CoolSuppliesFeatureSet1Controller.addParent(email,password,name,phoneNumber);
+            CoolSuppliesFeatureSet1Controller.addParent(email, password, name, phoneNumber);
         }
     }
 
