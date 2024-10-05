@@ -1,55 +1,46 @@
 package ca.mcgill.ecse.coolsupplies.controller;
 
-import java.util.ArrayList;
+import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
+import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
+import ca.mcgill.ecse.coolsupplies.model.Grade;
+import ca.mcgill.ecse.coolsupplies.model.Student;
+
 import java.util.List;
 
 public class CoolSuppliesFeatureSet2Controller {
 
-  private static List<TOStudent> students = new ArrayList<>();
+    private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
-  public static String addStudent(String name, String gradeLevel) {
-    for(TOStudent student: students){
-      if(student.getName().equals(name)){
-        return "Student "+ name + " has been already added to the list.";
-      }
+    public static String addStudent(String name, String gradeLevel) {
+        try {
+            Grade grade;
+            try {
+                grade = new Grade(gradeLevel, coolSupplies);
+            } catch (Exception e) {
+                grade = Grade.getWithLevel(gradeLevel);
+            }
+            Student student = new Student(name, coolSupplies, grade);
+            coolSupplies.addStudent(student);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        return "Student " + name + " has been successfully added to the list.";
     }
-    students.add(new TOStudent(name,gradeLevel));
-    return "Student "+ name + " has been successfully added to the list.";
-  }
 
-  public static String updateStudent(String name, String newName, String newGradeLevel) {
-    for(TOStudent student: students){
-      if(student.getName().equals(name)){
-        students.remove(student);
-        students.add(new TOStudent(newName,newGradeLevel));
-        return "Student "+ name + " has been successfully removed from the list.";
-      }
+    public static String updateStudent(String name, String newName, String newGradeLevel) {
+        return "Student " + name + " cannot be found in the list.";
     }
-    return "Student "+name+" cannot be found in the list.";
-  }
 
-  public static String deleteStudent(String name) {
-    for(TOStudent student: students){
-      if(student.getName().equals(name)){
-        students.remove(student);
-        return "Student "+ name + " has been successfully removed from the list.";
-      }
+    public static String deleteStudent(String name) {
+        return "Student " + name + " cannot be found in the list.";
     }
-    return "Student "+name+" cannot be found in the list.";
-  }
 
-  public static TOStudent getStudent(String name) {
-    for(TOStudent student: students){
-      if(student.getName().equals(name)){
-        return student;
-      }
+    public static TOStudent getStudent(String name) {
+        return null;
     }
-    return null;
-  }
 
-  // returns all students
-  public static List<TOStudent> getStudents() {
-    return students;
-  }
-
+    // returns all students
+    public static List<TOStudent> getStudents() {
+        return null;
+    }
 }

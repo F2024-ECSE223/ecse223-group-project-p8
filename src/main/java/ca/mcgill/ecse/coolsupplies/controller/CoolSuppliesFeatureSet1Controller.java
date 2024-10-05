@@ -22,7 +22,7 @@ public class CoolSuppliesFeatureSet1Controller {
             Parent newParent = new Parent(email, password, name, phoneNumber, coolSupplies);
             coolSupplies.addParent(newParent);
         } catch (Exception e) {
-            return "Parent is already in the list";
+            return e.getMessage();
         }
         return "Parent has been successfully added";
     }
