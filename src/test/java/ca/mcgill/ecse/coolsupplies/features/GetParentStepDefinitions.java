@@ -1,4 +1,4 @@
-package ca.mcgill.ecse.coolsupplies.features.test;
+package ca.mcgill.ecse.coolsupplies.features;
 
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet1Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOParent;
