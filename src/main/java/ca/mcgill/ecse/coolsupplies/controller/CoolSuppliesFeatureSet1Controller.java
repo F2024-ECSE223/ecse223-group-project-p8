@@ -1,30 +1,15 @@
 package ca.mcgill.ecse.coolsupplies.controller;
 
-import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
-import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
-import ca.mcgill.ecse.coolsupplies.model.Parent;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class CoolSuppliesFeatureSet1Controller {
-
-    private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
     public static String updateAdmin(String password) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     public static String addParent(String email, String password, String name, int phoneNumber) {
-
-        try {
-            //catch the exception to duplication
-            Parent newParent = new Parent(email, password, name, phoneNumber, coolSupplies);
-            coolSupplies.addParent(newParent);
-        } catch (Exception e) {
-            return e.getMessage();
-        }
-        return "Parent has been successfully added";
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     public static String updateParent(String email, String newPassword, String newName,
@@ -37,26 +22,12 @@ public class CoolSuppliesFeatureSet1Controller {
     }
 
     public static TOParent getParent(String email) {
-        for (Parent parent : coolSupplies.getParents()) {
-            if (parent.getEmail().equals(email)) {
-                return new TOParent(parent.getEmail(),
-                        parent.getPassword(),
-                        parent.getName(),
-                        parent.getPhoneNumber());
-            }
-        }
-        return null;
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     // returns all parents
     public static List<TOParent> getParents() {
-        List<TOParent> parents = new ArrayList<>();
-        for (Parent parent : coolSupplies.getParents()) {
-            parents.add(new TOParent(parent.getEmail(),
-                    parent.getPassword(),
-                    parent.getName(),
-                    parent.getPhoneNumber()));
-        }
-        return parents;
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
+
 }
