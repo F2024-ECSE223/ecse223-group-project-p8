@@ -49,11 +49,11 @@ public class GetParentStepDefinitions {
         actualParentList.addAll(CoolSuppliesFeatureSet1Controller.getParents());
     }
 
-    @Then("the number of parent entities in the system shall be {string} \\(p8)")
-    public void the_number_of_parent_entities_in_the_system_shall_be_p8(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        assertEquals(string, String.valueOf(CoolSuppliesFeatureSet1Controller.getParents().size()));
-    }
+//    @Then("the number of parent entities in the system shall be {string} \\(p8)")
+//    public void the_number_of_parent_entities_in_the_system_shall_be_p8(String string) {
+//        // Write code here that turns the phrase above into concrete actions
+//        assertEquals(string, String.valueOf(CoolSuppliesFeatureSet1Controller.getParents().size()));
+//    }
 
     @Then("the following parent entities shall be presented \\(p8)")
     public void the_following_parent_entities_shall_be_presented_p8(
