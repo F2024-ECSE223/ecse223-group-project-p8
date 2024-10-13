@@ -13,6 +13,11 @@ public class DeleteParentStepDefinitions {
 
   String error;
 
+  /**
+  * @author  Artimice Mirchi
+  * @author  Jyothsna Seema
+  * @author  Mary Li
+  */
   @Given("the following parent entities exists in the system \\(p8)")
   public void the_following_parent_entities_exists_in_the_system_p8(
       io.cucumber.datatable.DataTable dataTable) {
@@ -33,6 +38,11 @@ public class DeleteParentStepDefinitions {
     }
   }
 
+  /**
+  * @author  Artimice Mirchi
+  * @author  Jyothsna Seema
+  * @author  Mary Li
+  */
   @When("the school Administrator attempts to delete from the system the parent with email {string} \\(p8)")
   public void the_school_administrator_attempts_to_delete_from_the_system_the_parent_with_email_p8(
       String string) {
@@ -40,6 +50,11 @@ public class DeleteParentStepDefinitions {
     error = CoolSuppliesFeatureSet1Controller.deleteParent(string);
   }
 
+  /**
+  * @author  Artimice Mirchi
+  * @author  Jyothsna Seema
+  * @author  Mary Li
+  */
   @Then("the number of parent entities in the system shall be {string} \\(p8)")
   public void the_number_of_parent_entities_in_the_system_shall_be_p8(String string) {
     // Write code here that turns the phrase above into concrete actions
@@ -47,6 +62,11 @@ public class DeleteParentStepDefinitions {
     assertEquals(Integer.parseInt(string), numberOfParents);
   }
 
+  /**
+  * @author  Artimice Mirchi
+  * @author  Jyothsna Seema
+  * @author  Mary Li
+  */
   @Then("the following parent entities shall exist in the system \\(p8)")
   public void the_following_parent_entities_shall_exist_in_the_system_p8(
       io.cucumber.datatable.DataTable dataTable) {
@@ -75,6 +95,11 @@ public class DeleteParentStepDefinitions {
     }
   }
 
+  /**
+  * @author  Artimice Mirchi
+  * @author  Jyothsna Seema
+  * @author  Mary Li
+  */
   @Then("the error {string} shall be raised \\(p8)")
   public void the_error_shall_be_raised_p8(String string) {
     // Write code here that turns the phrase above into concrete actions
