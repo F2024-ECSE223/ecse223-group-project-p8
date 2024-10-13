@@ -12,11 +12,6 @@ import ca.mcgill.ecse.coolsupplies.model.Parent;
 
 public class CoolSuppliesFeatureSet6Controller {
 
-  private static CoolSupplies coolSupplies = new CoolSupplies();
-
-  // private static Map<String, List<Student>> parentStudentsMap = new HashMap<>();
-  // private static Map<Integer, Object> orderMap = new HashMap<>();
-
   public static String addStudentToParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
     Parent parent = (Parent) User.getWithEmail(parentEmail);
@@ -120,6 +115,7 @@ public class CoolSuppliesFeatureSet6Controller {
       throw new IllegalArgumentException("The student does not exist.");
     }
 
+    CoolSupplies coolSupplies = parent.getCoolSupplies();
     Order newOrder = new Order(number, date, purchaseLevel, parent, student, coolSupplies);
     List<Order> orders = coolSupplies.getOrders();
 
@@ -134,6 +130,8 @@ public class CoolSuppliesFeatureSet6Controller {
     }
 
     coolSupplies.addOrder(newOrder);
+    parent.addOrder(newOrder);
+    student.addOrder(newOrder);
 
     return "the order " + number + " with date " + date + ", level " + level + ", parent email " + parentEmail + ", and student name " + studentName + " shall exist in the system";
   }
