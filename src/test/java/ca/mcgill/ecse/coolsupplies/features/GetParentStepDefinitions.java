@@ -2,6 +2,7 @@ package ca.mcgill.ecse.coolsupplies.features;
 
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet1Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOParent;
+import ca.mcgill.ecse.coolsupplies.model.Parent;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -28,6 +29,10 @@ public class GetParentStepDefinitions {
             String string) {
         // Write code here that turns the phrase above into concrete actions
 
+        TOParent parent = CoolSuppliesFeatureSet1Controller.getParent(string);
+
+        // Check if the parent is not found, return without adding to the list
+        if(parent == null) return;
         //getParent() test
         actualParentList.add(CoolSuppliesFeatureSet1Controller.getParent(string));
     }

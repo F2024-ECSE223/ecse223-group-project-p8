@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * This class provides methods to add, update, delete, and retrieve students from the system.
+ *
+ * @author Zhengxuan Zhao
  */
 public class CoolSuppliesFeatureSet2Controller {
 
