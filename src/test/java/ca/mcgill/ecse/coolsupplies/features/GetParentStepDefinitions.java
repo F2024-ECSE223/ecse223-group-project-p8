@@ -94,8 +94,6 @@ public class GetParentStepDefinitions {
     @Then("no parent entities shall be presented \\(p8)")
     public void no_parent_entities_shall_be_presented_p8() {
         // Write code here that turns the phrase above into concrete actions
-        if (actualParentList.isEmpty()) {
-            assertNull(null);
-        }
+        assertEquals(0,actualParentList.size());
     }
 }
