@@ -79,19 +79,14 @@ public class DeleteParentStepDefinitions {
     // For other transformations you can register a DataTableType.
     List<Map<String, String>> rows = dataTable.asMaps();
     for (var row: rows){
-      try{
-        String email = row.get("email");
-        TOParent parent = CoolSuppliesFeatureSet1Controller.getParent(email);
-        String password = row.get("password");
-        assertEquals(password, parent.getPassword());
-        String name = row.get("name");
-        assertEquals(name, parent.getName());
-        int phoneNumber = Integer.parseInt(row.get("phoneNumber"));
-        assertEquals(phoneNumber, parent.getPhoneNumber());
-      }
-      catch(Exception e){
-        the_error_shall_be_raised_p8("The parent does not exist.");
-      }
+      String email = row.get("email");
+      TOParent parent = CoolSuppliesFeatureSet1Controller.getParent(email);
+      String password = row.get("password");
+      assertEquals(password, parent.getPassword());
+      String name = row.get("name");
+      assertEquals(name, parent.getName());
+      int phoneNumber = Integer.parseInt(row.get("phoneNumber"));
+      assertEquals(phoneNumber, parent.getPhoneNumber());
     }
   }
 
