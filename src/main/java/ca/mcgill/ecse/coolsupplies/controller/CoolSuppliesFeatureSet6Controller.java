@@ -10,8 +10,19 @@ import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 import ca.mcgill.ecse.coolsupplies.model.Order;
 import ca.mcgill.ecse.coolsupplies.model.Parent;
 
+/**
+ * This Controller provides methods to manage students and start orders from the parent
+ */
 public class CoolSuppliesFeatureSet6Controller {
 
+  /**
+   * Adds a student to the parent's list of students.
+   * 
+   * @param studentName The name of the student to add.
+   * @param parentEmail The email of the parent.
+   * @return A message indicating whether the student was successfully added or if the student is already associated with the parent.
+   * @throws IllegalArgumentException If the student does not exist.
+   */
   public static String addStudentToParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
     Parent parent = (Parent) User.getWithEmail(parentEmail);
@@ -30,6 +41,14 @@ public class CoolSuppliesFeatureSet6Controller {
     }
   }
 
+  /**
+   * Removes a student from the parent's list of students.
+   * 
+   * @param studentName The name of the student to remove.
+   * @param parentEmail The email of the parent.
+   * @return A message indicating whether the student was successfully removed.
+   * @throws IllegalArgumentException If the student or parent does not exist or the student is not associated with the parent.
+   */
   public static String deleteStudentFromParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
     if (student == null) {
@@ -55,6 +74,13 @@ public class CoolSuppliesFeatureSet6Controller {
     }
   }
 
+  /**
+   * Retrieves a specific student from a parent's list of students.
+   * 
+   * @param studentName The name of the student to retrieve.
+   * @param parentEmail The email of the parent.
+   * @return The TOStudent object representing the student if found, otherwise null.
+   */
   public static TOStudent getStudentOfParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
     Parent parent = (Parent) User.getWithEmail(parentEmail);
@@ -73,6 +99,12 @@ public class CoolSuppliesFeatureSet6Controller {
     }
   }
 
+  /**
+   * Retrieves all students associated with a parent.
+   * 
+   * @param parentEmail The email of the parent.
+   * @return A list of TOStudent objects representing all students of the parent, or null if the parent does not exist.
+   */
   // returns all students of a parent
   public static List<TOStudent> getStudentsOfParent(String parentEmail) {
     Parent parent = (Parent) User.getWithEmail(parentEmail);
@@ -93,6 +125,17 @@ public class CoolSuppliesFeatureSet6Controller {
     return toStudents;
   }
 
+  /**
+   * Creates and starts a new order for a parent and student.
+   * 
+   * @param number The unique order number.
+   * @param date The date of the order.
+   * @param level The purchase level (Mandatory, Recommended, or Optional).
+   * @param parentEmail The email of the parent placing the order.
+   * @param studentName The name of the student associated with the order.
+   * @return A message indicating that the order has been successfully created and added to the system.
+   * @throws IllegalArgumentException If the level is invalid, if the parent or student does not exist, or if the order number is not unique.
+   */
   public static String startOrder(int number, Date date, String level, String parentEmail,
       String studentName) {
 
