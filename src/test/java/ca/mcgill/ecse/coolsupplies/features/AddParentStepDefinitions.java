@@ -6,17 +6,18 @@
 
 package ca.mcgill.ecse.coolsupplies.features;
 
+import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet1Controller;
+
 import java.util.List;
 
-import org.junit.Assert;
-
-import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
-import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet1Controller;
-import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Parent;
+import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
+import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 
 
 public class AddParentStepDefinitions {
@@ -67,7 +68,6 @@ public class AddParentStepDefinitions {
 
     Parent systemParent = (Parent) Parent.getWithEmail(email);
 
-    Assert.assertNotNull(systemParent);
     Assert.assertEquals(email, systemParent.getEmail());
     Assert.assertEquals(password, systemParent.getPassword());
     Assert.assertEquals(name, systemParent.getName());
