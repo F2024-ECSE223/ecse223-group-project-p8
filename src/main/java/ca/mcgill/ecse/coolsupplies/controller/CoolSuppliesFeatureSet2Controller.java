@@ -25,22 +25,19 @@ public class CoolSuppliesFeatureSet2Controller {
      * @return              A message indicating whether the student was successfully added.
      */
     public static String addStudent(String name, String gradeLevel) {
-        try {
-            Grade grade;
-            if(!Grade.hasWithLevel(gradeLevel)) {
-                //check if the new Grade is created if there is no instance with current gradeLevel.
-                grade = new Grade(gradeLevel, coolSupplies);
-            }else{
-                grade = Grade.getWithLevel(gradeLevel);
-            }
-            //new Student is created if there is no instance with current name, coolSupplies and grade.
-            Student student = new Student(name, coolSupplies, grade);
-            coolSupplies.addStudent(student);
-            return "Student has been added.";
-        } catch (Exception e) {
-            //return Student Add Exception message
-            return e.getMessage();
+        if(name.isEmpty()){
+            return "The name must not be empty.";
         }
+        if(Student.hasWithName(name)){
+            return "The name must be unique.";
+        }
+        if(!Grade.hasWithLevel(gradeLevel)){
+            return "The grade does not exist.";
+        }
+        Grade grade = Grade.getWithLevel(gradeLevel);
+        Student student = new Student(name, coolSupplies, grade);
+        coolSupplies.addStudent(student);
+        return "The student has been added to the system.";
     }
 
     /**
@@ -52,24 +49,32 @@ public class CoolSuppliesFeatureSet2Controller {
      * @return              A message indicating whether the student was successfully updated.
      */
     public static String updateStudent(String name, String newName, String newGradeLevel) {
-        //get the student list from database
-        if (Student.hasWithName(name)) {
-            Student student = Student.getWithName(name);
-            //check if the newName has been stored in the list, otherwise set the newName to the student
-            if (!student.setName(newName)) {
-                return "Cannot create due to duplicate name.";
-            }
-            Grade grade;
-            if(!Grade.hasWithLevel(newGradeLevel)) {
-                //check if the new Grade is created if there is no instance with current gradeLevel.
-                grade = new Grade(newGradeLevel, coolSupplies);
-            }else{
-                grade = Grade.getWithLevel(newGradeLevel);
-            }
-            student.setGrade(grade);
-            return "Student has been updated!.";
+        if(newName.isEmpty()){
+            return "The name must not be empty.";
         }
-        return "Student " + name + " cannot be found in the list.";
+        //check if there is a student entity with the newName
+        if(Student.hasWithName(newName)){
+            return "The name must be unique.";
+        }
+
+        Grade grade;
+        //check if there is an instance with current gradeLevel.
+        if(!Grade.hasWithLevel(newGradeLevel)) {
+            return "The grade does not exist.";
+        }else{
+            grade = Grade.getWithLevel(newGradeLevel);
+        }
+
+        Student student;
+        if(!Student.hasWithName(name)){
+            return "The student does not exist.";
+        }else{
+            //get the student from database
+            student = Student.getWithName(name);
+        }
+        student.setName(newName);
+        student.setGrade(grade);
+        return "Student has been updated.";
     }
 
     /**
@@ -82,9 +87,9 @@ public class CoolSuppliesFeatureSet2Controller {
         if (Student.hasWithName(name)) {
             Student student = Student.getWithName(name);
             student.delete();
-            return "Student has been deleted.";
+            return "The student has been deleted.";
         }
-        return "Student " + name + " cannot be found in the list.";
+        return "The student does not exist.";
     }
 
     /**
