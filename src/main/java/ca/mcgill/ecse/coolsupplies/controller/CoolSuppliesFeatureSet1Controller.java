@@ -2,6 +2,10 @@ package ca.mcgill.ecse.coolsupplies.controller;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.model.User;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Parent;
@@ -12,7 +16,7 @@ import ca.mcgill.ecse.coolsupplies.model.SchoolAdmin;
  */
 public class CoolSuppliesFeatureSet1Controller {
 
-  private static CoolSupplies coolSupplies = new CoolSupplies();
+  private static CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
   /**
    * Updates the password of the admin account.
@@ -41,12 +45,44 @@ public class CoolSuppliesFeatureSet1Controller {
    * @return A message indicating if the parent was added successfully or if a parent with the given email already exists.
    */
   public static String addParent(String email, String password, String name, int phoneNumber) {
+    if (email.isEmpty()){
+      return "The email must not be empty.";
+    }
+
+    if (name.isEmpty()){
+      return "The name must not be empty.";
+    }
+
+    if (password.isEmpty()){
+      return "The password must not be empty.";
+    }
+
+    if (email.equals("admin@cool.ca")){
+      return "The email must not be admin@cool.ca.";
+    }
+
+    if (email.contains(" ")){
+      return "The email must not contain spaces.";
+    }
+
+    String emailFormat = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+    Pattern pattern = Pattern.compile(emailFormat);
+    Matcher matcher = pattern.matcher(email);
+    if (!matcher.matches()){
+      return "The email must be well-formed.";
+    }
+
+    if (Integer.toString(phoneNumber).length() != 7){
+      return "The phone number must be seven digits.";
+    }
+
     if (User.hasWithEmail(email)) {
-      return "A parent with this email already exists.";
+      return "The email must be unique.";
     }
 
     Parent parent = new Parent(email, password, name, phoneNumber, coolSupplies);
     coolSupplies.addParent(parent);
+
     return "Parent added successfully.";
   }
 
@@ -64,6 +100,18 @@ public class CoolSuppliesFeatureSet1Controller {
     Parent parent = (Parent) User.getWithEmail(email);
 
     if (parent != null){
+      if (newName.isEmpty()){
+        return "The name must not be empty.";
+      }
+
+      if (newPassword.isEmpty()){
+        return "The password must not be empty.";
+      }
+
+      if (Integer.toString(newPhoneNumber).length() != 7){
+        return "The phone number must be seven digits.";
+      }
+
       parent.setName(newName);
       parent.setPassword(newPassword);
       parent.setPhoneNumber(newPhoneNumber);
