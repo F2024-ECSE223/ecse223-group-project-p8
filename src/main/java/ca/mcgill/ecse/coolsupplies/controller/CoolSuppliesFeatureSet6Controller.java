@@ -11,7 +11,9 @@ import ca.mcgill.ecse.coolsupplies.model.Order;
 import ca.mcgill.ecse.coolsupplies.model.Parent;
 
 /**
- * This Controller provides methods to manage students and start orders from the parent
+ * This Controller provides methods to manage students and start orders from the
+ * parent
+ * 
  * @author Shengyi Zhong
  */
 public class CoolSuppliesFeatureSet6Controller {
@@ -21,7 +23,9 @@ public class CoolSuppliesFeatureSet6Controller {
    * 
    * @param studentName The name of the student to add.
    * @param parentEmail The email of the parent.
-   * @return A message indicating whether the student was successfully added or an error message if the student or parent does not exist, or if the student is already associated with the parent.
+   * @return A message indicating whether the student was successfully added or an
+   *         error message if the student or parent does not exist, or if the
+   *         student is already associated with the parent.
    */
   public static String addStudentToParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
@@ -29,20 +33,20 @@ public class CoolSuppliesFeatureSet6Controller {
 
     // Return an error message if the student does not exist
     if (student == null) {
-        return "The student does not exist.";
+      return "The student does not exist.";
     }
 
     // Return an error message if the parent does not exist
     if (parent == null) {
-        return "The parent does not exist.";
+      return "The parent does not exist.";
     }
 
     // Successfully add a student to a parent in the system
     Boolean isAdded = parent.addStudent(student);
     if (isAdded) {
-        return "Student " + studentName + " added to parent " + parentEmail;
+      return "Student " + studentName + " added to parent " + parentEmail;
     } else {
-        return "Student " + studentName + " is already associated with parent " + parentEmail;
+      return "Student " + studentName + " is already associated with parent " + parentEmail;
     }
   }
 
@@ -51,32 +55,34 @@ public class CoolSuppliesFeatureSet6Controller {
    * 
    * @param studentName The name of the student to remove.
    * @param parentEmail The email of the parent.
-   * @return A message indicating whether the student was successfully removed or an error message if the student or parent does not exist, or if the student is not associated with the parent.
+   * @return A message indicating whether the student was successfully removed or
+   *         an error message if the student or parent does not exist, or if the
+   *         student is not associated with the parent.
    */
   public static String deleteStudentFromParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
 
     // Return an error message if the student does not exist
     if (student == null) {
-        return "The student does not exist.";
+      return "The student does not exist.";
     }
 
     User user = User.getWithEmail(parentEmail);
 
     // Return an error message if the parent does not exist
     if (user == null || !(user instanceof Parent)) {
-        return "The parent does not exist.";
+      return "The parent does not exist.";
     }
 
     Parent parent = (Parent) user;
 
     Boolean isRemoved = parent.removeStudent(student);
     if (isRemoved) {
-        // Successfully remove a student from the students of a parent in the system
-        return "Student " + studentName + " removed from parent " + parentEmail;
+      // Successfully remove a student from the students of a parent in the system
+      return "Student " + studentName + " removed from parent " + parentEmail;
     } else {
-        // Return an error message if the student is not associated with the parent
-        return "The student does not exist for this parent.";
+      // Return an error message if the student is not associated with the parent
+      return "The student does not exist for this parent.";
     }
   }
 
@@ -85,7 +91,9 @@ public class CoolSuppliesFeatureSet6Controller {
    * 
    * @param studentName The name of the student to retrieve.
    * @param parentEmail The email of the parent.
-   * @return The TOStudent object representing the student if found, or null if the student is not associated with the parent or the parent does not exist.
+   * @return The TOStudent object representing the student if found, or null if
+   *         the student is not associated with the parent or the parent does not
+   *         exist.
    */
   public static TOStudent getStudentOfParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
@@ -97,7 +105,7 @@ public class CoolSuppliesFeatureSet6Controller {
     }
 
     List<Student> students = parent.getStudents();
-    
+
     if (students != null && students.contains(student)) {
       // Successfully get a student from the students of a parent in the system
       return new TOStudent(student.getName(), student.getGrade().getLevel());
@@ -111,7 +119,8 @@ public class CoolSuppliesFeatureSet6Controller {
    * Retrieves all students associated with a parent.
    * 
    * @param parentEmail The email of the parent.
-   * @return A list of TOStudent objects representing all students of the parent, or an empty list if the parent does not exist.
+   * @return A list of TOStudent objects representing all students of the parent,
+   *         or an empty list if the parent does not exist.
    */
   public static List<TOStudent> getStudentsOfParent(String parentEmail) {
     Parent parent = (Parent) User.getWithEmail(parentEmail);
@@ -123,12 +132,12 @@ public class CoolSuppliesFeatureSet6Controller {
 
     List<Student> students = parent.getStudents();
     List<TOStudent> toStudents = new ArrayList<>();
-    
+
     for (Student student : students) {
-        TOStudent toStudent = new TOStudent(student.getName(), student.getGrade().getLevel());
-        toStudents.add(toStudent);
+      TOStudent toStudent = new TOStudent(student.getName(), student.getGrade().getLevel());
+      toStudents.add(toStudent);
     }
-    
+
     // Successfully get all students of a parent in the system
     return toStudents;
   }
@@ -136,12 +145,15 @@ public class CoolSuppliesFeatureSet6Controller {
   /**
    * Creates and starts a new order for a parent and student.
    * 
-   * @param number The unique order number.
-   * @param date The date of the order.
-   * @param level The purchase level (Mandatory, Recommended, or Optional).
+   * @param number      The unique order number.
+   * @param date        The date of the order.
+   * @param level       The purchase level (Mandatory, Recommended, or Optional).
    * @param parentEmail The email of the parent placing the order.
    * @param studentName The name of the student associated with the order.
-   * @return A message indicating success, or an error message if any validation fails (invalid level, parent does not exist, student does not exist or is not associated with the parent, non-unique order number, or invalid order number).
+   * @return A message indicating success, or an error message if any validation
+   *         fails (invalid level, parent does not exist, student does not exist
+   *         or is not associated with the parent, non-unique order number, or
+   *         invalid order number).
    */
   public static String startOrder(int number, Date date, String level, String parentEmail,
       String studentName) {
@@ -184,20 +196,8 @@ public class CoolSuppliesFeatureSet6Controller {
     parent.addOrder(newOrder);
     student.addOrder(newOrder);
 
-    return "The order " + number + " with date " + date + ", level " + level + ", parent email " + parentEmail + ", and student name " + studentName + " has been successfully added.";
+    return "The order " + number + " with date " + date + ", level " + level + ", parent email " + parentEmail
+        + ", and student name " + studentName + " has been successfully added.";
   }
 
 }
-
-  // returns all students of a parent
-  public static List<TOStudent> getStudentsOfParent(String parentEmail) {
-    throw new UnsupportedOperationException("Not implemented yet.");
-  }
-
-  public static String startOrder(int number, Date date, String level, String parentEmail,
-      String studentName) {
-    throw new UnsupportedOperationException("Not implemented yet.");
-  }
-
-}
-
