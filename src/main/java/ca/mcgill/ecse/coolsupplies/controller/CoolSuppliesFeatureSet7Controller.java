@@ -1,4 +1,3 @@
-
 package ca.mcgill.ecse.coolsupplies.controller;
 
 import java.util.List;
@@ -113,7 +112,7 @@ public class CoolSuppliesFeatureSet7Controller {
    */
   public static List<TOGrade> getGrades() {
     var grades = new ArrayList<TOGrade>();
-    for (var grade  coolSupplies.getGrades()) {
+    for (var grade : coolSupplies.getGrades()) {
       grades.add(new TOGrade(grade.getLevel()));
     }
     return grades;
