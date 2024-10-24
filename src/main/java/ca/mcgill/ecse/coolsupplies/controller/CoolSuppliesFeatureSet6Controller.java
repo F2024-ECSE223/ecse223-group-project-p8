@@ -21,8 +21,7 @@ public class CoolSuppliesFeatureSet6Controller {
    * 
    * @param studentName The name of the student to add.
    * @param parentEmail The email of the parent.
-   * @return A message indicating whether the student was successfully added or if the student is already associated with the parent.
-   * @throws IllegalArgumentException If the student does not exist.
+   * @return A message indicating whether the student was successfully added or an error message if the student or parent does not exist, or if the student is already associated with the parent.
    */
   public static String addStudentToParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
@@ -52,8 +51,7 @@ public class CoolSuppliesFeatureSet6Controller {
    * 
    * @param studentName The name of the student to remove.
    * @param parentEmail The email of the parent.
-   * @return A message indicating whether the student was successfully removed.
-   * @throws IllegalArgumentException If the student or parent does not exist or the student is not associated with the parent.
+   * @return A message indicating whether the student was successfully removed or an error message if the student or parent does not exist, or if the student is not associated with the parent.
    */
   public static String deleteStudentFromParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
@@ -87,22 +85,24 @@ public class CoolSuppliesFeatureSet6Controller {
    * 
    * @param studentName The name of the student to retrieve.
    * @param parentEmail The email of the parent.
-   * @return The TOStudent object representing the student if found, otherwise null.
+   * @return The TOStudent object representing the student if found, or null if the student is not associated with the parent or the parent does not exist.
    */
   public static TOStudent getStudentOfParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
     Parent parent = (Parent) User.getWithEmail(parentEmail);
-    // Unsuccessfully get a student from the students of a parent that does not exist in the system
+
+    // Return null if the parent does not exist
     if (parent == null) {
       return null;
     }
-    List<Student> students= parent.getStudents();
+
+    List<Student> students = parent.getStudents();
     
     if (students != null && students.contains(student)) {
       // Successfully get a student from the students of a parent in the system
       return new TOStudent(student.getName(), student.getGrade().getLevel());
     } else {
-      // Unsuccessfully get a student that does not exist in the students of a parent in the system
+      // Return null if the student is not associated with the parent
       return null;
     }
   }
@@ -111,17 +111,17 @@ public class CoolSuppliesFeatureSet6Controller {
    * Retrieves all students associated with a parent.
    * 
    * @param parentEmail The email of the parent.
-   * @return A list of TOStudent objects representing all students of the parent, or null if the parent does not exist.
+   * @return A list of TOStudent objects representing all students of the parent, or an empty list if the parent does not exist.
    */
-  // returns all students of a parent
   public static List<TOStudent> getStudentsOfParent(String parentEmail) {
     Parent parent = (Parent) User.getWithEmail(parentEmail);
-    // Unsuccessfully get all students of a parent that does not exist in the system
+
+    // Return an empty list if the parent does not exist
     if (parent == null) {
       return new ArrayList<>();
     }
 
-    List<Student> students= parent.getStudents();
+    List<Student> students = parent.getStudents();
     List<TOStudent> toStudents = new ArrayList<>();
     
     for (Student student : students) {
@@ -141,7 +141,7 @@ public class CoolSuppliesFeatureSet6Controller {
    * @param level The purchase level (Mandatory, Recommended, or Optional).
    * @param parentEmail The email of the parent placing the order.
    * @param studentName The name of the student associated with the order.
-   * @return A message indicating success, or an error message if any validation fails.
+   * @return A message indicating success, or an error message if any validation fails (invalid level, parent does not exist, student does not exist or is not associated with the parent, non-unique order number, or invalid order number).
    */
   public static String startOrder(int number, Date date, String level, String parentEmail,
       String studentName) {
