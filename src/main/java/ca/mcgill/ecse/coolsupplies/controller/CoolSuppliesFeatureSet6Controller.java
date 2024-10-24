@@ -146,7 +146,6 @@ public class CoolSuppliesFeatureSet6Controller {
   public static String startOrder(int number, Date date, String level, String parentEmail,
       String studentName) {
 
-    // Validate purchase level
     PurchaseLevel purchaseLevel;
     try {
       purchaseLevel = PurchaseLevel.valueOf(level);
@@ -154,13 +153,11 @@ public class CoolSuppliesFeatureSet6Controller {
       return "The level must be Mandatory, Recommended, or Optional.";
     }
 
-    // Validate parent existence
     Parent parent = (Parent) User.getWithEmail(parentEmail);
     if (parent == null) {
       return "The parent does not exist.";
     }
 
-    // Validate student existence and association with the parent
     Student student = Student.getWithName(studentName);
     if (student == null) {
       return "The student does not exist.";
@@ -169,12 +166,10 @@ public class CoolSuppliesFeatureSet6Controller {
       return "The student is not associated with the parent.";
     }
 
-    // Validate order number (greater than 0)
     if (number <= 0) {
       return "The number must be greater than 0.";
     }
 
-    // Validate order number uniqueness
     CoolSupplies coolSupplies = parent.getCoolSupplies();
     List<Order> orders = coolSupplies.getOrders();
     for (Order order : orders) {
