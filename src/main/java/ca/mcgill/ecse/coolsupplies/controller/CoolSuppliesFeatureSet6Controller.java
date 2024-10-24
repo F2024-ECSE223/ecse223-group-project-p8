@@ -27,7 +27,7 @@ public class CoolSuppliesFeatureSet6Controller {
     Student student = Student.getWithName(studentName);
     Parent parent = (Parent) User.getWithEmail(parentEmail);
 
-    // Return an error message if the student does not exist
+    // Return an error message if the student does not exist 
     if (student == null) {
         return "The student does not exist.";
     }
