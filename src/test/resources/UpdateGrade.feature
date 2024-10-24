@@ -1,4 +1,3 @@
-
 Feature: Update Grade (p13)
 As the school admin, I want to update a grade in the system.
 
@@ -47,8 +46,7 @@ As the school admin, I want to update a grade in the system.
       | level |
       |   6th |
     When the school admin attempts to update grade "<level>" in the system with level "<updatedLevel>" (p13)
-    Then the number of grade entities in the system shall be "1" (p13)
-    Then the grade "<updatedLevel>" shall not exist in the system (p13)
+    Then the number of grade entities in the system shall be "2" (p13)
     Then the following grade entities shall exist in the system (p13)
       | level |
       |   5th |
@@ -58,4 +56,3 @@ As the school admin, I want to update a grade in the system.
     Examples:
       | level | updatedLevel | error                     |
       |   5th |          6th | The level must be unique. |
-
