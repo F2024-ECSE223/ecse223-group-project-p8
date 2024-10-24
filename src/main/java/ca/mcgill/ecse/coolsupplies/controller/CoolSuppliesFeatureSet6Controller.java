@@ -12,6 +12,7 @@ import ca.mcgill.ecse.coolsupplies.model.Parent;
 
 /**
  * This Controller provides methods to manage students and start orders from the parent
+ * @author Shengyi Zhong
  */
 public class CoolSuppliesFeatureSet6Controller {
 
@@ -27,17 +28,22 @@ public class CoolSuppliesFeatureSet6Controller {
     Student student = Student.getWithName(studentName);
     Parent parent = (Parent) User.getWithEmail(parentEmail);
 
-    // Unsuccessfully add a student that does not exist to a parent in the system
+    // Return an error message if the student does not exist
     if (student == null) {
-      throw new IllegalArgumentException("The student does not exist.");
+        return "The student does not exist.";
+    }
+
+    // Return an error message if the parent does not exist
+    if (parent == null) {
+        return "The parent does not exist.";
     }
 
     // Successfully add a student to a parent in the system
     Boolean isAdded = parent.addStudent(student);
     if (isAdded) {
-      return "Student " + studentName + " added to parent " + parentEmail;
+        return "Student " + studentName + " added to parent " + parentEmail;
     } else {
-      return "Student " + studentName + " is already associated with parent " + parentEmail;
+        return "Student " + studentName + " is already associated with parent " + parentEmail;
     }
   }
 
@@ -51,26 +57,28 @@ public class CoolSuppliesFeatureSet6Controller {
    */
   public static String deleteStudentFromParent(String studentName, String parentEmail) {
     Student student = Student.getWithName(studentName);
+
+    // Return an error message if the student does not exist
     if (student == null) {
-      throw new IllegalArgumentException("The student does not exist.");
+        return "The student does not exist.";
     }
 
     User user = User.getWithEmail(parentEmail);
 
-    // Unsuccessfully remove a student from the students of a parent that does not exist in the system
+    // Return an error message if the parent does not exist
     if (user == null || !(user instanceof Parent)) {
-        throw new IllegalArgumentException("The parent does not exist.");
+        return "The parent does not exist.";
     }
 
     Parent parent = (Parent) user;
 
     Boolean isRemoved = parent.removeStudent(student);
     if (isRemoved) {
-      // Successfully remove a student from the students of a parent in the system
-      return "Student " + studentName + " removed from parent " + parentEmail;
+        // Successfully remove a student from the students of a parent in the system
+        return "Student " + studentName + " removed from parent " + parentEmail;
     } else {
-      // Unsuccessfully remove a student that does not exist in the students of a parent in the system
-      throw new IllegalArgumentException("The student does not exist.");
+        // Return an error message if the student is not associated with the parent
+        return "The student does not exist for this parent.";
     }
   }
 
@@ -110,7 +118,7 @@ public class CoolSuppliesFeatureSet6Controller {
     Parent parent = (Parent) User.getWithEmail(parentEmail);
     // Unsuccessfully get all students of a parent that does not exist in the system
     if (parent == null) {
-      return null;
+      return new ArrayList<>();
     }
 
     List<Student> students= parent.getStudents();
@@ -133,50 +141,55 @@ public class CoolSuppliesFeatureSet6Controller {
    * @param level The purchase level (Mandatory, Recommended, or Optional).
    * @param parentEmail The email of the parent placing the order.
    * @param studentName The name of the student associated with the order.
-   * @return A message indicating that the order has been successfully created and added to the system.
-   * @throws IllegalArgumentException If the level is invalid, if the parent or student does not exist, or if the order number is not unique.
+   * @return A message indicating success, or an error message if any validation fails.
    */
   public static String startOrder(int number, Date date, String level, String parentEmail,
       String studentName) {
 
-    
+    // Validate purchase level
     PurchaseLevel purchaseLevel;
     try {
       purchaseLevel = PurchaseLevel.valueOf(level);
     } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException("The level must be Mandatory, Recommended, or Optional.");
+      return "The level must be Mandatory, Recommended, or Optional.";
     }
 
-    Student student = Student.getWithName(studentName);
+    // Validate parent existence
     Parent parent = (Parent) User.getWithEmail(parentEmail);
     if (parent == null) {
-      throw new IllegalArgumentException("The parent does not exist.");
+      return "The parent does not exist.";
     }
 
-    List<Student> students = parent.getStudents();
-    if (student == null || !students.contains(student)) {
-      throw new IllegalArgumentException("The student does not exist.");
+    // Validate student existence and association with the parent
+    Student student = Student.getWithName(studentName);
+    if (student == null) {
+      return "The student does not exist.";
+    }
+    if (!parent.getStudents().contains(student)) {
+      return "The student is not associated with the parent.";
     }
 
-    CoolSupplies coolSupplies = parent.getCoolSupplies();
-    Order newOrder = new Order(number, date, purchaseLevel, parent, student, coolSupplies);
-    List<Order> orders = coolSupplies.getOrders();
-
+    // Validate order number (greater than 0)
     if (number <= 0) {
-        throw new IllegalArgumentException("The number must be greater than 0.");
+      return "The number must be greater than 0.";
     }
 
+    // Validate order number uniqueness
+    CoolSupplies coolSupplies = parent.getCoolSupplies();
+    List<Order> orders = coolSupplies.getOrders();
     for (Order order : orders) {
       if (order.getNumber() == number) {
-          throw new IllegalArgumentException("The number must be unique.");
+        return "The number must be unique.";
       }
     }
 
+    // Create and add the new order
+    Order newOrder = new Order(number, date, purchaseLevel, parent, student, coolSupplies);
     coolSupplies.addOrder(newOrder);
     parent.addOrder(newOrder);
     student.addOrder(newOrder);
 
-    return "the order " + number + " with date " + date + ", level " + level + ", parent email " + parentEmail + ", and student name " + studentName + " shall exist in the system";
+    return "The order " + number + " with date " + date + ", level " + level + ", parent email " + parentEmail + ", and student name " + studentName + " has been successfully added.";
   }
 
 }
