@@ -188,3 +188,16 @@ public class CoolSuppliesFeatureSet6Controller {
   }
 
 }
+
+  // returns all students of a parent
+  public static List<TOStudent> getStudentsOfParent(String parentEmail) {
+    throw new UnsupportedOperationException("Not implemented yet.");
+  }
+
+  public static String startOrder(int number, Date date, String level, String parentEmail,
+      String studentName) {
+    throw new UnsupportedOperationException("Not implemented yet.");
+  }
+
+}
+
