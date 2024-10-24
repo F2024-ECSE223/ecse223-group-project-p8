@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+/**
+ * @author Artimice Mirchi 
+ * */
+
+
 public class CoolSuppliesFeatureSet3Controller {
 
   private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
@@ -103,6 +108,7 @@ public class CoolSuppliesFeatureSet3Controller {
 
 
   /**
+   * @author Artimice Mirchi
    *Retrieve all the items in the system
    * @return a list of the TOItem objects currently in the system
    */
