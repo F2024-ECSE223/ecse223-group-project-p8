@@ -2,6 +2,7 @@ package ca.mcgill.ecse.coolsupplies.controller;
 
 import java.util.List;
 import java.util.ArrayList;
+
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Grade;
@@ -27,7 +28,7 @@ public class CoolSuppliesFeatureSet7Controller {
    * @author Jiatian Liu
    */
   public static String addGrade(String level) {
-    if (level == null) {
+    if (level.isEmpty()) {
       return "The level must not be empty.";
     }
     if (Grade.hasWithLevel(level)) {
@@ -53,7 +54,7 @@ public class CoolSuppliesFeatureSet7Controller {
     if (!Grade.hasWithLevel(level)) {
       return "The grade does not exist.";
     }
-    if (newLevel == null) {
+    if (newLevel.isEmpty()) {
       return "The level must not be empty.";
     }
     if (Grade.hasWithLevel(newLevel)) {
