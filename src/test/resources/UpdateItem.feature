@@ -58,3 +58,4 @@ As the school admin, I want to update an item in the system.
     Examples:
       | name   | updatedName | updatedPrice | error                    |
       | pencil | textbook    |          150 | The name must be unique. |
+
