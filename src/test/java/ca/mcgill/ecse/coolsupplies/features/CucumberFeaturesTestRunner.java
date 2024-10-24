@@ -1,3 +1,4 @@
+
 package ca.mcgill.ecse.coolsupplies.features;
 
 import org.junit.runner.RunWith;
@@ -10,3 +11,4 @@ import io.cucumber.junit.CucumberOptions;
 public class CucumberFeaturesTestRunner {
 
 }
+

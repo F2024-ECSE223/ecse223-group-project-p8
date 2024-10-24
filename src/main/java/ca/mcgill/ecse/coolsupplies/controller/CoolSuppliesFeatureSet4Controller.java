@@ -1,3 +1,4 @@
+
 package ca.mcgill.ecse.coolsupplies.controller;
 
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
@@ -160,3 +161,4 @@ public class CoolSuppliesFeatureSet4Controller {
   }
 
   }
+
