@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides the controller methods to add, update, delete, and get Bundles from the system.
+ * This class provides the controller methods to add, update, delete, and get Bundles from the system
  *
  * @author Jyothsna Seema
  */
