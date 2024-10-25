@@ -1,4 +1,3 @@
-
 package ca.mcgill.ecse.coolsupplies.features;
 
 import org.junit.runner.RunWith;
