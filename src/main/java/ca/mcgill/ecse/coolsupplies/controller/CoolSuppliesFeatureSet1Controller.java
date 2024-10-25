@@ -13,6 +13,8 @@ import ca.mcgill.ecse.coolsupplies.model.SchoolAdmin;
 
 /**
  * Controller for managing admin accounts and parent accounts within the CoolSupplies system.
+ *
+ * @author Mary Li
  */
 public class CoolSuppliesFeatureSet1Controller {
 
