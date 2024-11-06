@@ -10,6 +10,9 @@ import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 import ca.mcgill.ecse.coolsupplies.model.Order;
 import ca.mcgill.ecse.coolsupplies.model.Parent;
 
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
+
+
 /**
  * This Controller provides methods to manage students and start orders from the
  * parent
@@ -44,6 +47,11 @@ public class CoolSuppliesFeatureSet6Controller {
     // Successfully add a student to a parent in the system
     Boolean isAdded = parent.addStudent(student);
     if (isAdded) {
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
       return "Student " + studentName + " added to parent " + parentEmail;
     } else {
       return "Student " + studentName + " is already associated with parent " + parentEmail;
@@ -79,6 +87,11 @@ public class CoolSuppliesFeatureSet6Controller {
     Boolean isRemoved = parent.removeStudent(student);
     if (isRemoved) {
       // Successfully remove a student from the students of a parent in the system
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
       return "Student " + studentName + " removed from parent " + parentEmail;
     } else {
       // Return an error message if the student is not associated with the parent
@@ -195,6 +208,11 @@ public class CoolSuppliesFeatureSet6Controller {
     coolSupplies.addOrder(newOrder);
     parent.addOrder(newOrder);
     student.addOrder(newOrder);
+    try {
+      CoolSuppliesPersistence.save();
+    } catch (RuntimeException e) {
+      return e.getMessage();
+    }
 
     return "The order " + number + " with date " + date + ", level " + level + ", parent email " + parentEmail
         + ", and student name " + studentName + " has been successfully added.";

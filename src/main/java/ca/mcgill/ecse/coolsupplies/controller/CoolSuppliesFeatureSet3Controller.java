@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
+
+
 /**
  * @author Artimice Mirchi 
  * */
@@ -37,6 +40,11 @@ public class CoolSuppliesFeatureSet3Controller {
     else {
       Item currItem = new Item(name, price, coolSupplies);
       coolSupplies.addItem(currItem);
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
 
 
       return("The item has been successfully added");
@@ -66,6 +74,11 @@ public class CoolSuppliesFeatureSet3Controller {
       Item currItem = (Item) Item.getWithName(name);
       currItem.setPrice(newPrice);
       currItem.setName(newName);
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
       return("The item has successfully been updated");
     }
 
@@ -81,6 +94,11 @@ public class CoolSuppliesFeatureSet3Controller {
     try{
       Item currItem = (Item) Item.getWithName(name);
       currItem.delete();
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
       return("The item has successfully been deleted");
     }
     catch (NullPointerException e) {

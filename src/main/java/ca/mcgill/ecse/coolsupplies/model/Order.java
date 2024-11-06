@@ -1,12 +1,13 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
+/*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
 
 package ca.mcgill.ecse.coolsupplies.model;
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 import java.util.*;
 import java.sql.Date;
 
-// line 39 "../../../../../CoolSupplies.ump"
+// line 30 "../../../../../CoolSuppliesPersistence.ump"
+// line 41 "../../../../../CoolSupplies.ump"
 public class Order
 {
 
@@ -355,6 +356,14 @@ public class Order
       OrderItem aOrderItem = orderItems.get(i - 1);
       aOrderItem.delete();
     }
+  }
+
+  // line 32 "../../../../../CoolSuppliesPersistence.ump"
+   public static  void reinitializeUniqueNumber(List<Order> orders){
+    ordersByNumber.clear();
+      for (var order : orders) {
+        ordersByNumber.put(order.getNumber(), order);
+      }
   }
 
 
