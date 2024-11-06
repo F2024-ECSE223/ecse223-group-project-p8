@@ -1,6 +1,7 @@
 namespace ca.mcgill.ecse.coolsupplies.model;
 
 use CoolSuppliesPersistence.ump;
+use OrderStates.ump;
 
 class CoolSupplies {
   depend ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
