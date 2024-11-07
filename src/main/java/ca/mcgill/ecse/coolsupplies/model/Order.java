@@ -2,14 +2,13 @@
 /*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
 
 package ca.mcgill.ecse.coolsupplies.model;
-
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 import java.util.*;
 import java.sql.Date;
 
-// line 39 "model.ump"
-// line 85 "model.ump"
-// line 308 "model.ump"
+// line 40 "../../../../../../model.ump"
+// line 86 "../../../../../../model.ump"
+// line 349 "../../../../../../model.ump"
 public class Order
 {
 
@@ -29,7 +28,6 @@ public class Order
   private PurchaseLevel level;
   private String authorizationCode;
   private String penaltyAuthorizationCode;
-  private String inventoryItems;
 
   //Order State Machines
   public enum Status { Started, Paid, Penalized, Prepared, Canceled, Final, PickedUp }
@@ -41,9 +39,6 @@ public class Order
   private CoolSupplies coolSupplies;
   private List<OrderItem> orderItems;
 
-  //Helper Variables
-  private boolean canSetInventoryItems;
-
   //------------------------
   // CONSTRUCTOR
   //------------------------
@@ -54,7 +49,6 @@ public class Order
     level = aLevel;
     authorizationCode = null;
     penaltyAuthorizationCode = null;
-    canSetInventoryItems = true;
     if (!setNumber(aNumber))
     {
       throw new RuntimeException("Cannot create due to duplicate number. See https://manual.umple.org?RE003ViolationofUniqueness.html");
@@ -132,16 +126,6 @@ public class Order
     wasSet = true;
     return wasSet;
   }
-  /* Code from template attribute_SetImmutable */
-  public boolean setInventoryItems(String aInventoryItems)
-  {
-    boolean wasSet = false;
-    if (!canSetInventoryItems) { return false; }
-    canSetInventoryItems = false;
-    inventoryItems = aInventoryItems;
-    wasSet = true;
-    return wasSet;
-  }
 
   public int getNumber()
   {
@@ -178,11 +162,6 @@ public class Order
     return penaltyAuthorizationCode;
   }
 
-  public String getInventoryItems()
-  {
-    return inventoryItems;
-  }
-
   public String getStatusFullName()
   {
     String answer = status.toString();
@@ -209,6 +188,27 @@ public class Order
     }
   }
 
+  private void rejectPreparedOrder()
+  {
+    switch(status)
+    {
+      case Started:
+        throw new RuntimeException("Cannot pay penalty for a started order");
+        //return;
+      case Paid:
+        throw new RuntimeException("Cannot pay penalty for a paid order");
+        //return;
+      case Prepared:
+        throw new RuntimeException("Cannot pay penalty for a prepared order");
+        //return;
+      case PickedUp:
+        throw new RuntimeException("Cannot pay penalty for a picked up order");
+        //return;
+      default:
+        return;
+    }
+  }
+
   private void updateOrder(PurchaseLevel purchaseLevel, Student student)
   {
     switch(status)
@@ -222,24 +222,12 @@ public class Order
     }
   }
 
-  private void addItemToOrder(InventoryItem item)
-  {
-    switch(status)
-    {
-      case Started:
-        this.addItemToOrder(item);
-        return;
-      default:
-        return;
-    }
-  }
-
   private void updateQuantity(int newQuantity, OrderItem item)
   {
     switch(status)
     {
       case Started:
-        item.setQuantity(newQuantity)
+        item.setQuantity(newQuantity);
         return;
       default:
         return;
@@ -258,22 +246,43 @@ public class Order
     }
   }
 
+  private void rejectPayOrder()
+  {
+    switch(status)
+    {
+      case Paid:
+        throw new RuntimeException("The order is already paid");
+        //return;
+      case Penalized:
+        throw new RuntimeException("Cannot pay for a penalized order");
+        //return;
+      case Prepared:
+        throw new RuntimeException("Cannot pay for a prepared order");
+        //return;
+      case PickedUp:
+        throw new RuntimeException("Cannot pay for a picked up order");
+        //return;
+      default:
+        return;
+    }
+  }
+
   private void rejectUpdate()
   {
     switch(status)
     {
       case Paid:
         throw new RuntimeException("Cannot update a paid order");
-        return;
+        // return;
       case Penalized:
         throw new RuntimeException("Cannot update a penalized order");
-        return;
+        // return;
       case Prepared:
         throw new RuntimeException("Cannot update a prepared order");
-        return;
+        // return;
       case PickedUp:
         throw new RuntimeException("Cannot update a picked up order");
-        return;
+        //return;
       default:
         return;
     }
@@ -285,16 +294,16 @@ public class Order
     {
       case Paid:
         throw new RuntimeException("Cannot add items to a paid order");
-        return;
+        //return;
       case Penalized:
         throw new RuntimeException("Cannot add items to a penalized order");
-        return;
+        //return;
       case Prepared:
         throw new RuntimeException("Cannot add items to a prepared order");
-        return;
+        //return;
       case PickedUp:
         throw new RuntimeException("Cannot add items to a picked up order");
-        return;
+        //return;
       default:
         return;
     }
@@ -306,16 +315,16 @@ public class Order
     {
       case Paid:
         throw new RuntimeException("Cannot update items in a paid order");
-        return;
+        //return;
       case Penalized:
         throw new RuntimeException("Cannot update items in a penalized order");
-        return;
+        //return;
       case Prepared:
         throw new RuntimeException("Cannot update items in a prepared order");
-        return;
+        //return;
       case PickedUp:
         throw new RuntimeException("Cannot update items in a picked up order");
-        return;
+        //return;
       default:
         return;
     }
@@ -327,16 +336,16 @@ public class Order
     {
       case Paid:
         throw new RuntimeException("Cannot delete items from a paid order");
-        return;
+        //return;
       case Penalized:
         throw new RuntimeException("Cannot delete items from a penalized order");
-        return;
+        //return;
       case Prepared:
         throw new RuntimeException("Cannot delete items from a prepared order");
-        return;
+        // return;
       case PickedUp:
         throw new RuntimeException("Cannot delete items from a picked up order");
-        return;
+        //  return;
       default:
         return;
     }
@@ -348,13 +357,13 @@ public class Order
     {
       case Penalized:
         throw new RuntimeException("The school year has already been started");
-        return;
+        //return;
       case Prepared:
         throw new RuntimeException("The school year has already been started");
-        return;
+        //return;
       case PickedUp:
         throw new RuntimeException("The school year has already been started");
-        return;
+        // return;
       default:
         return;
     }
@@ -366,19 +375,19 @@ public class Order
     {
       case Penalized:
         throw new RuntimeException("Cannot cancel a penalized order");
-        return;
+        //return;
       case Prepared:
         throw new RuntimeException("Cannot cancel a prepared order");
-        return;
+        //return;
       case PickedUp:
         throw new RuntimeException("Cannot cancel a picked up order");
-        return;
+        //return;
       default:
         return;
     }
   }
 
-  public boolean addUniqueItemToOrder(OrderItem aItem,String orderNumber)
+  public boolean addItemToOrder(OrderItem aItem)
   {
     boolean wasEventProcessed = false;
 
@@ -386,10 +395,10 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        if (aItem.getQuantity()==0)
+        if (orderItems.contains(aItem)==false)
         {
-          // line 89 "model.ump"
-          addItemToOrder(aItem, orderNumber);
+          // line 90 "../../../../../../model.ump"
+          addItemToOrder(aItem);
           setStatus(Status.Started);
           wasEventProcessed = true;
           break;
@@ -402,7 +411,7 @@ public class Order
     return wasEventProcessed;
   }
 
-  public boolean addNonUniqueItemToOrder(int newQuantity,OrderItem aItem,String orderNumber)
+  public boolean removeItemOrder(OrderItem aItem)
   {
     boolean wasEventProcessed = false;
 
@@ -410,10 +419,10 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        if (aItem.getQuantity()!=0)
+        if (orderItems.contains(aItem)==true)
         {
-          // line 92 "model.ump"
-          updateQuantity(newQuantity, aItem, orderNumber);
+          // line 93 "../../../../../../model.ump"
+          removeOrderItem(aItem);
           setStatus(Status.Started);
           wasEventProcessed = true;
           break;
@@ -426,7 +435,7 @@ public class Order
     return wasEventProcessed;
   }
 
-  public boolean removeUniqueItemOrder(int newQuantity,OrderItem aItem,String orderNumber)
+  public boolean updateItemOrder(int newQuantity,OrderItem aItem)
   {
     boolean wasEventProcessed = false;
 
@@ -434,34 +443,10 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        if (isOrderExist(orderNumber)&&aItem.getQuantity()==1)
+        if (orderItems.contains(aItem)==true)
         {
-          // line 95 "model.ump"
-          deleteOrderItem(aItem, orderNumber);
-          setStatus(Status.Started);
-          wasEventProcessed = true;
-          break;
-        }
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean removeNonUniqueItemOrder(int newQuantity,OrderItem aItem,String orderNumber)
-  {
-    boolean wasEventProcessed = false;
-
-    Status aStatus = status;
-    switch (aStatus)
-    {
-      case Started:
-        if (isOrderExist(orderNumber)&&aItem.getQuantity()>1)
-        {
-          // line 97 "model.ump"
-          updateQuantity(newQuantity, aItem, orderNumber);
+          // line 95 "../../../../../../model.ump"
+          aItem.setQuantity(newQuantity);
           setStatus(Status.Started);
           wasEventProcessed = true;
           break;
@@ -482,8 +467,8 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        // line 99 "model.ump"
-        updateOrder(aPurchaseLevel, studentName);
+        // line 97 "../../../../../../model.ump"
+        ;
         setStatus(Status.Started);
         wasEventProcessed = true;
         break;
@@ -494,17 +479,39 @@ public class Order
     return wasEventProcessed;
   }
 
-  public boolean orderHasBeenPaid(String orderNumber)
-  {
+  public boolean orderHasBeenPaid(String aAuthorizationCode) {
     boolean wasEventProcessed = false;
 
     Status aStatus = status;
-    switch (aStatus)
-    {
+    switch (aStatus) {
       case Started:
-        // line 101 "model.ump"
-        payOrder(orderNumber);
+        // line 98 "model.ump"
+        setAuthorizationCode(aAuthorizationCode);
         setStatus(Status.Paid);
+        wasEventProcessed = true;
+        break;
+      case Paid:
+        // line 118 "model.ump"
+        rejectPayOrder();
+        //setStatus(Status.Paid);
+        wasEventProcessed = true;
+        break;
+      case Penalized:
+        // line 141 "model.ump"
+        rejectPayOrder();
+        //setStatus(Status.Penalized);
+        wasEventProcessed = true;
+        break;
+      case Prepared:
+        // line 167 "model.ump"
+        rejectPayOrder();
+        //setStatus(Status.Prepared);
+        wasEventProcessed = true;
+        break;
+      case PickedUp:
+        // line 197 "model.ump"
+        rejectPayOrder();
+        //setStatus(Status.PickedUp);
         wasEventProcessed = true;
         break;
       default:
@@ -514,6 +521,48 @@ public class Order
     return wasEventProcessed;
   }
 
+  public boolean orderHasBeenPrepared(String aAuthorizationCode, String aPenaltyAuthorizationCode) {
+    boolean wasEventProcessed = false;
+
+    Status aStatus = status;
+    switch (aStatus) {
+      case Started:
+        // line 101 "model.ump"
+        rejectPreparedOrder();
+        setStatus(Status.Started);
+        wasEventProcessed = true;
+        break;
+      case Paid:
+        // line 121 "model.ump"
+        rejectPreparedOrder();
+        setStatus(Status.Paid);
+        wasEventProcessed = true;
+        break;
+      case Penalized:
+        // line 147 "model.ump"
+        setAuthorizationCode(aAuthorizationCode);
+        setPenaltyAuthorizationCode(aPenaltyAuthorizationCode);
+        setStatus(Status.Prepared);
+        wasEventProcessed = true;
+        break;
+      case Prepared:
+        // line 170 "model.ump"
+        rejectPreparedOrder();
+        setStatus(Status.Prepared);
+        wasEventProcessed = true;
+        break;
+      case PickedUp:
+        // line 200 "model.ump"
+        rejectPreparedOrder();
+        setStatus(Status.PickedUp);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
   public boolean startSchoolYear()
   {
     boolean wasEventProcessed = false;
@@ -522,31 +571,31 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        // line 105 "model.ump"
+        // line 106 "../../../../../../model.ump"
 
         setStatus(Status.Penalized);
         wasEventProcessed = true;
         break;
       case Paid:
-        // line 143 "model.ump"
+        // line 153 "../../../../../../model.ump"
 
         setStatus(Status.Prepared);
         wasEventProcessed = true;
         break;
       case Penalized:
-        // line 183 "model.ump"
+        // line 206 "../../../../../../model.ump"
         rejectStartYear();
         setStatus(Status.Penalized);
         wasEventProcessed = true;
         break;
       case Prepared:
-        // line 223 "model.ump"
+        // line 249 "../../../../../../model.ump"
         rejectStartYear();
         setStatus(Status.Prepared);
         wasEventProcessed = true;
         break;
       case PickedUp:
-        // line 265 "model.ump"
+        // line 303 "../../../../../../model.ump"
         rejectStartYear();
         setStatus(Status.PickedUp);
         wasEventProcessed = true;
@@ -566,31 +615,31 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        // line 107 "model.ump"
+        // line 108 "../../../../../../model.ump"
         cancelOrder();
         setStatus(Status.Canceled);
         wasEventProcessed = true;
         break;
       case Paid:
-        // line 145 "model.ump"
+        // line 155 "../../../../../../model.ump"
         cancelOrder();
         setStatus(Status.Canceled);
         wasEventProcessed = true;
         break;
       case Penalized:
-        // line 189 "model.ump"
+        // line 212 "../../../../../../model.ump"
         rejectCancelOrder();
         setStatus(Status.Penalized);
         wasEventProcessed = true;
         break;
       case Prepared:
-        // line 229 "model.ump"
+        // line 262 "../../../../../../model.ump"
         rejectCancelOrder();
         setStatus(Status.Prepared);
         wasEventProcessed = true;
         break;
       case PickedUp:
-        // line 271 "model.ump"
+        // line 309 "../../../../../../model.ump"
         rejectCancelOrder();
         setStatus(Status.PickedUp);
         wasEventProcessed = true;
@@ -610,31 +659,25 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        // line 113 "model.ump"
+        // line 117 "../../../../../../model.ump"
         updateOrder (purchaseLevel, student);
         setStatus(Status.Started);
         wasEventProcessed = true;
         break;
       case Paid:
-        // line 151 "model.ump"
+        // line 167 "../../../../../../model.ump"
         rejectUpdate();
         setStatus(Status.Paid);
         wasEventProcessed = true;
         break;
-      case Penalized:
-        // line 195 "model.ump"
-        rejectUpdate();
-        setStatus(Status.Penalized);
-        wasEventProcessed = true;
-        break;
       case Prepared:
-        // line 235 "model.ump"
+        // line 268 "../../../../../../model.ump"
         rejectUpdate();
         setStatus(Status.Prepared);
         wasEventProcessed = true;
         break;
       case PickedUp:
-        // line 277 "model.ump"
+        // line 318 "../../../../../../model.ump"
         rejectUpdate();
         setStatus(Status.PickedUp);
         wasEventProcessed = true;
@@ -646,7 +689,7 @@ public class Order
     return wasEventProcessed;
   }
 
-  public boolean add(InventoryItem item)
+  public boolean add(OrderItem item)
   {
     boolean wasEventProcessed = false;
 
@@ -654,31 +697,31 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        // line 121 "model.ump"
-        addItemToOrder (item);
+        // line 125 "../../../../../../model.ump"
+        addItemToOrder(item);
         setStatus(Status.Started);
         wasEventProcessed = true;
         break;
       case Paid:
-        // line 157 "model.ump"
+        // line 173 "../../../../../../model.ump"
         rejectAdd();
         setStatus(Status.Paid);
         wasEventProcessed = true;
         break;
       case Penalized:
-        // line 201 "model.ump"
+        // line 222 "../../../../../../model.ump"
         rejectAdd();
         setStatus(Status.Penalized);
         wasEventProcessed = true;
         break;
       case Prepared:
-        // line 241 "model.ump"
+        // line 274 "../../../../../../model.ump"
         rejectAdd();
         setStatus(Status.Prepared);
         wasEventProcessed = true;
         break;
       case PickedUp:
-        // line 283 "model.ump"
+        // line 324 "../../../../../../model.ump"
         rejectAdd();
         setStatus(Status.PickedUp);
         wasEventProcessed = true;
@@ -698,31 +741,31 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        // line 128 "model.ump"
+        // line 132 "../../../../../../model.ump"
         updateQuantity(newQuantity, item);
         setStatus(Status.Started);
         wasEventProcessed = true;
         break;
       case Paid:
-        // line 163 "model.ump"
+        // line 179 "../../../../../../model.ump"
         rejectUpdateQ();
         setStatus(Status.Paid);
         wasEventProcessed = true;
         break;
       case Penalized:
-        // line 207 "model.ump"
+        // line 228 "../../../../../../model.ump"
         rejectUpdateQ();
         setStatus(Status.Penalized);
         wasEventProcessed = true;
         break;
       case Prepared:
-        // line 247 "model.ump"
+        // line 280 "../../../../../../model.ump"
         rejectUpdateQ();
         setStatus(Status.Prepared);
         wasEventProcessed = true;
         break;
       case PickedUp:
-        // line 289 "model.ump"
+        // line 330 "../../../../../../model.ump"
         rejectUpdateQ();
         setStatus(Status.PickedUp);
         wasEventProcessed = true;
@@ -743,53 +786,33 @@ public class Order
     switch (aStatus)
     {
       case Started:
-        // line 134 "model.ump"
+        // line 138 "../../../../../../model.ump"
         deleteOrderItem(item);
         setStatus(Status.Started);
         wasEventProcessed = true;
         break;
       case Paid:
-        // line 169 "model.ump"
+        // line 185 "../../../../../../model.ump"
         rejectDelete();
         setStatus(Status.Paid);
         wasEventProcessed = true;
         break;
       case Penalized:
-        // line 213 "model.ump"
+        // line 234 "../../../../../../model.ump"
         rejectDelete();
         setStatus(Status.Penalized);
         wasEventProcessed = true;
         break;
       case Prepared:
-        // line 253 "model.ump"
+        // line 286 "../../../../../../model.ump"
         rejectDelete();
         setStatus(Status.Prepared);
         wasEventProcessed = true;
         break;
       case PickedUp:
-        // line 295 "model.ump"
+        // line 336 "../../../../../../model.ump"
         rejectDelete();
         setStatus(Status.PickedUp);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean orderHasBeenPrepared(String orderNumber)
-  {
-    boolean wasEventProcessed = false;
-
-    Status aStatus = status;
-    switch (aStatus)
-    {
-      case Penalized:
-        // line 179 "model.ump"
-        payOrder(orderNumber);
-        setStatus(Status.Prepared);
         wasEventProcessed = true;
         break;
       default:
@@ -807,7 +830,7 @@ public class Order
     switch (aStatus)
     {
       case Prepared:
-        // line 221 "model.ump"
+        // line 242 "../../../../../../model.ump"
 
         setStatus(Status.PickedUp);
         wasEventProcessed = true;
@@ -827,7 +850,7 @@ public class Order
     switch (aStatus)
     {
       case Canceled:
-        // line 261 "model.ump"
+        // line 294 "../../../../../../model.ump"
 
         setStatus(Status.Final);
         wasEventProcessed = true;
@@ -839,7 +862,7 @@ public class Order
     return wasEventProcessed;
   }
 
-  private void setStatus(Status aStatus)
+  public void setStatus(Status aStatus)
   {
     status = aStatus;
 
@@ -1054,21 +1077,13 @@ public class Order
     }
   }
 
-  // line 32 "../../../../../CoolSuppliesPersistence.ump"
-  public static  void reinitializeUniqueNumber(List<Order> orders){
-    ordersByNumber.clear();
-    for (var order : orders) {
-      ordersByNumber.put(order.getNumber(), order);
-    }
-  }
 
   public String toString()
   {
     return super.toString() + "["+
             "number" + ":" + getNumber()+ "," +
             "authorizationCode" + ":" + getAuthorizationCode()+ "," +
-            "penaltyAuthorizationCode" + ":" + getPenaltyAuthorizationCode()+ "," +
-            "inventoryItems" + ":" + getInventoryItems()+ "]" + System.getProperties().getProperty("line.separator") +
+            "penaltyAuthorizationCode" + ":" + getPenaltyAuthorizationCode()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "level" + "=" + (getLevel() != null ? !getLevel().equals(this)  ? getLevel().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "parent = "+(getParent()!=null?Integer.toHexString(System.identityHashCode(getParent())):"null") + System.getProperties().getProperty("line.separator") +
