@@ -35,8 +35,6 @@ public class OrderStepDefinitions {
   private List<OrderItem> orderItems;
   List<Order> resultOrders;
   String error;
-  TOOrder actualOrder;
-  List<TOOrder> actualOrderList = new ArrayList<>();
 
   /**
    * @author Shengyi Zhong
@@ -363,7 +361,7 @@ public class OrderStepDefinitions {
   @Then("the order {string} shall not contain {string}")
   public void the_order_shall_not_contain(String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-    actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
     Order order = Order.getWithNumber(actualOrder.getNumber());
     List<OrderItem> orderItems = order.getOrderItems();
     boolean matchFound = false;
@@ -447,8 +445,6 @@ public class OrderStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     // Map<Order, OrderState> orderStates =
     // CoolSuppliesFeatureSet8Controller.getOrderStates();
-
-    System.out.println(Order.getWithNumber(1));
     TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
     Order order = Order.getWithNumber(actualOrder.getNumber());
 
@@ -533,7 +529,7 @@ public class OrderStepDefinitions {
                                                                                      io.cucumber.datatable.DataTable expectedOrderDataTable) {
     List<Map<String, String>> expectedItemList = expectedOrderDataTable.asMaps();
 
-    actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
     Order order = Order.getWithNumber(actualOrder.getNumber());
 
     // Assert that the size of the expected list matches the actual list
@@ -560,7 +556,7 @@ public class OrderStepDefinitions {
   @Then("no order entities shall be presented")
   public void no_order_entities_shall_be_presented() {
     // Write code here that turns the phrase above into concrete actions
-    assertTrue(actualOrderList.isEmpty(), "Expected no orders, but found some.");
+    assertTrue(CoolSuppliesFeatureSet8Controller.viewOrders().isEmpty(), "Expected no orders, but found some.");
   }
 
 }
