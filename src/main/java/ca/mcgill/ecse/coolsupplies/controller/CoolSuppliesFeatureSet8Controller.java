@@ -11,34 +11,50 @@ import java.util.List;
 public class CoolSuppliesFeatureSet8Controller {
 
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
-    // Update order (only purchase level and student)
-    public static String updateOrder(String orderNumber, PurchaseLevel purchaseLevel, String studentName) {
+    public static String updateOrder(String levelName, int orderNumber, String studentName) {
 
-        boolean isValid = false;
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+        Order order = Order.getWithNumber(orderNumber);
         Student student = Student.getWithName(studentName);
+        PurchaseLevel purchaseLevel;
+        try {
+            purchaseLevel = PurchaseLevel.valueOf(levelName);
+        } catch (IllegalArgumentException e) {
+            return String.format("Purchase level %s does not exist.", levelName);
+        }
 
-        for (PurchaseLevel level : PurchaseLevel.values()) {
-            if (level == purchaseLevel) {
-                isValid = true;
-                break;
+
+        // PurchaseLevel newPurchaseLevel = null;
+        // for (PurchaseLevel level : PurchaseLevel.values()) {
+        //     if (level.equals(purchaseLevel)) {
+        //         newPurchaseLevel = level;
+        //         break;
+        //     }
+        // }
+
+        // if (!order.getLevel().toString().equals(levelName)) {
+        //     return String.format("Purchase level %s does not exist.", levelName);
+        // }
+        if (!Order.hasWithNumber(orderNumber)) {
+            return String.format("Order %d does not exist", orderNumber);
+        }
+        else if (student == null) {
+            return String.format("Student %s does not exist.", studentName);
+        }
+        else if (student.getParent() != order.getParent()) {
+            return String.format("Student %s is not a child of the parent %s.", studentName, order.getParent().getEmail());
+        }
+
+        else if (!order.getStatusFullName().equals("Started")){
+            //Must separate because picked up needs to give an error message with space and lowercase
+            if(order.getStatusFullName().equals("PickedUp")){
+                return "Cannot update a picked up order";
+            }
+            else{
+                return String.format("Cannot update a %s order",order.getStatusFullName().toLowerCase());
             }
         }
 
-        if (!isValid) {
-            return String.format("Purchase level %s does not exist.", purchaseLevel);
-        }
-        else if (order.hasWithNumber(Integer.parseInt(orderNumber))) {
-            return String.format("Order %d does not exist.", orderNumber);
-        }
-        else if (student == null) {
-            return String.format("Student %s does not exist.", student);
-        }
-        else if (student.getParent() != order.getParent()) {
-            return String.format("Student %s is not a child of the parent %s.", student, order.getParent());
-        }
-
-        else if (order != null) {
+        else {
             try {
                 order.updateOrderEvent(purchaseLevel,student);
 //                OrderPersistence.save();
@@ -53,30 +69,42 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     // Add item to order
-    public static String addItemToOrder(InventoryItem item, String orderNumber, int newQuantity) {
-
+    public static String addItemToOrder(String invName, InventoryItem item, String orderNumber, int newQuantity) {
         Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-        if (order.hasWithNumber(Integer.parseInt(orderNumber))) {
-            return String.format("Order %d does not exist.", orderNumber);
+        String itemName;
+
+        //For NotExist Test case - if item doesn't exist in systems
+        try{ itemName = item.getName();}
+        catch(NullPointerException e){ return String.format("Item %s does not exist.", invName);}
+
+
+        if (order == null) {
+            return String.format("Order %s does not exist", orderNumber);
+        }
+        else if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", invName);
         }
 
-        int intOrderNumber = order.getNumber();
-
-        if (item == null) {
-            return String.format("Item %s does not exist. ", item);
+        List<OrderItem> orderItems = order.getOrderItems();
+        for(OrderItem orderitem : orderItems){
+            if(orderitem.getItem().getName().equals(itemName)){
+                return String.format("Item %s already exists in the order %d.", invName, Integer.parseInt(orderNumber));
+            }
         }
 
-        else if (itemExists(item.getOrderItem(intOrderNumber),order.getOrderItems())) {
-            return String.format("Item %s already exists in the order %d.", item, orderNumber);
-        }
-        else if (newQuantity < 0) {
+        if (newQuantity <= 0) {
             return ("Quantity must be greater than 0.");
         }
-        else if (order.getStatusFullName() != "Started") {
-            return String.format("Cannot add items from a %s order", order.getStatusFullName());
+        else if (!order.getStatusFullName().equals("Started")){
+            //Must separate because PickedUp needs to give an error message with space and lowercase
+            if(order.getStatusFullName().equals("PickedUp")){
+                return "Cannot add items to a picked up order";
+            }
+            else{
+                return String.format("Cannot add items to a %s order",order.getStatusFullName().toLowerCase());
+            }
         }
-
-        else if (order != null) {
+        else {
             try {
                 OrderItem thisItem = coolSupplies.addOrderItem(newQuantity,order,item);
                 order.add(thisItem);
@@ -87,67 +115,77 @@ public class CoolSuppliesFeatureSet8Controller {
             }
         }
         return ("The item has successfully been added");
-
     }
 
     // Update quantity of an existing item of order
-    public static String updateQuantity(int newQuantity, OrderItem item) {
+    public static String updateQuantity(String itemName, int newQuantity, int orderNumber) {
 
-        if (item == null) {
-            return String.format("Item %s does not exist.", item);
+        if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", itemName);
         }
 
-        Order order = (Order) item.getOrder();
-        int orderNumber = item.getOrder().getNumber();
+        Order order = Order.getWithNumber(orderNumber);
 
-        if (order.hasWithNumber(orderNumber)) {
-            return String.format("Order %d does not exist ", orderNumber);
+        if (!Order.hasWithNumber(orderNumber)) {
+            return String.format("Order %d does not exist", orderNumber);
         }
 
         List<OrderItem> oItems = order.getOrderItems();
-
-        if (itemExists(item, oItems)) {
-            return String.format("Item %s does not exist in the order %d.", item, orderNumber);
+        OrderItem orderItem = null;
+        for (OrderItem o : oItems) {
+            if (o.getItem().getName().equals(itemName)) {
+                orderItem = o;
+                break;
+            }
         }
-        else if (newQuantity < 0) {
+
+        if (orderItem == null) {
+            return String.format("Item %s does not exist in the order %d.", itemName, orderNumber);
+        }
+
+        if (newQuantity <= 0) {
             return ("Quantity must be greater than 0.");
         }
-        else if (order.getStatusFullName() != "Started") {
-            return String.format("Cannot delete items from a %s order", order.getStatusFullName());
-        }
-        else if (order != null) {
-            try {
-                int oItemIndex = order.indexOfOrderItem(item);
-                OrderItem thisItem = order.getOrderItem(oItemIndex);
-                order.updateQuantityEvent(newQuantity,thisItem);
+
+        try {
+            order.updateQuantityEvent(newQuantity, orderItem);
 //                OrderPersistence.save();
-            }
-            catch (RuntimeException e) {
-                return e.getMessage();
-            }
         }
+        catch (RuntimeException e) {
+            return e.getMessage();
+        }
+
         return ("The item's quantity has successfully been updated");
     }
 
-    // Delete item of order
-    public static String deleteOrderItem(OrderItem item, String orderNumber) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
 
-        if (order.hasWithNumber(Integer.parseInt(orderNumber))) {
-            return String.format("Order %d does not exist ", orderNumber);
+    public static String deleteOrderItem(String itemName, String orderNumber) {
+        if (!Order.hasWithNumber(Integer.parseInt(orderNumber))) {
+            return String.format("Order %s does not exist", orderNumber);
         }
-        else if (order.getStatusFullName() != "Started") {
-            return String.format("Cannot delete items from a %s order", order.getStatusFullName());
+
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+        if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", itemName);
         }
-        else if (itemExists(item, order.getOrderItems())) {
-            return String.format("Item %s does not exist in the order %d.", item, orderNumber);
+
+        List<OrderItem> oItems = order.getOrderItems();
+        OrderItem orderItem = null;
+
+        for (OrderItem o : oItems) {
+            if (o.getItem().getName().equals(itemName)) {
+                orderItem = o;
+                break;
+            }
         }
-        else if (item == null) {
-            return String.format("Item %s does not exist.", item);
+
+        if (orderItem == null) {
+            return String.format("Item %s does not exist in the order %s.", itemName, orderNumber);
         }
         else if (order != null) {
+
             try {
-                int oItemIndex = order.indexOfOrderItem(item);
+                int oItemIndex = order.indexOfOrderItem(orderItem);
                 OrderItem thisItem = order.getOrderItem(oItemIndex);
                 order.delete(thisItem);
 //                OrderPersistence.save();
@@ -156,7 +194,7 @@ public class CoolSuppliesFeatureSet8Controller {
                 return e.getMessage();
             }
         }
-        return ("The Order item has successfully been deleted.");
+        return ("The order item has successfully been deleted.");
     }
 
     // Private method that checks if an item exists in a given list of OrderItems
@@ -264,7 +302,7 @@ public class CoolSuppliesFeatureSet8Controller {
     //price)
     // TODO: State Machine is not implemented yet
     public static TOOrder viewOrder(String index) {
-        Order order = coolSupplies.getOrder(Integer.parseInt(index));
+        Order order = coolSupplies.getOrder(Integer.parseInt(index)-1);
 
         int orderNumber = order.getNumber();
         Date orderDate = order.getDate();
