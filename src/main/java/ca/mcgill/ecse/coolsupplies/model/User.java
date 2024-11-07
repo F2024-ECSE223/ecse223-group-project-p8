@@ -104,7 +104,9 @@ public abstract class User
     for (var parent : parents) {
       usersByEmail.put(parent.getEmail(), parent);
     }
-    usersByEmail.put(admin.getEmail(), admin);
+    if (admin != null) {
+      usersByEmail.put(admin.getEmail(), admin);
+    }
   }
 
 
