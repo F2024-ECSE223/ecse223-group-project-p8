@@ -1,6 +1,7 @@
 package ca.mcgill.ecse.coolsupplies.controller;
 
 import java.sql.Date;
+import java.util.List;
 
 // line 2 "model.ump"
 // line 16 "model.ump"
@@ -21,6 +22,7 @@ public class TOOrder
     private String authorizationCode;
     private String penaltyAuthorizationCode;
     private int totalPrice;
+    private List<TOOrderItem> items;
 
     //------------------------
     // CONSTRUCTOR
@@ -113,6 +115,10 @@ public class TOOrder
         totalPrice = aTotalPrice;
         wasSet = true;
         return wasSet;
+    }
+
+    public void setItems(List<TOOrderItem> items) {
+        this.items = items;
     }
 
     public String getParentEmail()

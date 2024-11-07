@@ -3,6 +3,9 @@ package ca.mcgill.ecse.coolsupplies.controller;
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.model.*;
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
+
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoolSuppliesFeatureSet8Controller {
@@ -238,7 +241,22 @@ public class CoolSuppliesFeatureSet8Controller {
     // Cancel order
     // TODO: State Machine is not implemented yet
     public static String cancelOrder(String orderNumber) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+
+        if (order != null) {
+            try {
+                order.cancel();
+//                OrderPersistence.save();
+            }
+            catch (RuntimeException e) {
+                return e.getMessage();
+            }
+        }
+        else{
+            return "Order " + orderNumber + " does not exist";
+        }
+        return "Order deleted successfully";
+
     }
 
     // View individual order (including parent, student, status, number, date, level, authorization codes,
@@ -246,20 +264,162 @@ public class CoolSuppliesFeatureSet8Controller {
     //price)
     // TODO: State Machine is not implemented yet
     public static TOOrder viewOrder(String index) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Order order = coolSupplies.getOrder(Integer.parseInt(index));
+
+        int orderNumber = order.getNumber();
+        Date orderDate = order.getDate();
+        BundleItem.PurchaseLevel orderLevel = order.getLevel();
+        String authorizationCode = order.getAuthorizationCode();
+        String penaltyAuthorizationCode = order.getPenaltyAuthorizationCode();
+
+        Parent parent = order.getParent();
+        String parentEmail = parent.getEmail();
+        Student student = order.getStudent();
+        String studentName = student.getName();
+
+        String status = order.getStatus().toString();
+        int totalPrice = calculateTotalPrice(order);
+
+        TOOrder toOrder = new TOOrder(parentEmail, studentName, status, orderNumber, orderDate, orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice);
+
+        List<OrderItem> orderItems = order.getOrderItems();
+        List<TOOrderItem> toOrderItems = new ArrayList<>();
+        for (OrderItem orderItem : orderItems) {
+            int quantity = orderItem.getQuantity();
+            int price = 0;
+            String itemName = "";
+            String gradeBundleName = "";
+
+            InventoryItem inventoryItem = orderItem.getItem();
+            if (inventoryItem instanceof Item) {
+                itemName = ((Item) inventoryItem).getName();
+                price = ((Item) inventoryItem).getPrice();
+            } else if (inventoryItem instanceof GradeBundle) {
+                gradeBundleName = ((GradeBundle) inventoryItem).getName();
+            }
+
+            int discount = calculateDiscount(orderItem);
+
+            TOOrderItem toOrderItem = new TOOrderItem(quantity, itemName.isEmpty() ? gradeBundleName : itemName, gradeBundleName, price, discount);
+            toOrderItems.add(toOrderItem);
+        }
+
+        toOrder.setItems(toOrderItems);
+
+        return toOrder;
+    }
+
+
+    private static int calculateTotalPrice(Order order) {
+        int totalPrice = 0;
+        for (OrderItem orderItem : order.getOrderItems()) {
+            int price = 0;
+            if (orderItem.getItem() instanceof Item) {
+                price = ((Item) orderItem.getItem()).getPrice();
+            }
+            int quantity = orderItem.getQuantity();
+            int discount = calculateDiscount(orderItem);
+            totalPrice += ((price * quantity) * (100 -discount)) / 100;
+        }
+        return totalPrice;
+    }
+
+    private static int calculateDiscount(OrderItem orderItem) {
+        InventoryItem inventoryItem = orderItem.getItem();
+        if (inventoryItem instanceof GradeBundle && orderItem.getQuantity() > 1) {
+            return ((GradeBundle) inventoryItem).getDiscount();
+        }
+        return 100;
     }
 
     // View all orders
     public static List<TOOrder> viewOrders() {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        List<TOOrder> toOrders = new ArrayList<>();
+
+        for (Order order : coolSupplies.getOrders()) {
+            int orderNumber = order.getNumber();
+            Date orderDate = order.getDate();
+            BundleItem.PurchaseLevel orderLevel = order.getLevel();
+            String authorizationCode = order.getAuthorizationCode();
+            String penaltyAuthorizationCode = order.getPenaltyAuthorizationCode();
+
+            Parent parent = order.getParent();
+            String parentEmail = parent.getEmail();
+            Student student = order.getStudent();
+            String studentName = student.getName();
+
+            String status = order.getStatus().toString();
+            int totalPrice = calculateTotalPrice(order);
+
+            TOOrder toOrder = new TOOrder(parentEmail, studentName, status, orderNumber, orderDate, orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice);
+
+            List<OrderItem> orderItems = order.getOrderItems();
+            List<TOOrderItem> toOrderItems = new ArrayList<>();
+            for (OrderItem orderItem : orderItems) {
+                int quantity = orderItem.getQuantity();
+                int price = 0;
+                String itemName = "";
+                String gradeBundleName = "";
+
+                InventoryItem inventoryItem = orderItem.getItem();
+                if (inventoryItem instanceof Item) {
+                    itemName = ((Item) inventoryItem).getName();
+                    price = ((Item) inventoryItem).getPrice();
+                } else if (inventoryItem instanceof GradeBundle) {
+                    gradeBundleName = ((GradeBundle) inventoryItem).getName();
+                }
+
+                int discount = calculateDiscount(orderItem);
+
+                TOOrderItem toOrderItem = new TOOrderItem(quantity, itemName.isEmpty() ? gradeBundleName : itemName, gradeBundleName, price, discount);
+                toOrderItems.add(toOrderItem);
+            }
+
+            toOrder.setItems(toOrderItems);
+
+            toOrders.add(toOrder);
+        }
+
+        return toOrders;
     }
+
 
     // Start school year
     public static String startYear(String orderNumebr) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Order order = coolSupplies.getOrder(Integer.parseInt(orderNumebr));
+
+        if (order == null){
+            return "Order " + orderNumebr + " does not exist";
+        }
+        try {
+            order.startSchoolYear();
+//          OrderPersistence.save();
+        }
+        catch (RuntimeException e) {
+            return e.getMessage();
+        }
+
+        return "Successfully started school year";
     }
 
     public static String pickUpOrder(String orderNumber){
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Order order = coolSupplies.getOrder(Integer.parseInt(orderNumber));
+
+        if (order == null) {
+            return "Order not found.";
+        }
+
+        try {
+            String status = order.getStatus().toString();
+            if (status.equals("Prepared")) {
+                order.setStatus(Order.Status.PickedUp);
+                return "Order is picked up.";
+            } else {
+                return "Order cannot be picked up. It is not prepared.";
+            }
+            // OrderPersistence.save();
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
     }
 }

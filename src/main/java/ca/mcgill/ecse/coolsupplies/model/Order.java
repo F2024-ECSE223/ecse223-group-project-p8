@@ -1077,6 +1077,13 @@ public class Order
     }
   }
 
+  // line 32 "../../../../../CoolSuppliesPersistence.ump"
+  public static  void reinitializeUniqueNumber(List<Order> orders){
+    ordersByNumber.clear();
+    for (var order : orders) {
+      ordersByNumber.put(order.getNumber(), order);
+    }
+  }
 
   public String toString()
   {
