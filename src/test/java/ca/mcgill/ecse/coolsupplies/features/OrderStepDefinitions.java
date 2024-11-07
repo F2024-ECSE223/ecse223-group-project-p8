@@ -213,15 +213,10 @@ public class OrderStepDefinitions {
   @When("the parent attempts to update an item {string} with quantity {string} in the order {string}")
   public void the_parent_attempts_to_update_an_item_with_quantity_in_the_order(String string,
                                                                                String string2, String string3) {
-
-    Order order = Order.getWithNumber(Integer.parseInt(string));
-    List<OrderItem> orderItemsList = order.getOrderItems();
-
-    for (OrderItem orderItem : orderItemsList) {
-      if (orderItem.getItem().getName().equals(string)) {
-        error = CoolSuppliesFeatureSet8Controller.updateQuantity(Integer.parseInt(string2), orderItem);
-      }
-    }
+    String itemName = string;
+    int newQuantity = Integer.parseInt(string2);
+    int orderNumber = Integer.parseInt(string3);
+    error = CoolSuppliesFeatureSet8Controller.updateQuantity(itemName, newQuantity, orderNumber);
   }
 
   /**

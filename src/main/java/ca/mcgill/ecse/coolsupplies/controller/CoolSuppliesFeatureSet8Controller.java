@@ -85,37 +85,43 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     // Update quantity of an existing item of order
-    public static String updateQuantity(int newQuantity, OrderItem item) {
+    public static String updateQuantity(String itemName, int newQuantity, int orderNumber) {
 
-        if (item == null) {
-            return String.format("Item %s does not exist.", item);
+        if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", itemName);
         }
 
-        Order order = (Order) item.getOrder();
-        int orderNumber = item.getOrder().getNumber();
+        Order order = Order.getWithNumber(orderNumber);
 
-        if (order.hasWithNumber(orderNumber)) {
-            return String.format("Order %d does not exist ", orderNumber);
+        if (!Order.hasWithNumber(orderNumber)) {
+            return String.format("Order %d does not exist", orderNumber);
         }
 
         List<OrderItem> oItems = order.getOrderItems();
-
-        if (itemExists(item, oItems)) {
-            return String.format("Item %s does not exist in the order %d.", item, orderNumber);
-        } else if (newQuantity < 0) {
-            return ("Quantity must be greater than 0.");
-        } else if (order.getStatusFullName() != "Started") {
-            return String.format("Cannot delete items from a %s order", order.getStatusFullName());
-        } else if (order != null) {
-            try {
-                int oItemIndex = order.indexOfOrderItem(item);
-                OrderItem thisItem = order.getOrderItem(oItemIndex);
-                order.updateQuantityEvent(newQuantity, thisItem);
-                // OrderPersistence.save();
-            } catch (RuntimeException e) {
-                return e.getMessage();
+        OrderItem orderItem = null;
+        for (OrderItem o : oItems) {
+            if (o.getItem().getName().equals(itemName)) {
+                orderItem = o;
+                break;
             }
         }
+
+        if (orderItem == null) {
+            return String.format("Item %s does not exist in the order %d.", itemName, orderNumber);
+        }
+
+        if (newQuantity <= 0) {
+            return ("Quantity must be greater than 0.");
+        }
+
+        try {
+            order.updateQuantityEvent(newQuantity, orderItem);
+//                OrderPersistence.save();
+        }
+        catch (RuntimeException e) {
+            return e.getMessage();
+        }
+
         return ("The item's quantity has successfully been updated");
     }
 
@@ -222,7 +228,6 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     // Cancel order
-    // TODO: State Machine is not implemented yet
     public static String cancelOrder(String orderNumber) {
         Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
 
