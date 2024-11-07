@@ -1,6 +1,7 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
 
+package ca.mcgill.ecse.coolsupplies.model;
 
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 import java.util.*;
@@ -1053,6 +1054,13 @@ public class Order
     }
   }
 
+  // line 32 "../../../../../CoolSuppliesPersistence.ump"
+  public static  void reinitializeUniqueNumber(List<Order> orders){
+    ordersByNumber.clear();
+    for (var order : orders) {
+      ordersByNumber.put(order.getNumber(), order);
+    }
+  }
 
   public String toString()
   {
