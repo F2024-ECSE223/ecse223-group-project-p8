@@ -190,8 +190,8 @@ public class OrderStepDefinitions {
   @When("the parent attempts to update an order with number {string} to purchase level {string} and student with name {string}")
   public void the_parent_attempts_to_update_an_order_with_number_to_purchase_level_and_student_with_name(
           String string, String string2, String string3) {
-    PurchaseLevel purchaseLevel = PurchaseLevel.valueOf(string2);
-    error = CoolSuppliesFeatureSet8Controller.updateOrder(string, purchaseLevel, string3);
+    int orderNumber = Integer.parseInt(string);
+    error = CoolSuppliesFeatureSet8Controller.updateOrder(string2, orderNumber, string3);
   }
 
   /**
@@ -200,13 +200,11 @@ public class OrderStepDefinitions {
   @When("the parent attempts to add an item {string} with quantity {string} to the order {string}")
   public void the_parent_attempts_to_add_an_item_with_quantity_to_the_order(String string,
                                                                             String string2, String string3) {
-    Order order = Order.getWithNumber(Integer.parseInt(string3));
+
     int qty = Integer.parseInt(string2);
-    Item item = (Item) Item.getWithName(string);
-    order.addItemToOrder(new OrderItem(qty, coolSupplies, order, item));
-
+    InventoryItem invItem = (InventoryItem) InventoryItem.getWithName(string);
+    error = CoolSuppliesFeatureSet8Controller.addItemToOrder(string, invItem, string3, qty);
   }
-
   /**
    * @author Zhengxuan Zhao
    */
@@ -223,22 +221,11 @@ public class OrderStepDefinitions {
    * @author Zhengxuan Zhao
    */
   @When("the parent attempts to delete an item {string} from the order {string}")
-  public void the_parent_attempts_to_delete_an_item_from_the_order(String string, String string2) {
+  public void the_parent_attempts_to_delete_an_item_from_the_order( String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-
-    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string2);
-
-    Order order = Order.getWithNumber(actualOrder.getNumber());
-    List<OrderItem> orderItems = order.getOrderItems();
-
-    // remove an item from the order
-    for (OrderItem i : orderItems) {
-      if (i.getItem().getName().equals(string)) {
-        error = CoolSuppliesFeatureSet8Controller.deleteOrderItem(i, string2);
-        return;
-      }
-    }
+    error = CoolSuppliesFeatureSet8Controller.deleteOrderItem(string, string2);
   }
+
 
   /**
    * @author Artimice Mirchi, Jyothsna Seema, Mary Li
@@ -248,6 +235,7 @@ public class OrderStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     Order order = Order.getWithNumber(Integer.parseInt(string));
     assertNotNull("Order not found in the system", order);
+
   }
 
   /**
@@ -342,7 +330,7 @@ public class OrderStepDefinitions {
   @Then("the order {string} shall not exist in the system")
   public void the_order_shall_not_exist_in_the_system(String string) {
     // Write code here that turns the phrase above into concrete actions
-    Boolean isNotNull = Order.hasWithNumber(Integer.parseInt(string));
+    boolean isNotNull = Order.hasWithNumber(Integer.parseInt(string));
     assertFalse(isNotNull);
   }
 
@@ -362,8 +350,9 @@ public class OrderStepDefinitions {
   @Then("the order {string} shall contain {string} item")
   public void the_order_shall_contain_item(String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-    actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
     Order order = Order.getWithNumber(actualOrder.getNumber());
+
     List<OrderItem> orderItems = order.getOrderItems();
     assertEquals(string2, String.valueOf(orderItems.size()));
   }
@@ -402,7 +391,8 @@ public class OrderStepDefinitions {
    */
   @Then("the order {string} shall contain {string} items")
   public void the_order_shall_contain_items(String string, String string2) {
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
     int actualNum = order.numberOfOrderItems();
     int expectedNum = Integer.parseInt(string2);
     assertEquals(expectedNum, actualNum);
@@ -457,7 +447,12 @@ public class OrderStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     // Map<Order, OrderState> orderStates =
     // CoolSuppliesFeatureSet8Controller.getOrderStates();
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+
+    System.out.println(Order.getWithNumber(1));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
+
+
     String status = order.getStatus().toString();
     assertEquals(string2, status);
   }

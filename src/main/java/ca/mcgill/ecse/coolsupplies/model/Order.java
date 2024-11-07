@@ -779,7 +779,7 @@ public class Order
 
   public boolean delete(OrderItem item)
   {
-    ordersByNumber.remove(getNumber());
+    //ordersByNumber.remove(getNumber());
     boolean wasEventProcessed = false;
 
     Status aStatus = status;
