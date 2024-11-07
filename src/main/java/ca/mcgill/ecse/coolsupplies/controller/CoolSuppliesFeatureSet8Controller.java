@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
+
 public class CoolSuppliesFeatureSet8Controller {
 
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
@@ -45,7 +47,7 @@ public class CoolSuppliesFeatureSet8Controller {
         else {
             try {
                 order.updateOrderEvent(purchaseLevel, student);
-                // OrderPersistence.save();
+                CoolSuppliesPersistence.save();
             } catch (RuntimeException e) {
                 return e.getMessage();
             }
@@ -95,7 +97,7 @@ public class CoolSuppliesFeatureSet8Controller {
             try {
                 OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
                 order.add(thisItem);
-                // OrderPersistence.save();
+                CoolSuppliesPersistence.save();
             } catch (RuntimeException e) {
                 return e.getMessage();
             }
@@ -135,7 +137,7 @@ public class CoolSuppliesFeatureSet8Controller {
 
         try {
             order.updateQuantityEvent(newQuantity, orderItem);
-//                OrderPersistence.save();
+            CoolSuppliesPersistence.save();
         }
         catch (RuntimeException e) {
             return e.getMessage();
@@ -173,7 +175,7 @@ public class CoolSuppliesFeatureSet8Controller {
                 int oItemIndex = order.indexOfOrderItem(orderItem);
                 OrderItem thisItem = order.getOrderItem(oItemIndex);
                 order.delete(thisItem);
-                // OrderPersistence.save();
+                CoolSuppliesPersistence.save();
             } catch (RuntimeException e) {
                 return e.getMessage();
             }
@@ -217,6 +219,7 @@ public class CoolSuppliesFeatureSet8Controller {
 
             try {
                 order.orderHasBeenPrepared(authorizationCode, penaltyAuthorizationCode);
+                CoolSuppliesPersistence.save();
             } catch (RuntimeException e) {
                 return (e.getMessage());
             }
@@ -246,6 +249,7 @@ public class CoolSuppliesFeatureSet8Controller {
             String currStatus = order.getStatusFullName();
             try {
                 order.orderHasBeenPaid(AuthorizationCode);
+                CoolSuppliesPersistence.save();
             }
 
             catch (RuntimeException e) {
@@ -265,7 +269,7 @@ public class CoolSuppliesFeatureSet8Controller {
         if (order != null) {
             try {
                 order.cancel();
-                // OrderPersistence.save();
+                CoolSuppliesPersistence.save();
             } catch (RuntimeException e) {
                 return e.getMessage();
             }
@@ -415,6 +419,7 @@ public class CoolSuppliesFeatureSet8Controller {
     
         try {
             order.startSchoolYear();
+            CoolSuppliesPersistence.save();
             return "Successfully started school year";
         } catch (RuntimeException e) {
             return e.getMessage();
@@ -433,6 +438,11 @@ public class CoolSuppliesFeatureSet8Controller {
 
     if (currentStatus == Order.Status.Prepared) {
         order.setStatus(Order.Status.PickedUp);
+        try {
+            CoolSuppliesPersistence.save();
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
         return "Order is picked up.";
     } else if (currentStatus == Order.Status.PickedUp) {
         return "The order is already picked up";
