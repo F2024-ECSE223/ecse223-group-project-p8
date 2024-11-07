@@ -11,6 +11,7 @@ import java.util.List;
 public class CoolSuppliesFeatureSet8Controller {
 
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
+
     // Update order (only purchase level and student)
     public static String updateOrder(String orderNumber, PurchaseLevel purchaseLevel, String studentName) {
 
@@ -27,23 +28,19 @@ public class CoolSuppliesFeatureSet8Controller {
 
         if (!isValid) {
             return String.format("Purchase level %s does not exist.", purchaseLevel);
-        }
-        else if (order.hasWithNumber(Integer.parseInt(orderNumber))) {
+        } else if (order.hasWithNumber(Integer.parseInt(orderNumber))) {
             return String.format("Order %d does not exist.", orderNumber);
-        }
-        else if (student == null) {
+        } else if (student == null) {
             return String.format("Student %s does not exist.", student);
-        }
-        else if (student.getParent() != order.getParent()) {
+        } else if (student.getParent() != order.getParent()) {
             return String.format("Student %s is not a child of the parent %s.", student, order.getParent());
         }
 
         else if (order != null) {
             try {
-                order.updateOrderEvent(purchaseLevel,student);
-//                OrderPersistence.save();
-            }
-            catch (RuntimeException e) {
+                order.updateOrderEvent(purchaseLevel, student);
+                // OrderPersistence.save();
+            } catch (RuntimeException e) {
                 return e.getMessage();
             }
         }
@@ -66,23 +63,20 @@ public class CoolSuppliesFeatureSet8Controller {
             return String.format("Item %s does not exist. ", item);
         }
 
-        else if (itemExists(item.getOrderItem(intOrderNumber),order.getOrderItems())) {
+        else if (itemExists(item.getOrderItem(intOrderNumber), order.getOrderItems())) {
             return String.format("Item %s already exists in the order %d.", item, orderNumber);
-        }
-        else if (newQuantity < 0) {
+        } else if (newQuantity < 0) {
             return ("Quantity must be greater than 0.");
-        }
-        else if (order.getStatusFullName() != "Started") {
+        } else if (order.getStatusFullName() != "Started") {
             return String.format("Cannot add items from a %s order", order.getStatusFullName());
         }
 
         else if (order != null) {
             try {
-                OrderItem thisItem = coolSupplies.addOrderItem(newQuantity,order,item);
+                OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
                 order.add(thisItem);
-//                OrderPersistence.save();
-            }
-            catch (RuntimeException e) {
+                // OrderPersistence.save();
+            } catch (RuntimeException e) {
                 return e.getMessage();
             }
         }
@@ -108,21 +102,17 @@ public class CoolSuppliesFeatureSet8Controller {
 
         if (itemExists(item, oItems)) {
             return String.format("Item %s does not exist in the order %d.", item, orderNumber);
-        }
-        else if (newQuantity < 0) {
+        } else if (newQuantity < 0) {
             return ("Quantity must be greater than 0.");
-        }
-        else if (order.getStatusFullName() != "Started") {
+        } else if (order.getStatusFullName() != "Started") {
             return String.format("Cannot delete items from a %s order", order.getStatusFullName());
-        }
-        else if (order != null) {
+        } else if (order != null) {
             try {
                 int oItemIndex = order.indexOfOrderItem(item);
                 OrderItem thisItem = order.getOrderItem(oItemIndex);
-                order.updateQuantityEvent(newQuantity,thisItem);
-//                OrderPersistence.save();
-            }
-            catch (RuntimeException e) {
+                order.updateQuantityEvent(newQuantity, thisItem);
+                // OrderPersistence.save();
+            } catch (RuntimeException e) {
                 return e.getMessage();
             }
         }
@@ -135,24 +125,19 @@ public class CoolSuppliesFeatureSet8Controller {
 
         if (order.hasWithNumber(Integer.parseInt(orderNumber))) {
             return String.format("Order %d does not exist ", orderNumber);
-        }
-        else if (order.getStatusFullName() != "Started") {
+        } else if (order.getStatusFullName() != "Started") {
             return String.format("Cannot delete items from a %s order", order.getStatusFullName());
-        }
-        else if (itemExists(item, order.getOrderItems())) {
+        } else if (itemExists(item, order.getOrderItems())) {
             return String.format("Item %s does not exist in the order %d.", item, orderNumber);
-        }
-        else if (item == null) {
+        } else if (item == null) {
             return String.format("Item %s does not exist.", item);
-        }
-        else if (order != null) {
+        } else if (order != null) {
             try {
                 int oItemIndex = order.indexOfOrderItem(item);
                 OrderItem thisItem = order.getOrderItem(oItemIndex);
                 order.delete(thisItem);
-//                OrderPersistence.save();
-            }
-            catch (RuntimeException e) {
+                // OrderPersistence.save();
+            } catch (RuntimeException e) {
                 return e.getMessage();
             }
         }
@@ -173,13 +158,14 @@ public class CoolSuppliesFeatureSet8Controller {
 
     /**
      * @author Artimice Mirchi
-     * Pays the penalty for the order
-     * @param orderNumber the number associated with the order
+     *         Pays the penalty for the order
+     * @param orderNumber              the number associated with the order
      * @param penaltyAuthorizationCode The authorization code for the penalty
-     * @param authorizationCode The authorization code for the order
+     * @param authorizationCode        The authorization code for the order
      * @return indicates if the penalty was successfully paid
      */
-    public static String payPenaltyForOrder(String orderNumber, String penaltyAuthorizationCode, String authorizationCode) {
+    public static String payPenaltyForOrder(String orderNumber, String penaltyAuthorizationCode,
+            String authorizationCode) {
         if (Order.hasWithNumber(Integer.parseInt(orderNumber))) {
             Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
             if (authorizationCode.length() == 0) {
@@ -189,28 +175,25 @@ public class CoolSuppliesFeatureSet8Controller {
                 return ("Penalty authorization code is invalid");
             }
             if (!order.hasOrderItems()) {
-                return ("Order " +orderNumber+ " has no items");
+                return ("Order " + orderNumber + " has no items");
             }
 
             try {
                 order.orderHasBeenPrepared(authorizationCode, penaltyAuthorizationCode);
-            }
-            catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 return (e.getMessage());
             }
-        }
-        else {
-            return ("Order " + orderNumber+ " does not exist");
+        } else {
+            return ("Order " + orderNumber + " does not exist");
         }
         return ("Done");
-
 
     }
 
     /**
      * @author Artimice Mirchi
-     * Pays the penalty for the order
-     * @param orderNumber the number associated with the order
+     *         Pays the penalty for the order
+     * @param orderNumber       the number associated with the order
      * @param AuthorizationCode The authorization code for the order
      * @return indicates if the order has been successfully paid
      */
@@ -221,18 +204,18 @@ public class CoolSuppliesFeatureSet8Controller {
                 return ("Authorization code is invalid");
             }
             if (!order.hasOrderItems()) {
-                return ("Order " +orderNumber+ " has no items");
+                return ("Order " + orderNumber + " has no items");
             }
             String currStatus = order.getStatusFullName();
             try {
-                order.orderHasBeenPaid(AuthorizationCode);}
+                order.orderHasBeenPaid(AuthorizationCode);
+            }
 
-            catch (RuntimeException e){
+            catch (RuntimeException e) {
                 return (e.getMessage());
             }
-        }
-        else {
-            return ("Order " +orderNumber+ " does not exist");
+        } else {
+            return ("Order " + orderNumber + " does not exist");
         }
         return ("Done");
 
@@ -246,22 +229,22 @@ public class CoolSuppliesFeatureSet8Controller {
         if (order != null) {
             try {
                 order.cancel();
-//                OrderPersistence.save();
-            }
-            catch (RuntimeException e) {
+                // OrderPersistence.save();
+            } catch (RuntimeException e) {
                 return e.getMessage();
             }
-        }
-        else{
+        } else {
             return "Order " + orderNumber + " does not exist";
         }
         return "Order deleted successfully";
 
     }
 
-    // View individual order (including parent, student, status, number, date, level, authorization codes,
-    //individual items and items in bundles including their prices and deducted discounts, and total
-    //price)
+    // View individual order (including parent, student, status, number, date,
+    // level, authorization codes,
+    // individual items and items in bundles including their prices and deducted
+    // discounts, and total
+    // price)
     // TODO: State Machine is not implemented yet
     public static TOOrder viewOrder(String index) {
         Order order = coolSupplies.getOrder(Integer.parseInt(index));
@@ -280,7 +263,8 @@ public class CoolSuppliesFeatureSet8Controller {
         String status = order.getStatus().toString();
         int totalPrice = calculateTotalPrice(order);
 
-        TOOrder toOrder = new TOOrder(parentEmail, studentName, status, orderNumber, orderDate, orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice);
+        TOOrder toOrder = new TOOrder(parentEmail, studentName, status, orderNumber, orderDate, orderLevel.toString(),
+                authorizationCode, penaltyAuthorizationCode, totalPrice);
 
         List<OrderItem> orderItems = order.getOrderItems();
         List<TOOrderItem> toOrderItems = new ArrayList<>();
@@ -300,7 +284,8 @@ public class CoolSuppliesFeatureSet8Controller {
 
             int discount = calculateDiscount(orderItem);
 
-            TOOrderItem toOrderItem = new TOOrderItem(quantity, itemName.isEmpty() ? gradeBundleName : itemName, gradeBundleName, price, discount);
+            TOOrderItem toOrderItem = new TOOrderItem(quantity, itemName.isEmpty() ? gradeBundleName : itemName,
+                    gradeBundleName, price, discount);
             toOrderItems.add(toOrderItem);
         }
 
@@ -308,7 +293,6 @@ public class CoolSuppliesFeatureSet8Controller {
 
         return toOrder;
     }
-
 
     private static int calculateTotalPrice(Order order) {
         int totalPrice = 0;
@@ -319,7 +303,7 @@ public class CoolSuppliesFeatureSet8Controller {
             }
             int quantity = orderItem.getQuantity();
             int discount = calculateDiscount(orderItem);
-            totalPrice += ((price * quantity) * (100 -discount)) / 100;
+            totalPrice += ((price * quantity) * (100 - discount)) / 100;
         }
         return totalPrice;
     }
@@ -351,7 +335,8 @@ public class CoolSuppliesFeatureSet8Controller {
             String status = order.getStatus().toString();
             int totalPrice = calculateTotalPrice(order);
 
-            TOOrder toOrder = new TOOrder(parentEmail, studentName, status, orderNumber, orderDate, orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice);
+            TOOrder toOrder = new TOOrder(parentEmail, studentName, status, orderNumber, orderDate,
+                    orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice);
 
             List<OrderItem> orderItems = order.getOrderItems();
             List<TOOrderItem> toOrderItems = new ArrayList<>();
@@ -371,7 +356,8 @@ public class CoolSuppliesFeatureSet8Controller {
 
                 int discount = calculateDiscount(orderItem);
 
-                TOOrderItem toOrderItem = new TOOrderItem(quantity, itemName.isEmpty() ? gradeBundleName : itemName, gradeBundleName, price, discount);
+                TOOrderItem toOrderItem = new TOOrderItem(quantity, itemName.isEmpty() ? gradeBundleName : itemName,
+                        gradeBundleName, price, discount);
                 toOrderItems.add(toOrderItem);
             }
 
@@ -383,43 +369,40 @@ public class CoolSuppliesFeatureSet8Controller {
         return toOrders;
     }
 
-
     // Start school year
-    public static String startYear(String orderNumebr) {
-        Order order = coolSupplies.getOrder(Integer.parseInt(orderNumebr));
-
-        if (order == null){
-            return "Order " + orderNumebr + " does not exist";
-        }
-        try {
-            order.startSchoolYear();
-//          OrderPersistence.save();
-        }
-        catch (RuntimeException e) {
-            return e.getMessage();
-        }
-
-        return "Successfully started school year";
-    }
-
-    public static String pickUpOrder(String orderNumber){
-        Order order = coolSupplies.getOrder(Integer.parseInt(orderNumber));
+    public static String startYear(String orderNumber) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
 
         if (order == null) {
-            return "Order not found.";
+            return "Order " + orderNumber + " does not exist";
         }
-
+    
         try {
-            String status = order.getStatus().toString();
-            if (status.equals("Prepared")) {
-                order.setStatus(Order.Status.PickedUp);
-                return "Order is picked up.";
-            } else {
-                return "Order cannot be picked up. It is not prepared.";
-            }
-            // OrderPersistence.save();
+            order.startSchoolYear();
+            return "Successfully started school year";
         } catch (RuntimeException e) {
             return e.getMessage();
         }
+
+    }
+
+    public static String pickUpOrder(String orderNumber) {
+    Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+
+    if (order == null) {
+        return "Order " + orderNumber + " does not exist";
+    }
+
+    Order.Status currentStatus = order.getStatus();
+
+    if (currentStatus == Order.Status.Prepared) {
+        order.setStatus(Order.Status.PickedUp);
+        return "Order is picked up.";
+    } else if (currentStatus == Order.Status.PickedUp) {
+        return "The order is already picked up";
+    } else {
+        return "Cannot pickup a " + currentStatus.toString().toLowerCase() + " order";
+    }
     }
 }
+
