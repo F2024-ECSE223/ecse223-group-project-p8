@@ -32,14 +32,71 @@ public class CoolSuppliesFeatureSet8Controller {
 
     // Pay for order
     // TODO: State Machine is not implemented yet
-    public static String payOrder(String orderNumber, String AuthorizationCode) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    /**
+     * @author Artimice Mirchi
+     * Pays the penalty for the order
+     * @param orderNumber the number associated with the order
+     * @param penaltyAuthorizationCode The authorization code for the penalty
+     * @param authorizationCode The authorization code for the order
+     * @return indicates if the penalty was successfully paid
+     */
+    public static String payPenaltyForOrder(String orderNumber, String penaltyAuthorizationCode, String authorizationCode) {
+        if (Order.hasWithNumber(Integer.parseInt(orderNumber))) {
+            Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+            if (authorizationCode.length() == 0) {
+                return ("Authorization code is invalid");
+            }
+            if (penaltyAuthorizationCode.length() == 0) {
+                return ("Penalty authorization code is invalid");
+            }
+            if (!order.hasOrderItems()) {
+                return ("Order " +orderNumber+ " has no items");
+            }
+
+            try {
+                order.orderHasBeenPrepared(authorizationCode, penaltyAuthorizationCode);
+            }
+            catch (RuntimeException e){
+                return (e.getMessage());
+            }
+        }
+        else {
+            return ("Order " + orderNumber+ " does not exist");
+        }
+        return ("Done");
+
+
     }
 
-    // Pay penalty for order
-    // TODO: State Machine is not implemented yet
-    public static String payPenaltyForOrder(String orderNumber, String AuthorizationCode, String PenaltyAuthorizationCode) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    /**
+     * @author Artimice Mirchi
+     * Pays the penalty for the order
+     * @param orderNumber the number associated with the order
+     * @param AuthorizationCode The authorization code for the order
+     * @return indicates if the order was successfully paid
+     */
+    public static String payOrder(String orderNumber, String AuthorizationCode) {
+        if (Order.hasWithNumber(Integer.parseInt(orderNumber))) {
+            Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+            if (AuthorizationCode.length() == 0) {
+                return ("Authorization code is invalid");
+            }
+            if (!order.hasOrderItems()) {
+                return ("Order " +orderNumber+ " has no items");
+            }
+            String currStatus = order.getStatusFullName();
+            try {
+                order.orderHasBeenPaid(AuthorizationCode);}
+
+            catch (RuntimeException e){
+                return (e.getMessage());
+            }
+        }
+        else {
+            return ("Order " +orderNumber+ " does not exist");
+        }
+        return ("Done");
+
     }
 
     // Cancel order
