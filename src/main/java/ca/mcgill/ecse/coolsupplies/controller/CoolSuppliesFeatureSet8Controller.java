@@ -72,7 +72,7 @@ public class CoolSuppliesFeatureSet8Controller {
      * Pays the penalty for the order
      * @param orderNumber the number associated with the order
      * @param AuthorizationCode The authorization code for the order
-     * @return indicates if the order was successfully paid
+     * @return indicates if the order has been successfully paid
      */
     public static String payOrder(String orderNumber, String AuthorizationCode) {
         if (Order.hasWithNumber(Integer.parseInt(orderNumber))) {
