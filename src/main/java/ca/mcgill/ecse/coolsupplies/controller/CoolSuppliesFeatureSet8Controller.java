@@ -30,8 +30,7 @@ public class CoolSuppliesFeatureSet8Controller {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
-    // Pay for order
-    // TODO: State Machine is not implemented yet
+
     /**
      * @author Artimice Mirchi
      * Pays the penalty for the order
