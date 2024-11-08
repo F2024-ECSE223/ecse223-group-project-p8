@@ -4,20 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 
 import java.util.*;
 
-import com.thoughtworks.xstream.mapper.Mapper.Null;
-
 import java.sql.Date;
 
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.*;
-import ca.mcgill.ecse.coolsupplies.model.BundleItem;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Grade;
 import ca.mcgill.ecse.coolsupplies.model.GradeBundle;
@@ -29,7 +24,6 @@ import ca.mcgill.ecse.coolsupplies.model.User;
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 import ca.mcgill.ecse.coolsupplies.model.Order;
 import ca.mcgill.ecse.coolsupplies.model.OrderItem;
-import io.cucumber.java.Status;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -41,7 +35,6 @@ public class OrderStepDefinitions {
     List<Order> resultOrders;
     String error;
     TOOrder actualOrder;
-    List<TOOrder> actualOrderList = new ArrayList<>();
 
     /**
      * @author Shengyi Zhong
@@ -159,17 +152,11 @@ public class OrderStepDefinitions {
             io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> row : rows) {
-            int number = Integer.parseInt(row.get("number"));
             Date date = Date.valueOf(row.get("date"));
             PurchaseLevel level = PurchaseLevel.valueOf(row.get("level"));
             Parent parent = (Parent) User.getWithEmail(row.get("parentEmail"));
             Student student = Student.getWithName(row.get("studentName"));
-            Order order = new Order(number, date, level, parent, student, coolSupplies);
-            order.setAuthorizationCode(row.get("authorizationCode"));
-            order.setStatus(Order.Status.valueOf(row.get("status")));
-            order.setPenaltyAuthorizationCode(row.get("penaltyAuthorizationCode"));
-            coolSupplies.addOrder(order);
-
+            coolSupplies.addOrder(Integer.parseInt(row.get("number")), date, level, parent, student);
         }
     }
 
@@ -578,6 +565,6 @@ public class OrderStepDefinitions {
     @Then("no order entities shall be presented")
     public void no_order_entities_shall_be_presented() {
         // Write code here that turns the phrase above into concrete actions
-        assertTrue(actualOrderList.isEmpty(), "Expected no orders, but found some.");
+        assertTrue(resultOrders.isEmpty(), "Expected no orders, but found some.");
     }
 }
