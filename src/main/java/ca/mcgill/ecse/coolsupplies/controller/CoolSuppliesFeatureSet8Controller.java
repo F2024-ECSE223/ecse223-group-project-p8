@@ -536,29 +536,58 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     /**
-     * Starts the school year for a specified order.
+     * Starts the school year for the specified order.
+     * Changes the order status based on its current state:
+     * - 'Started' orders become 'Penalized'
+     * - 'Paid' orders become 'Prepared'
      *
-     * @author Zhengxuan Zhao
-     * @param orderNumebr the number of the order
+     * @param orderNumber the number of the order to process
      * @return a message indicating the result of the operation
+     * @throws RuntimeException if the school year has already been started for the order or the order does not exist
+     * 
+     * @author Mary Li, Shengyi Zhong
      */
-    public static String startYear(String orderNumebr) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumebr));
+    public static String startYear(String orderNumber) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
 
-        if (order == null){
-            return "Order " + orderNumebr + " does not exist";
+        if (order == null) {
+            return "Order " + orderNumber + " does not exist";
         }
+
         try {
             order.startSchoolYear();
-            //OrderPersistence.save();
-        }
-        catch (RuntimeException e) {
+            return "Successfully started school year";
+        } catch (RuntimeException e) {
             return e.getMessage();
         }
+    }
 
-        return "Successfully started school year";
+    /**
+     * Picks up an order by changing its status from 'Prepared' to 'PickedUp'.
+     *
+     * @param orderNumber the number of the order to pick up
+     * @return a message indicating the result of the operation
+     * @throws RuntimeException if the order cannot be picked up due to its current status
+     * 
+     * @author Shengyi Zhong
+     */
+    public static String pickUpOrder(String orderNumber) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+
+        if (order == null) {
+            return "Order " + orderNumber + " does not exist";
+        }
+
+        Order.Status currentStatus = order.getStatus();
+
+        if (currentStatus == Order.Status.Prepared) {
+            order.setStatus(Order.Status.PickedUp);
+            return "Order is picked up.";
+        } else if (currentStatus == Order.Status.PickedUp) {
+            return "The order is already picked up";
+        } else {
+            return "Cannot pick up a " + currentStatus.toString().toLowerCase() + " order";
+        }
     }
-    public static String pickUpOrder(String orderNumber){
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
+
 }
