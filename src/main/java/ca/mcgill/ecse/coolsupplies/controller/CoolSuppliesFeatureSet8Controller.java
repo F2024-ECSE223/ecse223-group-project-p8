@@ -42,8 +42,7 @@ public class CoolSuppliesFeatureSet8Controller {
         }
 
         else if (!order.getStatusFullName().equals("Started")) {
-            // Must separate because picked up needs to give an error message with space and
-            // lowercase
+            // Must separate because picked up needs to give an error message with space and lowercase
             if (order.getStatusFullName().equals("PickedUp")) {
                 return "Cannot update a picked up order";
             } else {
