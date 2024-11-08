@@ -112,18 +112,71 @@ public class CoolSuppliesFeatureSet8Controller {
             try {
                 OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
                 order.add(thisItem);
-                // OrderPersistence.save();
+                CoolSuppliesPersistence.save();
             } catch (RuntimeException e) {
                 return e.getMessage();
             }
         }
         return ("The item has successfully been added");
     }
-    
-    // Update quantity of an existing item of order
-    public static String updateQuantity(int newQuantity, OrderItem item) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+
+    /**
+     * Updates the quantity of an existing item in a specified order.
+     *
+     * @param itemName    the name of the item to update
+     * @param newQuantity the new quantity to set for the item
+     * @param orderNumber the number of the order containing the item
+     * @return a message indicating the result of the operation
+     * @author Jyothsna Seema
+     * @author Jiatian Liu
+     */
+    public static String updateQuantity(String itemName, int newQuantity, int orderNumber) {
+
+        // Check if the item exists in the inventory
+        if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", itemName);
+        }
+
+        // Retrieve the order with the given order number
+        Order order = Order.getWithNumber(orderNumber);
+
+        // Check if the order exists
+        if (!Order.hasWithNumber(orderNumber)) {
+            return String.format("Order %d does not exist", orderNumber);
+        }
+
+        // Find the specific order item within the order
+        List<OrderItem> oItems = order.getOrderItems();
+        OrderItem orderItem = null;
+        for (OrderItem o : oItems) {
+            if (o.getItem().getName().equals(itemName)) {
+                orderItem = o;
+                break;
+            }
+        }
+
+        // If the item is not found in the order, return an error message
+        if (orderItem == null) {
+            return String.format("Item %s does not exist in the order %d.", itemName, orderNumber);
+        }
+
+        // Check if the new quantity is valid
+        if (newQuantity <= 0) {
+            return ("Quantity must be greater than 0.");
+        }
+
+        // Update the quantity and save the changes
+        try {
+            order.updateQuantityEvent(newQuantity, orderItem);
+            CoolSuppliesPersistence.save();
+        }
+        catch (RuntimeException e) {
+            return e.getMessage();
+        }
+
+        return ("The item's quantity has successfully been updated");
     }
+
      /**
      * @author Jyothsna Seema, Zhengxuan Zhao, Snigdha Sen
      *         Deletes the order with new quantity and level 
@@ -194,6 +247,7 @@ public class CoolSuppliesFeatureSet8Controller {
 
             try {
                 order.orderHasBeenPrepared(authorizationCode, penaltyAuthorizationCode);
+                CoolSuppliesPersistence.save();
             } catch (RuntimeException e) {
                 return (e.getMessage());
             }
@@ -223,6 +277,7 @@ public class CoolSuppliesFeatureSet8Controller {
             String currStatus = order.getStatusFullName();
             try {
                 order.orderHasBeenPaid(AuthorizationCode);
+                CoolSuppliesPersistence.save();
             }
 
             catch (RuntimeException e) {
@@ -249,7 +304,7 @@ public class CoolSuppliesFeatureSet8Controller {
                 order.cancel();
 
                 order.delete();
-//                OrderPersistence.save();
+                CoolSuppliesPersistence.save();
             }
             catch (RuntimeException e) {
                 return e.getMessage();
@@ -556,6 +611,7 @@ public class CoolSuppliesFeatureSet8Controller {
 
         try {
             order.startSchoolYear();
+            CoolSuppliesPersistence.save();
             return "Successfully started school year";
         } catch (RuntimeException e) {
             return e.getMessage();
@@ -582,6 +638,11 @@ public class CoolSuppliesFeatureSet8Controller {
 
         if (currentStatus == Order.Status.Prepared) {
             order.setStatus(Order.Status.PickedUp);
+            try {
+                CoolSuppliesPersistence.save();
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
             return "Order is picked up.";
         } else if (currentStatus == Order.Status.PickedUp) {
             return "The order is already picked up";
