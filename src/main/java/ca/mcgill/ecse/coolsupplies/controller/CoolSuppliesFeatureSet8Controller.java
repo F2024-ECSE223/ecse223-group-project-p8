@@ -3,6 +3,7 @@ package ca.mcgill.ecse.coolsupplies.controller;
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.model.*;
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -260,16 +261,23 @@ public class CoolSuppliesFeatureSet8Controller {
 
     // Cancel order
     public static String cancelOrder(String orderNumber) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-
+        Order order = null;
+        for (Order o : coolSupplies.getOrders()){
+            if(o.getNumber() == Integer.parseInt(orderNumber)) {
+                order = o;
+                break;
+            }
+        }
         if (order != null) {
             try {
                 order.cancel();
-                // OrderPersistence.save();
-            } catch (RuntimeException e) {
+                order.delete();
+            }
+            catch (RuntimeException e) {
                 return e.getMessage();
             }
-        } else {
+        }
+        else{
             return "Order " + orderNumber + " does not exist";
         }
         return "Order deleted successfully";
@@ -283,7 +291,17 @@ public class CoolSuppliesFeatureSet8Controller {
     // price)
     // TODO: State Machine is not implemented yet
     public static TOOrder viewOrder(String index) {
-        Order order = coolSupplies.getOrder(Integer.parseInt(index)-1);
+        Order order = null;
+        for(Order o: coolSupplies.getOrders()){
+            if(o.getNumber() == Integer.parseInt(index)){
+                order = o;
+                break;
+            }
+        }
+
+        if (order == null) {
+            return null;
+        }
 
         int orderNumber = order.getNumber();
         Date orderDate = order.getDate();
