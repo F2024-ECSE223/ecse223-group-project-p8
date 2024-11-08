@@ -647,7 +647,7 @@ public class CoolSuppliesFeatureSet8Controller {
         } else if (currentStatus == Order.Status.PickedUp) {
             return "The order is already picked up";
         } else {
-            return "Cannot pick up a " + currentStatus.toString().toLowerCase() + " order";
+            return "Cannot pickup a " + currentStatus.toString().toLowerCase() + " order";
         }
     }
 
