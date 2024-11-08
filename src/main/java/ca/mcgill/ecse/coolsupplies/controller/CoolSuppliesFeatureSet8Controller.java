@@ -9,18 +9,19 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 public class CoolSuppliesFeatureSet8Controller {
+
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
+
     /**
      * @author Jyothsna Seema
-     *         Updates the order with new quantity and level 
-     * @param levelName              The purchase level name 
+     *         Updates the order with new quantity and level
+     * @param levelName              The purchase level name
      * @param orderNumber            The order number of the order to be updated
      * @param studentName            The student name to be updated
-     * @return indicates if the order was updated successfully 
+     * @return indicates if the order was updated successfully
      */
-    
-     public static String updateOrder(String levelName, int orderNumber, String studentName) {
-        
+    public static String updateOrder(String levelName, int orderNumber, String studentName) {
+
         Order order = Order.getWithNumber(orderNumber);
         Student student = Student.getWithName(studentName);
         PurchaseLevel purchaseLevel;
@@ -60,7 +61,6 @@ public class CoolSuppliesFeatureSet8Controller {
         }
 
         return ("The order has successfully been updated.");
-
     }
 
     /**
@@ -72,52 +72,79 @@ public class CoolSuppliesFeatureSet8Controller {
      * @param newQuantity the quantity of the item of interest
      * @return indicates if the item was succesfully added to a specific order
      */
-
     public static String addItemToOrder(String invName, InventoryItem item, String orderNumber, int newQuantity) {
+        if (newQuantity <= 0) {
+            return "Quantity must be greater than 0.";
+        }
+
         Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-        String itemName;
-
-        //For NotExist Test case - if item doesn't exist in systems
-        try{ itemName = item.getName();}
-        catch(NullPointerException e){ return String.format("Item %s does not exist.", invName);}
-
-
         if (order == null) {
             return String.format("Order %s does not exist", orderNumber);
         }
-        else if (!InventoryItem.hasWithName(itemName)) {
+
+        if (!order.getStatusFullName().equals("Started")) {
+            if (order.getStatusFullName().equals("PickedUp")) {
+                return "Cannot add items to a picked up order";
+            } else {
+                return String.format("Cannot add items to a %s order", order.getStatusFullName().toLowerCase());
+            }
+        }
+
+        if (item == null || !InventoryItem.hasWithName(invName)) {
             return String.format("Item %s does not exist.", invName);
         }
 
         List<OrderItem> orderItems = order.getOrderItems();
-        for(OrderItem orderitem : orderItems){
-            if(orderitem.getItem().getName().equals(itemName)){
+        for (OrderItem existingItem : orderItems) {
+            if (existingItem.getItem().getName().equals(item.getName())) {
                 return String.format("Item %s already exists in the order %d.", invName, Integer.parseInt(orderNumber));
             }
         }
 
-        if (newQuantity <= 0) {
-            return ("Quantity must be greater than 0.");
-        }
-        else if (!order.getStatusFullName().equals("Started")){
-            //Must separate because PickedUp needs to give an error message with space and lowercase
-            if(order.getStatusFullName().equals("PickedUp")){
-                return "Cannot add items to a picked up order";
+        double unitPrice = 0;
+        if (item instanceof Item) {
+            Item aItem = (Item) item;
+            unitPrice = aItem.getPrice();
+            double itemTotalPrice = unitPrice * newQuantity;
+            order.setTotalPrice(order.getTotalPrice() + itemTotalPrice);
+
+        } else if (item instanceof GradeBundle) {
+            GradeBundle gradeBundle = (GradeBundle) item;
+            String gradeBundleName = gradeBundle.getName() != null ? gradeBundle.getName() : "";
+
+            int numBundleItemsSelected = 0;
+            double bundleItemsTotal = 0;
+
+            for (BundleItem bundleItem : gradeBundle.getBundleItems()) {
+                if (isLevelEligibleForOrder(order.getLevel(), bundleItem.getLevel())) {
+                    numBundleItemsSelected++;
+                    Item bundleItemItem = bundleItem.getItem();
+                    unitPrice = bundleItemItem.getPrice();
+                    int bundleItemQuantity = bundleItem.getQuantity();
+
+                    double itemTotalPrice = unitPrice * newQuantity * bundleItemQuantity;
+                    bundleItemsTotal += itemTotalPrice;
+                }
             }
-            else{
-                return String.format("Cannot add items to a %s order",order.getStatusFullName().toLowerCase());
+
+            if (numBundleItemsSelected > 1) {
+                int discountPercentage = gradeBundle.getDiscount();
+                double discountValue = bundleItemsTotal * discountPercentage / 100.0;
+                bundleItemsTotal -= discountValue;
             }
+
+            order.setTotalPrice(order.getTotalPrice() + bundleItemsTotal);
         }
-        else {
-            try {
-                OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
-                order.add(thisItem);
-                CoolSuppliesPersistence.save();
-            } catch (RuntimeException e) {
-                return e.getMessage();
-            }
+
+        try {
+            OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
+            order.add(thisItem);
+            CoolSuppliesPersistence.save();
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
-        return ("The item has successfully been added");
+
+        return "The item has successfully been added.";
     }
 
     /**
@@ -131,21 +158,16 @@ public class CoolSuppliesFeatureSet8Controller {
      * @author Jiatian Liu
      */
     public static String updateQuantity(String itemName, int newQuantity, int orderNumber) {
-
-        // Check if the item exists in the inventory
         if (!InventoryItem.hasWithName(itemName)) {
             return String.format("Item %s does not exist.", itemName);
         }
 
-        // Retrieve the order with the given order number
         Order order = Order.getWithNumber(orderNumber);
 
-        // Check if the order exists
         if (!Order.hasWithNumber(orderNumber)) {
             return String.format("Order %d does not exist", orderNumber);
         }
 
-        // Find the specific order item within the order
         List<OrderItem> oItems = order.getOrderItems();
         OrderItem orderItem = null;
         for (OrderItem o : oItems) {
@@ -155,17 +177,14 @@ public class CoolSuppliesFeatureSet8Controller {
             }
         }
 
-        // If the item is not found in the order, return an error message
         if (orderItem == null) {
             return String.format("Item %s does not exist in the order %d.", itemName, orderNumber);
         }
 
-        // Check if the new quantity is valid
         if (newQuantity <= 0) {
             return ("Quantity must be greater than 0.");
         }
 
-        // Update the quantity and save the changes
         try {
             order.updateQuantityEvent(newQuantity, orderItem);
             CoolSuppliesPersistence.save();
@@ -177,14 +196,13 @@ public class CoolSuppliesFeatureSet8Controller {
         return ("The item's quantity has successfully been updated");
     }
 
-     /**
+    /**
      * @author Jyothsna Seema, Zhengxuan Zhao, Snigdha Sen
-     *         Deletes the order with new quantity and level 
+     *         Deletes the order with new quantity and level
      * @param itemName              The item name of the item to be delted
      * @param orderNumber           The order number of the order to be updated
-     * @return indicates if the order was updated successfully 
+     * @return indicates if the order was updated successfully
      */
-    // Delete an item in an existing order
     public static String deleteOrderItem(String itemName, String orderNumber) {
         if (!Order.hasWithNumber(Integer.parseInt(orderNumber))) {
             return String.format("Order %s does not exist", orderNumber);
@@ -221,8 +239,6 @@ public class CoolSuppliesFeatureSet8Controller {
         return ("The order item has successfully been deleted.");
     }
 
-    // Pay for order
-    // TODO: State Machine is not implemented yet
     /**
      * @author Artimice Mirchi
      *         Pays the penalty for the order
@@ -289,7 +305,7 @@ public class CoolSuppliesFeatureSet8Controller {
         return ("Done");
 
     }
-     /**
+    /**
      * Cancels an order.
      *
      * @authoer Zhengxuan Zhao
@@ -317,7 +333,7 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     /**
-     * Determines if a bundle item is eligible to be included in an order
+     * A Helpeer method that determines if a bundle item is eligible to be included in an order
      * based on the order's purchase level.
      *
      * This method checks if the item's level (Mandatory, Recommended, or Optional)
@@ -345,23 +361,27 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     /**
-     * Retrieves the details of a specific order by its index.
-     * This method handles both regular items and GradeBundle items.
+     * Retrieves the details of a specific order using its order number.
+     * This method handles both regular items and GradeBundle items within the order.
      * For GradeBundle items, it adds each eligible bundle item separately and applies
-     * a discount if more than one item is included from the bundle.
+     * a discount if more than one unique item is included from the bundle.
+     *
+     * The method returns a `TOOrder` object containing high-level information about the order,
+     * including:
+     * - Order number
+     * - Order date
+     * - Purchase level (Mandatory, Recommended, Optional)
+     * - Parent's email associated with the order
+     * - Student's name associated with the order
+     *
+     * If the specified order does not exist, the method returns `null`.
      *
      * @author Mary Li, Zhengxuan Zhao
-     * @param index the index of the order to view (1-based index)
-     * @return a TOOrder object containing the details of the specified order, or null if the index is out of bounds
+     * @param index the order number (1-based index) to retrieve the order details
+     * @return a `TOOrder` object containing the details of the specified order, or `null` if the order is not found
      */
     public static TOOrder viewOrder(String index) {
-        Order order = null;
-        for(Order o: coolSupplies.getOrders()){
-            if(o.getNumber() == Integer.parseInt(index)){
-                order = o;
-                break;
-            }
-        }
+        Order order = Order.getWithNumber(Integer.parseInt(index));
         if (order == null) {
             return null;
         }
@@ -369,116 +389,28 @@ public class CoolSuppliesFeatureSet8Controller {
         int orderNumber = order.getNumber();
         Date orderDate = order.getDate();
         BundleItem.PurchaseLevel orderLevel = order.getLevel();
-        String authorizationCode = order.getAuthorizationCode();
-        String penaltyAuthorizationCode = order.getPenaltyAuthorizationCode();
 
-        Parent parent = order.getParent();
-        String parentEmail = parent.getEmail();
-        Student student = order.getStudent();
-        String studentName = student.getName();
+        String parentEmail = order.getParent().getEmail();
+        String studentName = order.getStudent().getName();
 
-        String status = order.getStatus().toString();
-        double totalPrice = 0;
-
-        List<OrderItem> orderItems = order.getOrderItems();
-        List<TOOrderItem> toOrderItems = new ArrayList<>();
-
-        for (OrderItem orderItem : orderItems) {
-            InventoryItem inventoryItem = orderItem.getItem();
-            int orderItemQuantity = orderItem.getQuantity();
-            int unitPrice = 0;
-            String itemName = "";
-            String gradeBundleName = "";
-            List<TOOrderItem> bundleOrderItems = new ArrayList<>();
-
-            if (inventoryItem instanceof Item) {
-                Item item = (Item) inventoryItem;
-                itemName = item.getName() != null ? item.getName() : "";
-                unitPrice = item.getPrice();
-                totalPrice += unitPrice * orderItemQuantity;
-
-                TOOrderItem toOrderItem = new TOOrderItem(
-                        orderItemQuantity,
-                        itemName,
-                        null,
-                        unitPrice,
-                        null
-                );
-                toOrderItems.add(toOrderItem);
-
-            } else if (inventoryItem instanceof GradeBundle) {
-                GradeBundle gradeBundle = (GradeBundle) inventoryItem;
-                gradeBundleName = gradeBundle.getName() != null ? gradeBundle.getName() : "";
-
-                int bundleItemsTotal = 0;
-                int numBundleItemsSelected = 0;
-
-                for (BundleItem bundleItem : gradeBundle.getBundleItems()) {
-                    if (isLevelEligibleForOrder(orderLevel, bundleItem.getLevel())) {
-                        numBundleItemsSelected++;
-                        Item bundleItemItem = bundleItem.getItem();
-                        unitPrice = bundleItemItem.getPrice();
-                        int bundleItemQuantity = bundleItem.getQuantity();
-                        itemName = bundleItemItem.getName();
-
-                        double itemTotalPrice = unitPrice * orderItemQuantity * bundleItemQuantity;
-                        bundleItemsTotal += itemTotalPrice;
-
-                        TOOrderItem toOrderItem = new TOOrderItem(
-                                bundleItemQuantity * orderItemQuantity,
-                                itemName,
-                                gradeBundleName.isEmpty() ? null : gradeBundleName,
-                                unitPrice,
-                                null
-                        );
-                        bundleOrderItems.add(toOrderItem);
-                    }
-                }
-
-                totalPrice += bundleItemsTotal;
-
-                if (numBundleItemsSelected > 1) {
-                    double discountPercentage = gradeBundle.getDiscount() / 100.0;
-                    double discountValue = bundleItemsTotal * discountPercentage;
-                    totalPrice -= discountValue;
-
-                    for (TOOrderItem bundleItem : bundleOrderItems) {
-                        double thediscount = bundleItem.getPrice() * discountPercentage;
-                        String discountAmount;
-                        if (thediscount == Math.floor(thediscount)) {
-                            discountAmount = "-" + String.valueOf((int) thediscount);
-                        } else {
-                            discountAmount = "-" + String.valueOf(thediscount);
-                        }
-                        bundleItem.setDiscount(discountAmount);
-                        toOrderItems.add(bundleItem);
-                    }
-                } else {
-                    toOrderItems.addAll(bundleOrderItems);
-                }
-            }
-        }
-
-        TOOrder toOrder = new TOOrder(
-                parentEmail, studentName, status, orderNumber, orderDate,
-                orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice
-        );
-        toOrder.setItems(toOrderItems);
-
-        return toOrder;
+        return new TOOrder(orderNumber,orderDate,orderLevel.toString(),parentEmail,studentName);
     }
 
     /**
-     * Retrieves the details of all orders in the system.
-     * This method handles both regular items and GradeBundle items.
-     * For GradeBundle items, it adds each eligible bundle item separately and applies
-     * a discount if more than one item is included from the bundle.
+     * Retrieves a list of all existing orders in the system.
+     * This method processes both regular items and GradeBundle items within each order.
+     * For GradeBundle items, each eligible bundle item is added separately to the order's details.
+     * Additionally, a discount is applied if more than one unique item is included from the same bundle.
      *
-     * Each order is returned as a TOOrder object containing its associated items
-     * and total price after applying any discounts.
+     * Each order is represented as a `TOOrder` object, containing details such as:
+     * - Order number
+     * - Order date
+     * - Purchase level (Mandatory, Recommended, Optional)
+     * - Parent's email associated with the order
+     * - Student's name associated with the order
      *
      * @author Mary Li, Zhengxuan Zhao
-     * @return a list of TOOrder objects, each representing an order in the system
+     * @return a list of `TOOrder` objects, each representing an order's basic information in the system
      */
     public static List<TOOrder> viewOrders() {
         List<TOOrder> toOrders = new ArrayList<>();
@@ -487,104 +419,11 @@ public class CoolSuppliesFeatureSet8Controller {
             int orderNumber = order.getNumber();
             Date orderDate = order.getDate();
             BundleItem.PurchaseLevel orderLevel = order.getLevel();
-            String authorizationCode = order.getAuthorizationCode();
-            String penaltyAuthorizationCode = order.getPenaltyAuthorizationCode();
 
-            Parent parent = order.getParent();
-            String parentEmail = parent.getEmail();
-            Student student = order.getStudent();
-            String studentName = student.getName();
+            String parentEmail = order.getParent().getEmail();
+            String studentName = order.getStudent().getName();
 
-            String status = order.getStatus().toString();
-            double totalPrice = 0;
-
-            List<OrderItem> orderItems = order.getOrderItems();
-            List<TOOrderItem> toOrderItems = new ArrayList<>();
-
-            for (OrderItem orderItem : orderItems) {
-                InventoryItem inventoryItem = orderItem.getItem();
-                int orderItemQuantity = orderItem.getQuantity();
-                int unitPrice = 0;
-                String itemName = "";
-                String gradeBundleName = "";
-                List<TOOrderItem> bundleOrderItems = new ArrayList<>();
-
-                if (inventoryItem instanceof Item) {
-                    // Regular Item
-                    Item item = (Item) inventoryItem;
-                    itemName = item.getName() != null ? item.getName() : "";
-                    unitPrice = item.getPrice();
-                    totalPrice += unitPrice * orderItemQuantity;
-
-                    TOOrderItem toOrderItem = new TOOrderItem(
-                            orderItemQuantity,
-                            itemName,
-                            null,
-                            unitPrice,
-                            null
-                    );
-                    toOrderItems.add(toOrderItem);
-
-                } else if (inventoryItem instanceof GradeBundle) {
-                    GradeBundle gradeBundle = (GradeBundle) inventoryItem;
-                    gradeBundleName = gradeBundle.getName() != null ? gradeBundle.getName() : "";
-
-                    int bundleItemsTotal = 0;
-                    int numBundleItemsSelected = 0;
-
-                    for (BundleItem bundleItem : gradeBundle.getBundleItems()) {
-                        if (isLevelEligibleForOrder(orderLevel, bundleItem.getLevel())) {
-                            numBundleItemsSelected++;
-                            Item bundleItemItem = bundleItem.getItem();
-                            unitPrice = bundleItemItem.getPrice();
-                            int bundleItemQuantity = bundleItem.getQuantity();
-                            itemName = bundleItemItem.getName();
-
-                            double itemTotalPrice = unitPrice * orderItemQuantity * bundleItemQuantity;
-                            bundleItemsTotal += itemTotalPrice;
-
-                            TOOrderItem toOrderItem = new TOOrderItem(
-                                    bundleItemQuantity * orderItemQuantity,
-                                    itemName,
-                                    gradeBundleName.isEmpty() ? null : gradeBundleName,
-                                    unitPrice,
-                                    null
-                            );
-                            bundleOrderItems.add(toOrderItem);
-                        }
-                    }
-
-                    totalPrice += bundleItemsTotal;
-
-                    if (numBundleItemsSelected > 1) {
-                        double discountPercentage = gradeBundle.getDiscount() / 100.0;
-                        double discountValue = bundleItemsTotal * discountPercentage;
-                        totalPrice -= discountValue;
-
-                        for (TOOrderItem bundleItem : bundleOrderItems) {
-                            double theDiscount = bundleItem.getPrice() * discountPercentage;
-                            String discountAmount;
-
-                            if (theDiscount == Math.floor(theDiscount)) {
-                                discountAmount = "-" + String.valueOf((int) theDiscount);
-                            } else {
-                                discountAmount = "-" + String.valueOf(theDiscount);
-                            }
-                            bundleItem.setDiscount(discountAmount);
-                            toOrderItems.add(bundleItem);
-                        }
-                    } else {
-                        toOrderItems.addAll(bundleOrderItems);
-                    }
-                }
-            }
-
-            TOOrder toOrder = new TOOrder(
-                    parentEmail, studentName, status, orderNumber, orderDate,
-                    orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice
-            );
-            toOrder.setItems(toOrderItems);
-            toOrders.add(toOrder);
+            toOrders.add(new TOOrder(orderNumber,orderDate,orderLevel.toString(),parentEmail,studentName));
         }
 
         return toOrders;
@@ -599,7 +438,7 @@ public class CoolSuppliesFeatureSet8Controller {
      * @param orderNumber the number of the order to process
      * @return a message indicating the result of the operation
      * @throws RuntimeException if the school year has already been started for the order or the order does not exist
-     * 
+     *
      * @author Mary Li, Shengyi Zhong
      */
     public static String startYear(String orderNumber) {
@@ -624,7 +463,7 @@ public class CoolSuppliesFeatureSet8Controller {
      * @param orderNumber the number of the order to pick up
      * @return a message indicating the result of the operation
      * @throws RuntimeException if the order cannot be picked up due to its current status
-     * 
+     *
      * @author Shengyi Zhong
      */
     public static String pickUpOrder(String orderNumber) {
