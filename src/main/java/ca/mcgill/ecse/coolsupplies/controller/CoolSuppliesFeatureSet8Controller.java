@@ -101,41 +101,6 @@ public class CoolSuppliesFeatureSet8Controller {
             }
         }
 
-        double unitPrice = 0;
-        if (item instanceof Item) {
-            Item aItem = (Item) item;
-            unitPrice = aItem.getPrice();
-            double itemTotalPrice = unitPrice * newQuantity;
-            order.setTotalPrice(order.getTotalPrice() + itemTotalPrice);
-
-        } else if (item instanceof GradeBundle) {
-            GradeBundle gradeBundle = (GradeBundle) item;
-            String gradeBundleName = gradeBundle.getName() != null ? gradeBundle.getName() : "";
-
-            int numBundleItemsSelected = 0;
-            double bundleItemsTotal = 0;
-
-            for (BundleItem bundleItem : gradeBundle.getBundleItems()) {
-                if (isLevelEligibleForOrder(order.getLevel(), bundleItem.getLevel())) {
-                    numBundleItemsSelected++;
-                    Item bundleItemItem = bundleItem.getItem();
-                    unitPrice = bundleItemItem.getPrice();
-                    int bundleItemQuantity = bundleItem.getQuantity();
-
-                    double itemTotalPrice = unitPrice * newQuantity * bundleItemQuantity;
-                    bundleItemsTotal += itemTotalPrice;
-                }
-            }
-
-            if (numBundleItemsSelected > 1) {
-                int discountPercentage = gradeBundle.getDiscount();
-                double discountValue = bundleItemsTotal * discountPercentage / 100.0;
-                bundleItemsTotal -= discountValue;
-            }
-
-            order.setTotalPrice(order.getTotalPrice() + bundleItemsTotal);
-        }
-
         try {
             OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
             order.add(thisItem);
