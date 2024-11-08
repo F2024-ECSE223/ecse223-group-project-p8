@@ -12,15 +12,15 @@ public class CoolSuppliesFeatureSet8Controller {
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
     /**
      * @author Jyothsna Seema
-     *         Updates the order with new quantity and level
-     * @param levelName              The purchase level name
+     *         Updates the order with new quantity and level 
+     * @param levelName              The purchase level name 
      * @param orderNumber            The order number of the order to be updated
      * @param studentName            The student name to be updated
-     * @return indicates if the order was updated successfully
+     * @return indicates if the order was updated successfully 
      */
-
-    public static String updateOrder(String levelName, int orderNumber, String studentName) {
-
+    
+     public static String updateOrder(String levelName, int orderNumber, String studentName) {
+        
         Order order = Order.getWithNumber(orderNumber);
         Student student = Student.getWithName(studentName);
         PurchaseLevel purchaseLevel;
@@ -62,20 +62,127 @@ public class CoolSuppliesFeatureSet8Controller {
         return ("The order has successfully been updated.");
 
     }
-    // Add item to order
-    public static String addItemToOrder(InventoryItem item, String orderNumber, int newQuantity) {
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
-    // Update quantity of an existing item of order
-    public static String updateQuantity(int newQuantity, OrderItem item) {
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
+
     /**
+     * Adds item to an order
+     * @author Jyothsna Seema, Snigdha Sen
+     * @param invName the name of item
+     * @param item the Inventory item object with that name
+     * @param orderNumber the order number of the order
+     * @param newQuantity the quantity of the item of interest
+     * @return indicates if the item was succesfully added to a specific order
+     */
+
+    public static String addItemToOrder(String invName, InventoryItem item, String orderNumber, int newQuantity) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+        String itemName;
+
+        //For NotExist Test case - if item doesn't exist in systems
+        try{ itemName = item.getName();}
+        catch(NullPointerException e){ return String.format("Item %s does not exist.", invName);}
+
+
+        if (order == null) {
+            return String.format("Order %s does not exist", orderNumber);
+        }
+        else if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", invName);
+        }
+
+        List<OrderItem> orderItems = order.getOrderItems();
+        for(OrderItem orderitem : orderItems){
+            if(orderitem.getItem().getName().equals(itemName)){
+                return String.format("Item %s already exists in the order %d.", invName, Integer.parseInt(orderNumber));
+            }
+        }
+
+        if (newQuantity <= 0) {
+            return ("Quantity must be greater than 0.");
+        }
+        else if (!order.getStatusFullName().equals("Started")){
+            //Must separate because PickedUp needs to give an error message with space and lowercase
+            if(order.getStatusFullName().equals("PickedUp")){
+                return "Cannot add items to a picked up order";
+            }
+            else{
+                return String.format("Cannot add items to a %s order",order.getStatusFullName().toLowerCase());
+            }
+        }
+        else {
+            try {
+                OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
+                order.add(thisItem);
+                CoolSuppliesPersistence.save();
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
+        }
+        return ("The item has successfully been added");
+    }
+
+    /**
+     * Updates the quantity of an existing item in a specified order.
+     *
+     * @param itemName    the name of the item to update
+     * @param newQuantity the new quantity to set for the item
+     * @param orderNumber the number of the order containing the item
+     * @return a message indicating the result of the operation
+     * @author Jyothsna Seema
+     * @author Jiatian Liu
+     */
+    public static String updateQuantity(String itemName, int newQuantity, int orderNumber) {
+
+        // Check if the item exists in the inventory
+        if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", itemName);
+        }
+
+        // Retrieve the order with the given order number
+        Order order = Order.getWithNumber(orderNumber);
+
+        // Check if the order exists
+        if (!Order.hasWithNumber(orderNumber)) {
+            return String.format("Order %d does not exist", orderNumber);
+        }
+
+        // Find the specific order item within the order
+        List<OrderItem> oItems = order.getOrderItems();
+        OrderItem orderItem = null;
+        for (OrderItem o : oItems) {
+            if (o.getItem().getName().equals(itemName)) {
+                orderItem = o;
+                break;
+            }
+        }
+
+        // If the item is not found in the order, return an error message
+        if (orderItem == null) {
+            return String.format("Item %s does not exist in the order %d.", itemName, orderNumber);
+        }
+
+        // Check if the new quantity is valid
+        if (newQuantity <= 0) {
+            return ("Quantity must be greater than 0.");
+        }
+
+        // Update the quantity and save the changes
+        try {
+            order.updateQuantityEvent(newQuantity, orderItem);
+            CoolSuppliesPersistence.save();
+        }
+        catch (RuntimeException e) {
+            return e.getMessage();
+        }
+
+        return ("The item's quantity has successfully been updated");
+    }
+
+     /**
      * @author Jyothsna Seema, Zhengxuan Zhao, Snigdha Sen
-     *         Deletes the order with new quantity and level
+     *         Deletes the order with new quantity and level 
      * @param itemName              The item name of the item to be delted
      * @param orderNumber           The order number of the order to be updated
-     * @return indicates if the order was updated successfully
+     * @return indicates if the order was updated successfully 
      */
     // Delete an item in an existing order
     public static String deleteOrderItem(String itemName, String orderNumber) {
@@ -140,6 +247,7 @@ public class CoolSuppliesFeatureSet8Controller {
 
             try {
                 order.orderHasBeenPrepared(authorizationCode, penaltyAuthorizationCode);
+                CoolSuppliesPersistence.save();
             } catch (RuntimeException e) {
                 return (e.getMessage());
             }
@@ -169,6 +277,7 @@ public class CoolSuppliesFeatureSet8Controller {
             String currStatus = order.getStatusFullName();
             try {
                 order.orderHasBeenPaid(AuthorizationCode);
+                CoolSuppliesPersistence.save();
             }
 
             catch (RuntimeException e) {
@@ -180,10 +289,10 @@ public class CoolSuppliesFeatureSet8Controller {
         return ("Done");
 
     }
-
-    /**
+     /**
      * Cancels an order.
      *
+     * @authoer Zhengxuan Zhao
      * @param orderNumber the number of the order
      * @return a message indicating the result of the cancellation operation
      */
@@ -195,7 +304,7 @@ public class CoolSuppliesFeatureSet8Controller {
                 order.cancel();
 
                 order.delete();
-//                OrderPersistence.save();
+                CoolSuppliesPersistence.save();
             }
             catch (RuntimeException e) {
                 return e.getMessage();
@@ -482,29 +591,64 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     /**
-     * Starts the school year for a specified order.
+     * Starts the school year for the specified order.
+     * Changes the order status based on its current state:
+     * - 'Started' orders become 'Penalized'
+     * - 'Paid' orders become 'Prepared'
      *
-     * @author Zhengxuan Zhao
-     * @param orderNumebr the number of the order
+     * @param orderNumber the number of the order to process
      * @return a message indicating the result of the operation
+     * @throws RuntimeException if the school year has already been started for the order or the order does not exist
+     * 
+     * @author Mary Li, Shengyi Zhong
      */
-    public static String startYear(String orderNumebr) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumebr));
+    public static String startYear(String orderNumber) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
 
-        if (order == null){
-            return "Order " + orderNumebr + " does not exist";
+        if (order == null) {
+            return "Order " + orderNumber + " does not exist";
         }
+
         try {
             order.startSchoolYear();
-            //OrderPersistence.save();
-        }
-        catch (RuntimeException e) {
+            CoolSuppliesPersistence.save();
+            return "Successfully started school year";
+        } catch (RuntimeException e) {
             return e.getMessage();
         }
+    }
 
-        return "Successfully started school year";
+    /**
+     * Picks up an order by changing its status from 'Prepared' to 'PickedUp'.
+     *
+     * @param orderNumber the number of the order to pick up
+     * @return a message indicating the result of the operation
+     * @throws RuntimeException if the order cannot be picked up due to its current status
+     * 
+     * @author Shengyi Zhong
+     */
+    public static String pickUpOrder(String orderNumber) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+
+        if (order == null) {
+            return "Order " + orderNumber + " does not exist";
+        }
+
+        Order.Status currentStatus = order.getStatus();
+
+        if (currentStatus == Order.Status.Prepared) {
+            order.setStatus(Order.Status.PickedUp);
+            try {
+                CoolSuppliesPersistence.save();
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
+            return "Order is picked up.";
+        } else if (currentStatus == Order.Status.PickedUp) {
+            return "The order is already picked up";
+        } else {
+            return "Cannot pick up a " + currentStatus.toString().toLowerCase() + " order";
+        }
     }
-    public static String pickUpOrder(String orderNumber){
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
+
 }
