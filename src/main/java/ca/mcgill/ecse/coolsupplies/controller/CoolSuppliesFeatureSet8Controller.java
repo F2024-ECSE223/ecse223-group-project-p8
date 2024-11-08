@@ -14,272 +14,53 @@ public class CoolSuppliesFeatureSet8Controller {
 
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
-    public static String updateOrder(String levelName, int orderNumber, String studentName) {
-        Order order = Order.getWithNumber(orderNumber);
-        Student student = Student.getWithName(studentName);
-        PurchaseLevel purchaseLevel;
-        try {
-            purchaseLevel = PurchaseLevel.valueOf(levelName);
-        } catch (IllegalArgumentException e) {
-            return String.format("Purchase level %s does not exist.", levelName);
-        }
-
-        if (!Order.hasWithNumber(orderNumber)) {
-            return String.format("Order %d does not exist", orderNumber);
-        }
-        else if (student == null) {
-            return String.format("Student %s does not exist.", studentName);
-        }
-        else if (student.getParent() != order.getParent()) {
-            return String.format("Student %s is not a child of the parent %s.", studentName, order.getParent().getEmail());
-        }
-
-        else if (!order.getStatusFullName().equals("Started")){
-            //Must separate because picked up needs to give an error message with space and lowercase
-            if(order.getStatusFullName().equals("PickedUp")){
-                return "Cannot update a picked up order";
-            }
-            else{
-                return String.format("Cannot update a %s order",order.getStatusFullName().toLowerCase());
-            }
-        }
-
-        else {
-            try {
-                order.updateOrderEvent(purchaseLevel, student);
-                CoolSuppliesPersistence.save();
-            } catch (RuntimeException e) {
-                return e.getMessage();
-            }
-        }
-
-        return ("The order has successfully been updated.");
-
+    // Update order (only purchase level and student)
+    public static String updateOrder(String orderNumber, PurchaseLevel purchaseLevel, String studentName) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
-
     // Add item to order
-    public static String addItemToOrder(String invName, InventoryItem item, String orderNumber, int newQuantity) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-        String itemName;
-
-        //For NotExist Test case - if item doesn't exist in systems
-        try{ itemName = item.getName();}
-        catch(NullPointerException e){ return String.format("Item %s does not exist.", invName);}
-
-
-        if (order == null) {
-            return String.format("Order %s does not exist", orderNumber);
-        }
-        else if (!InventoryItem.hasWithName(itemName)) {
-            return String.format("Item %s does not exist.", invName);
-        }
-
-        List<OrderItem> orderItems = order.getOrderItems();
-        for(OrderItem orderitem : orderItems){
-            if(orderitem.getItem().getName().equals(itemName)){
-                return String.format("Item %s already exists in the order %d.", invName, Integer.parseInt(orderNumber));
-            }
-        }
-
-        if (newQuantity <= 0) {
-            return ("Quantity must be greater than 0.");
-        }
-        else if (!order.getStatusFullName().equals("Started")){
-            //Must separate because PickedUp needs to give an error message with space and lowercase
-            if(order.getStatusFullName().equals("PickedUp")){
-                return "Cannot add items to a picked up order";
-            }
-            else{
-                return String.format("Cannot add items to a %s order",order.getStatusFullName().toLowerCase());
-            }
-        }
-        else {
-            try {
-                OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
-                order.add(thisItem);
-                CoolSuppliesPersistence.save();
-            } catch (RuntimeException e) {
-                return e.getMessage();
-            }
-        }
-        return ("The item has successfully been added");
+    public static String addItemToOrder(InventoryItem item, String orderNumber, int newQuantity) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
-
     // Update quantity of an existing item of order
-    public static String updateQuantity(String itemName, int newQuantity, int orderNumber) {
-
-        if (!InventoryItem.hasWithName(itemName)) {
-            return String.format("Item %s does not exist.", itemName);
-        }
-
-        Order order = Order.getWithNumber(orderNumber);
-
-        if (!Order.hasWithNumber(orderNumber)) {
-            return String.format("Order %d does not exist", orderNumber);
-        }
-
-        List<OrderItem> oItems = order.getOrderItems();
-        OrderItem orderItem = null;
-        for (OrderItem o : oItems) {
-            if (o.getItem().getName().equals(itemName)) {
-                orderItem = o;
-                break;
-            }
-        }
-
-        if (orderItem == null) {
-            return String.format("Item %s does not exist in the order %d.", itemName, orderNumber);
-        }
-
-        if (newQuantity <= 0) {
-            return ("Quantity must be greater than 0.");
-        }
-
-        try {
-            order.updateQuantityEvent(newQuantity, orderItem);
-            CoolSuppliesPersistence.save();
-        }
-        catch (RuntimeException e) {
-            return e.getMessage();
-        }
-
-        return ("The item's quantity has successfully been updated");
+    public static String updateQuantity(int newQuantity, OrderItem item) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
-
-
-    public static String deleteOrderItem(String itemName, String orderNumber) {
-        if (!Order.hasWithNumber(Integer.parseInt(orderNumber))) {
-            return String.format("Order %s does not exist", orderNumber);
-        }
-
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-        if (!InventoryItem.hasWithName(itemName)) {
-            return String.format("Item %s does not exist.", itemName);
-        }
-
-        List<OrderItem> oItems = order.getOrderItems();
-        OrderItem orderItem = null;
-
-        for (OrderItem o : oItems) {
-            if (o.getItem().getName().equals(itemName)) {
-                orderItem = o;
-                break;
-            }
-        }
-
-        if (orderItem == null) {
-            return String.format("Item %s does not exist in the order %s.", itemName, orderNumber);
-        }
-        else if (order != null) {
-            try {
-                int oItemIndex = order.indexOfOrderItem(orderItem);
-                OrderItem thisItem = order.getOrderItem(oItemIndex);
-                order.delete(thisItem);
-                CoolSuppliesPersistence.save();
-            } catch (RuntimeException e) {
-                return e.getMessage();
-            }
-        }
-        return ("The order item has successfully been deleted.");
+    // Delete item of order
+    public static String deleteOrderItem(OrderItem item, String orderNumber) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
-
-    // Private method that checks if an item exists in a given list of OrderItems
-    private static boolean itemExists(OrderItem item, List<OrderItem> orderItems) {
-        boolean itemExists = false;
-        for (OrderItem i : orderItems) {
-            if (i == item) {
-                itemExists = true;
-                break;
-            }
-        }
-        return itemExists;
-    }
-
-    /**
-     * @author Artimice Mirchi
-     *         Pays the penalty for the order
-     * @param orderNumber              the number associated with the order
-     * @param penaltyAuthorizationCode The authorization code for the penalty
-     * @param authorizationCode        The authorization code for the order
-     * @return indicates if the penalty was successfully paid
-     */
-    public static String payPenaltyForOrder(String orderNumber, String penaltyAuthorizationCode,
-                                            String authorizationCode) {
-        if (Order.hasWithNumber(Integer.parseInt(orderNumber))) {
-            Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-            if (authorizationCode.length() == 0) {
-                return ("Authorization code is invalid");
-            }
-            if (penaltyAuthorizationCode.length() == 0) {
-                return ("Penalty authorization code is invalid");
-            }
-            if (!order.hasOrderItems()) {
-                return ("Order " + orderNumber + " has no items");
-            }
-
-            try {
-                order.orderHasBeenPrepared(authorizationCode, penaltyAuthorizationCode);
-                CoolSuppliesPersistence.save();
-            } catch (RuntimeException e) {
-                return (e.getMessage());
-            }
-        } else {
-            return ("Order " + orderNumber + " does not exist");
-        }
-        return ("Done");
-
-    }
-
-    /**
-     * @author Artimice Mirchi
-     *         Pays the penalty for the order
-     * @param orderNumber       the number associated with the order
-     * @param AuthorizationCode The authorization code for the order
-     * @return indicates if the order has been successfully paid
-     */
+    // Pay for order
+    // TODO: State Machine is not implemented yet
     public static String payOrder(String orderNumber, String AuthorizationCode) {
-        if (Order.hasWithNumber(Integer.parseInt(orderNumber))) {
-            Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-            if (AuthorizationCode.length() == 0) {
-                return ("Authorization code is invalid");
-            }
-            if (!order.hasOrderItems()) {
-                return ("Order " + orderNumber + " has no items");
-            }
-            String currStatus = order.getStatusFullName();
-            try {
-                order.orderHasBeenPaid(AuthorizationCode);
-                CoolSuppliesPersistence.save();
-            }
-
-            catch (RuntimeException e) {
-                return (e.getMessage());
-            }
-        } else {
-            return ("Order " + orderNumber + " does not exist");
-        }
-        return ("Done");
-
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
-
+    // Pay penalty for order
+    // TODO: State Machine is not implemented yet
+    public static String payPenaltyForOrder(String orderNumber, String AuthorizationCode, String PenaltyAuthorizationCode) {
+        throw new UnsupportedOperationException("Not implemented yet.");
+    }
     // Cancel order
+    // TODO: State Machine is not implemented yet
     public static String cancelOrder(String orderNumber) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-
-        if (order != null) {
-            try {
-                order.cancel();
-                CoolSuppliesPersistence.save();
-            } catch (RuntimeException e) {
-                return e.getMessage();
-            }
-        } else {
-            return "Order " + orderNumber + " does not exist";
-        }
-        return "Order deleted successfully";
-
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 
+    /**
+     * Determines if a bundle item is eligible to be included in an order
+     * based on the order's purchase level.
+     *
+     * This method checks if the item's level (Mandatory, Recommended, or Optional)
+     * matches the purchase level of the order. The eligibility criteria are as follows:
+     * - If the order level is "Mandatory", only items with the "Mandatory" level are included.
+     * - If the order level is "Recommended", both "Mandatory" and "Recommended" items are included.
+     * - If the order level is "Optional", all items are included regardless of their level.
+     *
+     * @author Mary Li
+     * @param orderLevel the purchase level of the order (Mandatory, Recommended, or Optional)
+     * @param itemLevel the purchase level of the item to be checked
+     * @return true if the item's level is eligible for inclusion in the order, false otherwise
+     */
     private static boolean isLevelEligibleForOrder(BundleItem.PurchaseLevel orderLevel, BundleItem.PurchaseLevel itemLevel) {
         switch (orderLevel) {
             case Mandatory:
@@ -293,6 +74,16 @@ public class CoolSuppliesFeatureSet8Controller {
         }
     }
 
+    /**
+     * Retrieves the details of a specific order by its index.
+     * This method handles both regular items and GradeBundle items.
+     * For GradeBundle items, it adds each eligible bundle item separately and applies
+     * a discount if more than one item is included from the bundle.
+     *
+     * @author Mary Li, Zhengxuan Zhao
+     * @param index the index of the order to view (1-based index)
+     * @return a TOOrder object containing the details of the specified order, or null if the index is out of bounds
+     */
     public static TOOrder viewOrder(String index) {
         if (Integer.parseInt(index) > coolSupplies.getOrders().size()) {
             return null;
@@ -401,6 +192,18 @@ public class CoolSuppliesFeatureSet8Controller {
         return toOrder;
     }
 
+    /**
+     * Retrieves the details of all orders in the system.
+     * This method handles both regular items and GradeBundle items.
+     * For GradeBundle items, it adds each eligible bundle item separately and applies
+     * a discount if more than one item is included from the bundle.
+     *
+     * Each order is returned as a TOOrder object containing its associated items
+     * and total price after applying any discounts.
+     *
+     * @author Mary Li, Zhengxuan Zhao
+     * @return a list of TOOrder objects, each representing an order in the system
+     */
     public static List<TOOrder> viewOrders() {
         List<TOOrder> toOrders = new ArrayList<>();
 
@@ -512,44 +315,11 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     // Start school year
-    public static String startYear(String orderNumber) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-
-        if (order == null) {
-            return "Order " + orderNumber + " does not exist";
-        }
-
-        try {
-            order.startSchoolYear();
-            CoolSuppliesPersistence.save();
-            return "Successfully started school year";
-        } catch (RuntimeException e) {
-            return e.getMessage();
-        }
-
+    public static String startYear(String orderNumebr) {
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 
-    public static String pickUpOrder(String orderNumber) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-
-        if (order == null) {
-            return "Order " + orderNumber + " does not exist";
-        }
-
-        Order.Status currentStatus = order.getStatus();
-
-        if (currentStatus == Order.Status.Prepared) {
-            order.setStatus(Order.Status.PickedUp);
-            try {
-                CoolSuppliesPersistence.save();
-            } catch (RuntimeException e) {
-                return e.getMessage();
-            }
-            return "Order is picked up.";
-        } else if (currentStatus == Order.Status.PickedUp) {
-            return "The order is already picked up";
-        } else {
-            return "Cannot pickup a " + currentStatus.toString().toLowerCase() + " order";
-        }
+    public static String pickUpOrder(String orderNumber){
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }
