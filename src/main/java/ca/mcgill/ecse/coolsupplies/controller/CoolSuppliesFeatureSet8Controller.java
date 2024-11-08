@@ -10,10 +10,59 @@ import java.util.ArrayList;
 import java.util.List;
 public class CoolSuppliesFeatureSet8Controller {
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
-    // Update order (only purchase level and student)
-    public static String updateOrder(String orderNumber, PurchaseLevel purchaseLevel, String studentName) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    /**
+     * @author Jyothsna Seema
+     *         Updates the order with new quantity and level 
+     * @param levelName              The purchase level name 
+     * @param orderNumber            The order number of the order to be updated
+     * @param studentName            The student name to be updated
+     * @return indicates if the order was updated successfully 
+     */
+    
+     public static String updateOrder(String levelName, int orderNumber, String studentName) {
+        
+        Order order = Order.getWithNumber(orderNumber);
+        Student student = Student.getWithName(studentName);
+        PurchaseLevel purchaseLevel;
+        try {
+            purchaseLevel = PurchaseLevel.valueOf(levelName);
+        } catch (IllegalArgumentException e) {
+            return String.format("Purchase level %s does not exist.", levelName);
+        }
+
+        if (!Order.hasWithNumber(orderNumber)) {
+            return String.format("Order %d does not exist", orderNumber);
+        }
+        else if (student == null) {
+            return String.format("Student %s does not exist.", studentName);
+        }
+        else if (student.getParent() != order.getParent()) {
+            return String.format("Student %s is not a child of the parent %s.", studentName, order.getParent().getEmail());
+        }
+
+        else if (!order.getStatusFullName().equals("Started")){
+            //Must separate because picked up needs to give an error message with space and lowercase
+            if(order.getStatusFullName().equals("PickedUp")){
+                return "Cannot update a picked up order";
+            }
+            else{
+                return String.format("Cannot update a %s order",order.getStatusFullName().toLowerCase());
+            }
+        }
+
+        else {
+            try {
+                order.updateOrderEvent(purchaseLevel, student);
+                CoolSuppliesPersistence.save();
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
+        }
+
+        return ("The order has successfully been updated.");
+
     }
+
     // Add item to order
     public static String addItemToOrder(InventoryItem item, String orderNumber, int newQuantity) {
         throw new UnsupportedOperationException("Not implemented yet.");
@@ -22,10 +71,50 @@ public class CoolSuppliesFeatureSet8Controller {
     public static String updateQuantity(int newQuantity, OrderItem item) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
-    // Delete item of order
-    public static String deleteOrderItem(OrderItem item, String orderNumber) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+     /**
+     * @author Jyothsna Seema, Zhengxuan Zhao, Snigdha Sen
+     *         Deletes the order with new quantity and level 
+     * @param itemName              The item name of the item to be delted
+     * @param orderNumber           The order number of the order to be updated
+     * @return indicates if the order was updated successfully 
+     */
+    // Delete an item in an existing order
+    public static String deleteOrderItem(String itemName, String orderNumber) {
+        if (!Order.hasWithNumber(Integer.parseInt(orderNumber))) {
+            return String.format("Order %s does not exist", orderNumber);
+        }
+
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+        if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", itemName);
+        }
+
+        List<OrderItem> oItems = order.getOrderItems();
+        OrderItem orderItem = null;
+
+        for (OrderItem o : oItems) {
+            if (o.getItem().getName().equals(itemName)) {
+                orderItem = o;
+                break;
+            }
+        }
+
+        if (orderItem == null) {
+            return String.format("Item %s does not exist in the order %s.", itemName, orderNumber);
+        }
+        else if (order != null) {
+            try {
+                int oItemIndex = order.indexOfOrderItem(orderItem);
+                OrderItem thisItem = order.getOrderItem(oItemIndex);
+                order.delete(thisItem);
+                CoolSuppliesPersistence.save();
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
+        }
+        return ("The order item has successfully been deleted.");
     }
+
     // Pay for order
     // TODO: State Machine is not implemented yet
     /**
