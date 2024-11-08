@@ -156,17 +156,32 @@ public class OrderStepDefinitions {
             int number = Integer.parseInt(row.get("number"));
             Date date = Date.valueOf(row.get("date"));
             PurchaseLevel level = PurchaseLevel.valueOf(row.get("level"));
+
             Parent parent = (Parent) User.getWithEmail(row.get("parentEmail"));
             Student student = Student.getWithName(row.get("studentName"));
-            Order order = new Order(number, date, level, parent, student, coolSupplies);
-            order.setAuthorizationCode(row.get("authorizationCode"));
-            order.setStatus(Order.Status.valueOf(row.get("status")));
-            order.setPenaltyAuthorizationCode(row.get("penaltyAuthorizationCode"));
-            coolSupplies.addOrder(order);
 
+            Order order = new Order(number, date, level, parent, student, coolSupplies);
+
+            String authorizationCode = row.get("authorizationCode");
+            if (authorizationCode == null || authorizationCode.isEmpty()) {
+                authorizationCode = null;
+            }
+            order.setAuthorizationCode(authorizationCode);
+
+            String status = row.get("status");
+            if (status != null && !status.isEmpty()) {
+                order.setStatus(Order.Status.valueOf(status));
+            }
+
+            String penaltyAuthorizationCode = row.get("penaltyAuthorizationCode");
+            if (penaltyAuthorizationCode == null || penaltyAuthorizationCode.isEmpty()) {
+                penaltyAuthorizationCode = null;
+            }
+            order.setPenaltyAuthorizationCode(penaltyAuthorizationCode);
+
+            coolSupplies.addOrder(order);
         }
     }
-
 
     /**
      * @author Jiatian Liu
