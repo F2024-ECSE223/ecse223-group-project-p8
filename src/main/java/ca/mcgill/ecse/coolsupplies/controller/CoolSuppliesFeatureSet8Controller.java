@@ -413,7 +413,27 @@ public class CoolSuppliesFeatureSet8Controller {
         return "Successfully started school year";
     }
 
-    public static String pickUpOrder(String orderNumber){
-        throw new UnsupportedOperationException("Not implemented yet.");
+    public static String pickUpOrder(String orderNumber) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+
+        if (order == null) {
+            return "Order " + orderNumber + " does not exist";
+        }
+
+        Order.Status currentStatus = order.getStatus();
+
+        if (currentStatus == Order.Status.Prepared) {
+            order.setStatus(Order.Status.PickedUp);
+            try {
+                CoolSuppliesPersistence.save();
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
+            return "Order is picked up.";
+        } else if (currentStatus == Order.Status.PickedUp) {
+            return "The order is already picked up";
+        } else {
+            return "Cannot pickup a " + currentStatus.toString().toLowerCase() + " order";
+        }
     }
 }
