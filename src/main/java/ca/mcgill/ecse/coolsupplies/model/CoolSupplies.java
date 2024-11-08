@@ -1,12 +1,13 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
+/*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
 
 package ca.mcgill.ecse.coolsupplies.model;
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 import java.util.*;
 import java.sql.Date;
 
-// line 3 "../../../../../CoolSupplies.ump"
+// line 1 "../../../../../CoolSuppliesPersistence.ump"
+// line 5 "../../../../../CoolSupplies.ump"
 public class CoolSupplies
 {
 
@@ -964,6 +965,15 @@ public class CoolSupplies
       grades.remove(aGrade);
     }
     
+  }
+
+  // line 3 "../../../../../CoolSuppliesPersistence.ump"
+   public void reinitialize(){
+    User.reinitializeUniqueEmail(getParents(), getAdmin());
+    Student.reinitializeUniqueName(getStudents());
+    Order.reinitializeUniqueNumber(getOrders());
+    InventoryItem.reinitializeUniqueName(getItems(), getBundles());
+    Grade.reinitializeUniqueLevel(getGrades());
   }
 
 }

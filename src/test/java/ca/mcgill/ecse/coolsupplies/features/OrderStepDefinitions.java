@@ -2,8 +2,12 @@ package ca.mcgill.ecse.coolsupplies.features;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
+
 
 import java.util.*;
 import java.sql.Date;
@@ -569,5 +573,4 @@ public class OrderStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         assertTrue(actualOrderList.isEmpty(), "Expected no orders, but found some.");
     }
-
-}
+  }
