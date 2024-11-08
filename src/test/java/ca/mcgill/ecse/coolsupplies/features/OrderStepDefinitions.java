@@ -6,8 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.*;
+
+import com.thoughtworks.xstream.mapper.Mapper.Null;
+
 import java.sql.Date;
 
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
@@ -32,11 +36,8 @@ import io.cucumber.java.en.When;
 public class OrderStepDefinitions {
 
   private CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
-  private List<OrderItem> orderItems;
-  List<Order> resultOrders;
   String error;
-  TOOrder actualOrder;
-  List<TOOrder> actualOrderList = new ArrayList<>();
+  List<TOOrder> resultOrders;
 
   /**
    * @author Shengyi Zhong
@@ -177,6 +178,9 @@ public class OrderStepDefinitions {
     }
   }
 
+  /**
+   * @author Shengyi Zhong
+   */  
   @Given("the order {string} is marked as {string}")
   public void the_order_is_marked_as(String string, String string2) {
     Order order = Order.getWithNumber(Integer.parseInt(string));
@@ -233,7 +237,8 @@ public class OrderStepDefinitions {
   @When("the parent attempts to get from the system the order with number {string}")
   public void the_parent_attempts_to_get_from_the_system_the_order_with_number(String string) {
     // Write code here that turns the phrase above into concrete actions
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
     assertNotNull("Order not found in the system", order);
 
   }
@@ -290,7 +295,7 @@ public class OrderStepDefinitions {
   @When("the school admin attempts to get from the system all orders")
   public void the_school_admin_attempts_to_get_from_the_system_all_orders() {
     // Write code here that turns the phrase above into concrete actions
-    resultOrders = coolSupplies.getOrders();
+    resultOrders = CoolSuppliesFeatureSet8Controller.viewOrders();
   }
 
   /**
@@ -299,7 +304,8 @@ public class OrderStepDefinitions {
   @Then("the order {string} shall contain penalty authorization code {string}")
   public void the_order_shall_contain_penalty_authorization_code(String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
     assertEquals(string2, order.getPenaltyAuthorizationCode());
   }
 
@@ -310,7 +316,8 @@ public class OrderStepDefinitions {
   public void the_order_shall_not_contain_penalty_authorization_code(String string,
                                                                      String string2) {
     // Write code here that turns the phrase above into concrete actions
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
     assertNotEquals(string2, order.getPenaltyAuthorizationCode());
   }
 
@@ -320,7 +327,8 @@ public class OrderStepDefinitions {
   @Then("the order {string} shall not contain authorization code {string}")
   public void the_order_shall_not_contain_authorization_code(String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
     assertNotEquals(string2, order.getAuthorizationCode());
   }
 
@@ -330,8 +338,8 @@ public class OrderStepDefinitions {
   @Then("the order {string} shall not exist in the system")
   public void the_order_shall_not_exist_in_the_system(String string) {
     // Write code here that turns the phrase above into concrete actions
-    boolean isNotNull = Order.hasWithNumber(Integer.parseInt(string));
-    assertFalse(isNotNull);
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    assertNull(actualOrder);
   }
 
   /**
@@ -340,7 +348,8 @@ public class OrderStepDefinitions {
   @Then("the order {string} shall contain authorization code {string}")
   public void the_order_shall_contain_authorization_code(String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
     assertEquals(string2, order.getAuthorizationCode());
   }
 
@@ -363,7 +372,7 @@ public class OrderStepDefinitions {
   @Then("the order {string} shall not contain {string}")
   public void the_order_shall_not_contain(String string, String string2) {
     // Write code here that turns the phrase above into concrete actions
-    actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
     Order order = Order.getWithNumber(actualOrder.getNumber());
     List<OrderItem> orderItems = order.getOrderItems();
     boolean matchFound = false;
@@ -405,7 +414,8 @@ public class OrderStepDefinitions {
   public void the_order_shall_not_contain_with_quantity(String string, String string2,
                                                         String string3) {
     boolean contains = false;
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
     List<OrderItem> orderItemsList = order.getOrderItems();
 
     for (OrderItem orderItem : orderItemsList) {
@@ -427,7 +437,8 @@ public class OrderStepDefinitions {
    */
   @Then("the order {string} shall contain {string} with quantity {string}")
   public void the_order_shall_contain_with_quantity(String string, String string2, String string3) {
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
     List<OrderItem> orderItemsList = order.getOrderItems();
 
     for (OrderItem orderItem : orderItemsList) {
@@ -447,11 +458,8 @@ public class OrderStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     // Map<Order, OrderState> orderStates =
     // CoolSuppliesFeatureSet8Controller.getOrderStates();
-
-    System.out.println(Order.getWithNumber(1));
     TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
     Order order = Order.getWithNumber(actualOrder.getNumber());
-
 
     String status = order.getStatus().toString();
     assertEquals(string2, status);
@@ -474,7 +482,9 @@ public class OrderStepDefinitions {
   public void the_order_shall_contain_level_and_student(String string, String string2,
                                                         String string3) {
     // Write code here that turns the phrase above into concrete actions
-    Order order = Order.getWithNumber(Integer.parseInt(string));
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    Order order = Order.getWithNumber(actualOrder.getNumber());
+
     PurchaseLevel level = PurchaseLevel.valueOf(string2);
     Student student = Student.getWithName(string3);
 
@@ -533,7 +543,7 @@ public class OrderStepDefinitions {
                                                                                      io.cucumber.datatable.DataTable expectedOrderDataTable) {
     List<Map<String, String>> expectedItemList = expectedOrderDataTable.asMaps();
 
-    actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
+    TOOrder actualOrder = CoolSuppliesFeatureSet8Controller.viewOrder(string);
     Order order = Order.getWithNumber(actualOrder.getNumber());
 
     // Assert that the size of the expected list matches the actual list
@@ -560,7 +570,7 @@ public class OrderStepDefinitions {
   @Then("no order entities shall be presented")
   public void no_order_entities_shall_be_presented() {
     // Write code here that turns the phrase above into concrete actions
-    assertTrue(actualOrderList.isEmpty(), "Expected no orders, but found some.");
+    assertTrue(CoolSuppliesFeatureSet8Controller.viewOrders().isEmpty(), "Expected no orders, but found some.");
   }
 
 }
