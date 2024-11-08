@@ -181,10 +181,30 @@ public class CoolSuppliesFeatureSet8Controller {
         return ("Done");
 
     }
-    // Cancel order
-    // TODO: State Machine is not implemented yet
+     /**
+     * Cancels an order.
+     *
+     * @param orderNumber the number of the order
+     * @return a message indicating the result of the cancellation operation
+     */
     public static String cancelOrder(String orderNumber) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+
+        if (order != null) {
+            try {
+                order.cancel();
+
+                order.delete();
+//                OrderPersistence.save();
+            }
+            catch (RuntimeException e) {
+                return e.getMessage();
+            }
+        }
+        else{
+            return "Order " + orderNumber + " does not exist";
+        }
+        return "Order deleted successfully";
     }
 
     /**
@@ -461,9 +481,28 @@ public class CoolSuppliesFeatureSet8Controller {
         return toOrders;
     }
 
-    // Start school year
+    /**
+     * Starts the school year for a specified order.
+     *
+     * @author Zhengxuan Zhao
+     * @param orderNumebr the number of the order
+     * @return a message indicating the result of the operation
+     */
     public static String startYear(String orderNumebr) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumebr));
+
+        if (order == null){
+            return "Order " + orderNumebr + " does not exist";
+        }
+        try {
+            order.startSchoolYear();
+            //OrderPersistence.save();
+        }
+        catch (RuntimeException e) {
+            return e.getMessage();
+        }
+
+        return "Successfully started school year";
     }
     public static String pickUpOrder(String orderNumber){
         throw new UnsupportedOperationException("Not implemented yet.");
