@@ -17,13 +17,13 @@ public class TOOrderItem
     private String itemName;
     private String gradeBundleName;
     private int price;
-    private int discount;
+    private String discount;
 
     //------------------------
     // CONSTRUCTOR
     //------------------------
 
-    public TOOrderItem(int aQuantity, String aItemName, String aGradeBundleName, int aPrice, int aDiscount)
+    public TOOrderItem(int aQuantity, String aItemName, String aGradeBundleName, int aPrice, String aDiscount)
     {
         quantity = aQuantity;
         itemName = aItemName;
@@ -68,7 +68,7 @@ public class TOOrderItem
         return wasSet;
     }
 
-    public boolean setDiscount(int aDiscount)
+    public boolean setDiscount(String aDiscount)
     {
         boolean wasSet = false;
         discount = aDiscount;
@@ -96,7 +96,7 @@ public class TOOrderItem
         return price;
     }
 
-    public int getDiscount()
+    public String getDiscount()
     {
         return discount;
     }
@@ -115,5 +115,3 @@ public class TOOrderItem
                 "discount" + ":" + getDiscount()+ "]";
     }
 }
-
-
