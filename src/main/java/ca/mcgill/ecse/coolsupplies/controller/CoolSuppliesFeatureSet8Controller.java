@@ -137,10 +137,16 @@ public class CoolSuppliesFeatureSet8Controller {
      * @return a TOOrder object containing the details of the specified order, or null if the index is out of bounds
      */
     public static TOOrder viewOrder(String index) {
-        if (Integer.parseInt(index) > coolSupplies.getOrders().size()) {
+        Order order = null;
+        for(Order o: coolSupplies.getOrders()){
+            if(o.getNumber() == Integer.parseInt(index)){
+                order = o;
+                break;
+            }
+        }
+        if (order == null) {
             return null;
         }
-        Order order = coolSupplies.getOrder(Integer.parseInt(index) - 1);
 
         int orderNumber = order.getNumber();
         Date orderDate = order.getDate();
