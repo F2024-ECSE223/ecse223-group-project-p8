@@ -10,6 +10,9 @@ import ca.mcgill.ecse.coolsupplies.model.GradeBundle;
 import ca.mcgill.ecse.coolsupplies.model.Item;
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
+
+
 /**
  * Controller for managing the bundle items of a grade bundle in the CoolSupplies system (adding, updating, deleting, and retrieving).
  * 
@@ -62,6 +65,11 @@ public class CoolSuppliesFeatureSet5Controller {
         PurchaseLevel purchaseLevel = PurchaseLevel.valueOf(level);
         BundleItem newItem = new BundleItem(quantity, purchaseLevel, coolSupplies, bundle, aItem); 
         coolSupplies.addBundleItem(newItem);
+        try {
+          CoolSuppliesPersistence.save();
+        } catch (RuntimeException e) {
+          return e.getMessage();
+        }
         return "The bundle item has been succesfully added";
     }
   }
@@ -97,8 +105,13 @@ public class CoolSuppliesFeatureSet5Controller {
       if(itemName.equals(nameItemList)){
         item.setQuantity(newQuantity);
         PurchaseLevel newPurchaseLevel = PurchaseLevel.valueOf(newLevel);
-        item.setLevel(newPurchaseLevel);  
-        return "The bundle item has successfully been updated";     
+        item.setLevel(newPurchaseLevel);
+        try {
+          CoolSuppliesPersistence.save();
+        } catch (RuntimeException e) {
+          return e.getMessage();
+        }
+        return "The bundle item has successfully been updated";
       }
     }
 
@@ -124,6 +137,11 @@ public class CoolSuppliesFeatureSet5Controller {
       String nameItemList = item.getItem().getName();
       if(itemName.equals(nameItemList)){
         item.delete();
+        try {
+          CoolSuppliesPersistence.save();
+        } catch (RuntimeException e) {
+          return e.getMessage();
+        }
         return "The bundle item has been deleted.";
       }
     }

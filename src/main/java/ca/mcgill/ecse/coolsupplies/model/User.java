@@ -1,10 +1,11 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.34.0.7242.6b8819789 modeling language!*/
+/*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
 
 package ca.mcgill.ecse.coolsupplies.model;
 import java.util.*;
 
-// line 16 "../../../../../CoolSupplies.ump"
+// line 11 "../../../../../CoolSuppliesPersistence.ump"
+// line 18 "../../../../../CoolSupplies.ump"
 public abstract class User
 {
 
@@ -95,6 +96,17 @@ public abstract class User
   public void delete()
   {
     usersByEmail.remove(getEmail());
+  }
+
+  // line 13 "../../../../../CoolSuppliesPersistence.ump"
+   public static  void reinitializeUniqueEmail(List<Parent> parents, SchoolAdmin admin){
+    usersByEmail.clear();
+    for (var parent : parents) {
+      usersByEmail.put(parent.getEmail(), parent);
+    }
+    if (admin != null) {
+      usersByEmail.put(admin.getEmail(), admin);
+    }
   }
 
 
