@@ -7,6 +7,9 @@ import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Grade;
 
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
+
+
 /**
  * Controller for managing grades in the CoolSupplies system.
  * This class includes methods for adding, updating, deleting, and retrieving grades.
@@ -36,6 +39,7 @@ public class CoolSuppliesFeatureSet7Controller {
     }
     try {
       coolSupplies.addGrade(level);
+      CoolSuppliesPersistence.save();
     } catch (RuntimeException e) {
       return e.getMessage();
     }
@@ -63,6 +67,7 @@ public class CoolSuppliesFeatureSet7Controller {
     Grade grade = Grade.getWithLevel(level);
     try {
       grade.setLevel(newLevel);
+      CoolSuppliesPersistence.save();
     } catch (RuntimeException e) {
       return e.getMessage();
     }
@@ -83,6 +88,7 @@ public class CoolSuppliesFeatureSet7Controller {
     }
     try {
       grade.delete();
+      CoolSuppliesPersistence.save();
     } catch (RuntimeException e) {
       return e.getMessage();
     }

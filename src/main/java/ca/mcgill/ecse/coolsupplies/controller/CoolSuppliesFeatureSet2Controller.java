@@ -8,6 +8,9 @@ import ca.mcgill.ecse.coolsupplies.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
+
+
 /**
  * This class provides methods to add, update, delete, and retrieve students from the system.
  *
@@ -37,6 +40,11 @@ public class CoolSuppliesFeatureSet2Controller {
     Grade grade = Grade.getWithLevel(gradeLevel);
     Student student = new Student(name, coolSupplies, grade);
     coolSupplies.addStudent(student);
+    try {
+      CoolSuppliesPersistence.save();
+    } catch (RuntimeException e) {
+      return e.getMessage();
+    }
     return "The student has been added to the system.";
   }
 
@@ -74,6 +82,11 @@ public class CoolSuppliesFeatureSet2Controller {
     }
     student.setName(newName);
     student.setGrade(grade);
+    try {
+      CoolSuppliesPersistence.save();
+    } catch (RuntimeException e) {
+      return e.getMessage();
+    }
     return "Student has been updated.";
   }
 
@@ -87,6 +100,11 @@ public class CoolSuppliesFeatureSet2Controller {
     if (Student.hasWithName(name)) {
       Student student = Student.getWithName(name);
       student.delete();
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
       return "The student has been deleted.";
     }
     return "The student does not exist.";

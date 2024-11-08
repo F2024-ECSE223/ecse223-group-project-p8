@@ -7,6 +7,9 @@ import ca.mcgill.ecse.coolsupplies.model.GradeBundle;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
+
+
 /**
  * This class provides the controller methods to add, update, delete, and get Bundles from the system
  *
@@ -52,6 +55,11 @@ public class CoolSuppliesFeatureSet4Controller {
     else {
       GradeBundle bundle = new GradeBundle (name, discount, coolSupplies, grade);
       coolSupplies.addBundle(bundle);
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
 
       return ("The bundle has been added successfully.");
     }
@@ -96,11 +104,16 @@ public class CoolSuppliesFeatureSet4Controller {
     }
 
     else {
-        GradeBundle bundle = (GradeBundle) GradeBundle.getWithName(name);
-        bundle.setName(newName);
-        bundle.setDiscount(newDiscount);
-        bundle.setGrade(newGrade);
-        return ("The bundle has been successfully updated.");
+      GradeBundle bundle = (GradeBundle) GradeBundle.getWithName(name);
+      bundle.setName(newName);
+      bundle.setDiscount(newDiscount);
+      bundle.setGrade(newGrade);
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
+      return ("The bundle has been successfully updated.");
     }
 
   }
@@ -114,10 +127,15 @@ public class CoolSuppliesFeatureSet4Controller {
 
   public static String deleteBundle(String name) {
     if (GradeBundle.hasWithName(name)) {
-            GradeBundle bundle = (GradeBundle) GradeBundle.getWithName(name);
-            bundle.delete();
-            return "Bundle has been deleted.";
-        }
+      GradeBundle bundle = (GradeBundle) GradeBundle.getWithName(name);
+      bundle.delete();
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
+      return "Bundle has been deleted.";
+    }
 
     return ("The grade bundle does not exist.");
   }

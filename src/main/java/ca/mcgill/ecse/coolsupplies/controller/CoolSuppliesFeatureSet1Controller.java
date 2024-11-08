@@ -11,6 +11,9 @@ import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Parent;
 import ca.mcgill.ecse.coolsupplies.model.SchoolAdmin;
 
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
+
+
 /**
  * Controller for managing admin accounts and parent accounts within the CoolSupplies system.
  *
@@ -30,6 +33,11 @@ public class CoolSuppliesFeatureSet1Controller {
     if (coolSupplies.hasAdmin()){
       SchoolAdmin schoolAdmin = coolSupplies.getAdmin();
       schoolAdmin.setPassword(password);
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
       return "Admin password is updated successfully.";
     }
     else{
@@ -84,6 +92,11 @@ public class CoolSuppliesFeatureSet1Controller {
 
     Parent parent = new Parent(email, password, name, phoneNumber, coolSupplies);
     coolSupplies.addParent(parent);
+    try {
+      CoolSuppliesPersistence.save();
+    } catch (RuntimeException e) {
+      return e.getMessage();
+    }
 
     return "Parent added successfully.";
   }
@@ -117,6 +130,11 @@ public class CoolSuppliesFeatureSet1Controller {
       parent.setName(newName);
       parent.setPassword(newPassword);
       parent.setPhoneNumber(newPhoneNumber);
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
       return "Parent account updated successfully.";
     }
     else {
@@ -134,6 +152,11 @@ public class CoolSuppliesFeatureSet1Controller {
     Parent parent = (Parent) User.getWithEmail(email);
     if (parent != null){
       parent.delete();
+      try {
+        CoolSuppliesPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
       return "Parent account deleted successfully.";
     }
     else{
