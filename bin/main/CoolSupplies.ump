@@ -1,5 +1,8 @@
 namespace ca.mcgill.ecse.coolsupplies.model;
 
+use CoolSuppliesPersistence.ump;
+use OrderStates.ump;
+
 class CoolSupplies {
   depend ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
   1 <@>- 0..1 SchoolAdmin admin;
