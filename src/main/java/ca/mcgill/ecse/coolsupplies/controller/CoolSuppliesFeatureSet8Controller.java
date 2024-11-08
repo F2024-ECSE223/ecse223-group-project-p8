@@ -12,6 +12,7 @@ import java.util.List;
 public class CoolSuppliesFeatureSet8Controller {
 
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
+  
     public static String updateOrder(String levelName, int orderNumber, String studentName) {
 
         Order order = Order.getWithNumber(orderNumber);
@@ -23,18 +24,6 @@ public class CoolSuppliesFeatureSet8Controller {
             return String.format("Purchase level %s does not exist.", levelName);
         }
 
-
-        // PurchaseLevel newPurchaseLevel = null;
-        // for (PurchaseLevel level : PurchaseLevel.values()) {
-        //     if (level.equals(purchaseLevel)) {
-        //         newPurchaseLevel = level;
-        //         break;
-        //     }
-        // }
-
-        // if (!order.getLevel().toString().equals(levelName)) {
-        //     return String.format("Purchase level %s does not exist.", levelName);
-        // }
         if (!Order.hasWithNumber(orderNumber)) {
             return String.format("Order %d does not exist", orderNumber);
         }
@@ -58,7 +47,7 @@ public class CoolSuppliesFeatureSet8Controller {
         else {
             try {
                 order.updateOrderEvent(purchaseLevel,student);
-//                OrderPersistence.save();
+                OrderPersistence.save();
             }
             catch (RuntimeException e) {
                 return e.getMessage();
@@ -66,9 +55,7 @@ public class CoolSuppliesFeatureSet8Controller {
         }
 
         return ("The order has successfully been updated.");
-
     }
-
     // Add item to order
     public static String addItemToOrder(String invName, InventoryItem item, String orderNumber, int newQuantity) {
         Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
@@ -117,7 +104,6 @@ public class CoolSuppliesFeatureSet8Controller {
         }
         return ("The item has successfully been added");
     }
-
     // Update quantity of an existing item of order
     public static String updateQuantity(String itemName, int newQuantity, int orderNumber) {
 
@@ -198,18 +184,6 @@ public class CoolSuppliesFeatureSet8Controller {
         return ("The order item has successfully been deleted.");
     }
 
-    // Private method that checks if an item exists in a given list of OrderItems
-    private static boolean itemExists(OrderItem item, List<OrderItem> orderItems) {
-        boolean itemExists = false;
-        for (OrderItem i : orderItems) {
-            if (i == item) {
-                itemExists = true;
-                break;
-            }
-        }
-        return itemExists;
-    }
-
     /**
      * @author Artimice Mirchi
      * Pays the penalty for the order
@@ -274,9 +248,7 @@ public class CoolSuppliesFeatureSet8Controller {
             return ("Order " +orderNumber+ " does not exist");
         }
         return ("Done");
-
     }
-
     // Cancel order
     // TODO: State Machine is not implemented yet
     public static String cancelOrder(String orderNumber) {
@@ -285,6 +257,8 @@ public class CoolSuppliesFeatureSet8Controller {
         if (order != null) {
             try {
                 order.cancel();
+              
+                order.delete();
 //                OrderPersistence.save();
             }
             catch (RuntimeException e) {
@@ -298,10 +272,6 @@ public class CoolSuppliesFeatureSet8Controller {
 
     }
 
-    // View individual order (including parent, student, status, number, date, level, authorization codes,
-    //individual items and items in bundles including their prices and deducted discounts, and total
-    //price)
-    // TODO: State Machine is not implemented yet
     public static TOOrder viewOrder(String index) {
         Order order = Order.getWithNumber(Integer.parseInt(index));
         if(order == null)
@@ -443,27 +413,7 @@ public class CoolSuppliesFeatureSet8Controller {
         return "Successfully started school year";
     }
 
-    public static String pickUpOrder(String orderNumber) {
-        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
-
-        if (order == null) {
-            return "Order " + orderNumber + " does not exist";
-        }
-
-        Order.Status currentStatus = order.getStatus();
-
-        if (currentStatus == Order.Status.Prepared) {
-            order.setStatus(Order.Status.PickedUp);
-            try {
-                CoolSuppliesPersistence.save();
-            } catch (RuntimeException e) {
-                return e.getMessage();
-            }
-            return "Order is picked up.";
-        } else if (currentStatus == Order.Status.PickedUp) {
-            return "The order is already picked up";
-        } else {
-            return "Cannot pickup a " + currentStatus.toString().toLowerCase() + " order";
-        }
+    public static String pickUpOrder(String orderNumber){
+        throw new UnsupportedOperationException("Not implemented yet.");
     }
 }
