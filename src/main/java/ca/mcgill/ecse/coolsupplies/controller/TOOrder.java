@@ -1,3 +1,6 @@
+/*PLEASE DO NOT EDIT THIS CODE*/
+/*This code was generated using the UMPLE 1.35.0.7523.c616a4dce modeling language!*/
+
 package ca.mcgill.ecse.coolsupplies.controller;
 
 import java.sql.Date;
@@ -21,14 +24,14 @@ public class TOOrder
     private String level;
     private String authorizationCode;
     private String penaltyAuthorizationCode;
-    private int totalPrice;
+    private double totalPrice;
     private List<TOOrderItem> items;
 
     //------------------------
     // CONSTRUCTOR
     //------------------------
 
-    public TOOrder(String aParentEmail, String aStudentName, String aStatus, int aNumber, Date aDate, String aLevel, String aAuthorizationCode, String aPenaltyAuthorizationCode, int aTotalPrice)
+    public TOOrder(String aParentEmail, String aStudentName, String aStatus, int aNumber, Date aDate, String aLevel, String aAuthorizationCode, String aPenaltyAuthorizationCode, double aTotalPrice)
     {
         parentEmail = aParentEmail;
         studentName = aStudentName;
@@ -121,6 +124,7 @@ public class TOOrder
         this.items = items;
     }
 
+
     public String getParentEmail()
     {
         return parentEmail;
@@ -161,9 +165,13 @@ public class TOOrder
         return penaltyAuthorizationCode;
     }
 
-    public int getTotalPrice()
+    public double getTotalPrice()
     {
         return totalPrice;
+    }
+
+    public List<TOOrderItem> getItems() {
+        return items;
     }
 
     public void delete()
@@ -184,4 +192,3 @@ public class TOOrder
                 "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null");
     }
 }
-
