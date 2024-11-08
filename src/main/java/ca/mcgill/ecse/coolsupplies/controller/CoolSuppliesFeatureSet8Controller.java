@@ -361,24 +361,14 @@ public class CoolSuppliesFeatureSet8Controller {
     }
 
     /**
-     * Retrieves the details of a specific order using its order number.
-     * This method handles both regular items and GradeBundle items within the order.
+     * Retrieves the details of a specific order by its index.
+     * This method handles both regular items and GradeBundle items.
      * For GradeBundle items, it adds each eligible bundle item separately and applies
-     * a discount if more than one unique item is included from the bundle.
-     *
-     * The method returns a `TOOrder` object containing high-level information about the order,
-     * including:
-     * - Order number
-     * - Order date
-     * - Purchase level (Mandatory, Recommended, Optional)
-     * - Parent's email associated with the order
-     * - Student's name associated with the order
-     *
-     * If the specified order does not exist, the method returns `null`.
+     * a discount if more than one item is included from the bundle.
      *
      * @author Mary Li, Zhengxuan Zhao
-     * @param index the order number (1-based index) to retrieve the order details
-     * @return a `TOOrder` object containing the details of the specified order, or `null` if the order is not found
+     * @param index the index of the order to view (1-based index)
+     * @return a TOOrder object containing the details of the specified order, or null if the index is out of bounds
      */
     public static TOOrder viewOrder(String index) {
         Order order = Order.getWithNumber(Integer.parseInt(index));
@@ -389,28 +379,116 @@ public class CoolSuppliesFeatureSet8Controller {
         int orderNumber = order.getNumber();
         Date orderDate = order.getDate();
         BundleItem.PurchaseLevel orderLevel = order.getLevel();
+        String authorizationCode = order.getAuthorizationCode();
+        String penaltyAuthorizationCode = order.getPenaltyAuthorizationCode();
 
-        String parentEmail = order.getParent().getEmail();
-        String studentName = order.getStudent().getName();
+        Parent parent = order.getParent();
+        String parentEmail = parent.getEmail();
+        Student student = order.getStudent();
+        String studentName = student.getName();
 
-        return new TOOrder(orderNumber,orderDate,orderLevel.toString(),parentEmail,studentName);
+        String status = order.getStatus().toString();
+        double totalPrice = 0;
+
+        List<OrderItem> orderItems = order.getOrderItems();
+        List<TOOrderItem> toOrderItems = new ArrayList<>();
+
+        for (OrderItem orderItem : orderItems) {
+            InventoryItem inventoryItem = orderItem.getItem();
+            int orderItemQuantity = orderItem.getQuantity();
+            int unitPrice = 0;
+            String itemName = "";
+            String gradeBundleName = "";
+            List<TOOrderItem> bundleOrderItems = new ArrayList<>();
+
+            if (inventoryItem instanceof Item) {
+                Item item = (Item) inventoryItem;
+                itemName = item.getName() != null ? item.getName() : "";
+                unitPrice = item.getPrice();
+                totalPrice += unitPrice * orderItemQuantity;
+
+                TOOrderItem toOrderItem = new TOOrderItem(
+                        orderItemQuantity,
+                        itemName,
+                        null,
+                        unitPrice,
+                        null
+                );
+                toOrderItems.add(toOrderItem);
+
+            } else if (inventoryItem instanceof GradeBundle) {
+                GradeBundle gradeBundle = (GradeBundle) inventoryItem;
+                gradeBundleName = gradeBundle.getName() != null ? gradeBundle.getName() : "";
+
+                int bundleItemsTotal = 0;
+                int numBundleItemsSelected = 0;
+
+                for (BundleItem bundleItem : gradeBundle.getBundleItems()) {
+                    if (isLevelEligibleForOrder(orderLevel, bundleItem.getLevel())) {
+                        numBundleItemsSelected++;
+                        Item bundleItemItem = bundleItem.getItem();
+                        unitPrice = bundleItemItem.getPrice();
+                        int bundleItemQuantity = bundleItem.getQuantity();
+                        itemName = bundleItemItem.getName();
+
+                        double itemTotalPrice = unitPrice * orderItemQuantity * bundleItemQuantity;
+                        bundleItemsTotal += itemTotalPrice;
+
+                        TOOrderItem toOrderItem = new TOOrderItem(
+                                bundleItemQuantity * orderItemQuantity,
+                                itemName,
+                                gradeBundleName.isEmpty() ? null : gradeBundleName,
+                                unitPrice,
+                                null
+                        );
+                        bundleOrderItems.add(toOrderItem);
+                    }
+                }
+
+                totalPrice += bundleItemsTotal;
+
+                if (numBundleItemsSelected > 1) {
+                    double discountPercentage = gradeBundle.getDiscount() / 100.0;
+                    double discountValue = bundleItemsTotal * discountPercentage;
+                    totalPrice -= discountValue;
+
+                    for (TOOrderItem bundleItem : bundleOrderItems) {
+                        double thediscount = bundleItem.getPrice() * discountPercentage;
+                        String discountAmount;
+                        if (thediscount == Math.floor(thediscount)) {
+                            discountAmount = "-" + String.valueOf((int) thediscount);
+                        } else {
+                            discountAmount = "-" + String.valueOf(thediscount);
+                        }
+                        bundleItem.setDiscount(discountAmount);
+                        toOrderItems.add(bundleItem);
+                    }
+                } else {
+                    toOrderItems.addAll(bundleOrderItems);
+                }
+            }
+        }
+
+        TOOrder toOrder = new TOOrder(
+                parentEmail, studentName, status, orderNumber, orderDate,
+                orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice
+        );
+        toOrder.setItems(toOrderItems);
+
+        return toOrder;
     }
 
     /**
-     * Retrieves a list of all existing orders in the system.
-     * This method processes both regular items and GradeBundle items within each order.
-     * For GradeBundle items, each eligible bundle item is added separately to the order's details.
-     * Additionally, a discount is applied if more than one unique item is included from the same bundle.
+     * Retrieves the details of all orders in the system.
+     * This method handles both regular items and GradeBundle items.
+     * For GradeBundle items, it adds each eligible bundle item separately and applies
+     * a discount if more than one item is included from the bundle.
      *
-     * Each order is represented as a `TOOrder` object, containing details such as:
-     * - Order number
-     * - Order date
-     * - Purchase level (Mandatory, Recommended, Optional)
-     * - Parent's email associated with the order
-     * - Student's name associated with the order
+     * Each order is returned as a TOOrder object containing its associated items
+     * and total price after applying any discounts.
      *
      * @author Mary Li, Zhengxuan Zhao
-     * @return a list of `TOOrder` objects, each representing an order's basic information in the system
+     * @return a list of TOOrder objects, each representing an order in the system
      */
     public static List<TOOrder> viewOrders() {
         List<TOOrder> toOrders = new ArrayList<>();
@@ -419,11 +497,104 @@ public class CoolSuppliesFeatureSet8Controller {
             int orderNumber = order.getNumber();
             Date orderDate = order.getDate();
             BundleItem.PurchaseLevel orderLevel = order.getLevel();
+            String authorizationCode = order.getAuthorizationCode();
+            String penaltyAuthorizationCode = order.getPenaltyAuthorizationCode();
 
-            String parentEmail = order.getParent().getEmail();
-            String studentName = order.getStudent().getName();
+            Parent parent = order.getParent();
+            String parentEmail = parent.getEmail();
+            Student student = order.getStudent();
+            String studentName = student.getName();
 
-            toOrders.add(new TOOrder(orderNumber,orderDate,orderLevel.toString(),parentEmail,studentName));
+            String status = order.getStatus().toString();
+            double totalPrice = 0;
+
+            List<OrderItem> orderItems = order.getOrderItems();
+            List<TOOrderItem> toOrderItems = new ArrayList<>();
+
+            for (OrderItem orderItem : orderItems) {
+                InventoryItem inventoryItem = orderItem.getItem();
+                int orderItemQuantity = orderItem.getQuantity();
+                int unitPrice = 0;
+                String itemName = "";
+                String gradeBundleName = "";
+                List<TOOrderItem> bundleOrderItems = new ArrayList<>();
+
+                if (inventoryItem instanceof Item) {
+                    // Regular Item
+                    Item item = (Item) inventoryItem;
+                    itemName = item.getName() != null ? item.getName() : "";
+                    unitPrice = item.getPrice();
+                    totalPrice += unitPrice * orderItemQuantity;
+
+                    TOOrderItem toOrderItem = new TOOrderItem(
+                            orderItemQuantity,
+                            itemName,
+                            null,
+                            unitPrice,
+                            null
+                    );
+                    toOrderItems.add(toOrderItem);
+
+                } else if (inventoryItem instanceof GradeBundle) {
+                    GradeBundle gradeBundle = (GradeBundle) inventoryItem;
+                    gradeBundleName = gradeBundle.getName() != null ? gradeBundle.getName() : "";
+
+                    int bundleItemsTotal = 0;
+                    int numBundleItemsSelected = 0;
+
+                    for (BundleItem bundleItem : gradeBundle.getBundleItems()) {
+                        if (isLevelEligibleForOrder(orderLevel, bundleItem.getLevel())) {
+                            numBundleItemsSelected++;
+                            Item bundleItemItem = bundleItem.getItem();
+                            unitPrice = bundleItemItem.getPrice();
+                            int bundleItemQuantity = bundleItem.getQuantity();
+                            itemName = bundleItemItem.getName();
+
+                            double itemTotalPrice = unitPrice * orderItemQuantity * bundleItemQuantity;
+                            bundleItemsTotal += itemTotalPrice;
+
+                            TOOrderItem toOrderItem = new TOOrderItem(
+                                    bundleItemQuantity * orderItemQuantity,
+                                    itemName,
+                                    gradeBundleName.isEmpty() ? null : gradeBundleName,
+                                    unitPrice,
+                                    null
+                            );
+                            bundleOrderItems.add(toOrderItem);
+                        }
+                    }
+
+                    totalPrice += bundleItemsTotal;
+
+                    if (numBundleItemsSelected > 1) {
+                        double discountPercentage = gradeBundle.getDiscount() / 100.0;
+                        double discountValue = bundleItemsTotal * discountPercentage;
+                        totalPrice -= discountValue;
+
+                        for (TOOrderItem bundleItem : bundleOrderItems) {
+                            double theDiscount = bundleItem.getPrice() * discountPercentage;
+                            String discountAmount;
+
+                            if (theDiscount == Math.floor(theDiscount)) {
+                                discountAmount = "-" + String.valueOf((int) theDiscount);
+                            } else {
+                                discountAmount = "-" + String.valueOf(theDiscount);
+                            }
+                            bundleItem.setDiscount(discountAmount);
+                            toOrderItems.add(bundleItem);
+                        }
+                    } else {
+                        toOrderItems.addAll(bundleOrderItems);
+                    }
+                }
+            }
+
+            TOOrder toOrder = new TOOrder(
+                    parentEmail, studentName, status, orderNumber, orderDate,
+                    orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice
+            );
+            toOrder.setItems(toOrderItems);
+            toOrders.add(toOrder);
         }
 
         return toOrders;
