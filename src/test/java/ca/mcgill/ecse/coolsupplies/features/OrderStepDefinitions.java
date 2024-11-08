@@ -35,6 +35,7 @@ public class OrderStepDefinitions {
     List<Order> resultOrders;
     String error;
     TOOrder actualOrder;
+    List<TOOrder> actualOrderList = new ArrayList<>();
 
     /**
      * @author Shengyi Zhong
@@ -152,11 +153,17 @@ public class OrderStepDefinitions {
             io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> row : rows) {
+            int number = Integer.parseInt(row.get("number"));
             Date date = Date.valueOf(row.get("date"));
             PurchaseLevel level = PurchaseLevel.valueOf(row.get("level"));
             Parent parent = (Parent) User.getWithEmail(row.get("parentEmail"));
             Student student = Student.getWithName(row.get("studentName"));
-            coolSupplies.addOrder(Integer.parseInt(row.get("number")), date, level, parent, student);
+            Order order = new Order(number, date, level, parent, student, coolSupplies);
+            order.setAuthorizationCode(row.get("authorizationCode"));
+            order.setStatus(Order.Status.valueOf(row.get("status")));
+            order.setPenaltyAuthorizationCode(row.get("penaltyAuthorizationCode"));
+            coolSupplies.addOrder(order);
+
         }
     }
 
@@ -505,7 +512,7 @@ public class OrderStepDefinitions {
     public void the_following_order_entities_shall_be_presented(
             io.cucumber.datatable.DataTable expectedOrderDataTable) {
         List<Map<String, String>> expectedOrderList = expectedOrderDataTable.asMaps();
-        List<TOOrder> actualOrderList = CoolSuppliesFeatureSet8Controller.viewOrders();
+        actualOrderList = CoolSuppliesFeatureSet8Controller.viewOrders();
 
         for (Map<String, String> expectedOrder : expectedOrderList) {
             boolean matchFound = false;
@@ -565,6 +572,6 @@ public class OrderStepDefinitions {
     @Then("no order entities shall be presented")
     public void no_order_entities_shall_be_presented() {
         // Write code here that turns the phrase above into concrete actions
-        assertTrue(resultOrders.isEmpty(), "Expected no orders, but found some.");
+        assertTrue(actualOrderList.isEmpty(), "Expected no orders, but found some.");
     }
 }
