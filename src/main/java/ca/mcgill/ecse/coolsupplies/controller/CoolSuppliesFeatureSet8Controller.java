@@ -63,10 +63,63 @@ public class CoolSuppliesFeatureSet8Controller {
 
     }
 
-    // Add item to order
-    public static String addItemToOrder(InventoryItem item, String orderNumber, int newQuantity) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    /**
+     * Adds item to an order
+     * @author Jyothsna Seema, Snigdha Sen
+     * @param invName the name of item
+     * @param item the Inventory item object with that name
+     * @param orderNumber the order number of the order
+     * @param newQuantity the quantity of the item of interest
+     * @return indicates if the item was succesfully added to a specific order
+     */
+
+    public static String addItemToOrder(String invName, InventoryItem item, String orderNumber, int newQuantity) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+        String itemName;
+
+        //For NotExist Test case - if item doesn't exist in systems
+        try{ itemName = item.getName();}
+        catch(NullPointerException e){ return String.format("Item %s does not exist.", invName);}
+
+
+        if (order == null) {
+            return String.format("Order %s does not exist", orderNumber);
+        }
+        else if (!InventoryItem.hasWithName(itemName)) {
+            return String.format("Item %s does not exist.", invName);
+        }
+
+        List<OrderItem> orderItems = order.getOrderItems();
+        for(OrderItem orderitem : orderItems){
+            if(orderitem.getItem().getName().equals(itemName)){
+                return String.format("Item %s already exists in the order %d.", invName, Integer.parseInt(orderNumber));
+            }
+        }
+
+        if (newQuantity <= 0) {
+            return ("Quantity must be greater than 0.");
+        }
+        else if (!order.getStatusFullName().equals("Started")){
+            //Must separate because PickedUp needs to give an error message with space and lowercase
+            if(order.getStatusFullName().equals("PickedUp")){
+                return "Cannot add items to a picked up order";
+            }
+            else{
+                return String.format("Cannot add items to a %s order",order.getStatusFullName().toLowerCase());
+            }
+        }
+        else {
+            try {
+                OrderItem thisItem = coolSupplies.addOrderItem(newQuantity, order, item);
+                order.add(thisItem);
+                // OrderPersistence.save();
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
+        }
+        return ("The item has successfully been added");
     }
+    
     // Update quantity of an existing item of order
     public static String updateQuantity(int newQuantity, OrderItem item) {
         throw new UnsupportedOperationException("Not implemented yet.");
