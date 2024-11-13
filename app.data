@@ -1,0 +1,66 @@
+{
+  "CoolSupplies": {
+    "students": [
+      {
+        "Student": {
+          "name": "Barbara",
+          "coolSupplies": {
+            "@reference": "../../.."
+          },
+          "orders": [
+            ""
+          ],
+          "grade": {
+            "level": "6th",
+            "students": [
+              {
+                "Student": {
+                  "@reference": "../../.."
+                }
+              }
+            ],
+            "coolSupplies": {
+              "@reference": "../../../.."
+            }
+          }
+        }
+      }
+    ],
+    "parents": [
+      ""
+    ],
+    "items": [
+      ""
+    ],
+    "bundles": [
+      ""
+    ],
+    "bundleItems": [
+      ""
+    ],
+    "orders": [
+      ""
+    ],
+    "orderItems": [
+      ""
+    ],
+    "grades": [
+      {
+        "Grade": [
+          {
+            "level": "5th",
+            "students": [
+              ""
+            ],
+            "coolSupplies": {
+              "@reference": "../../.."
+            }
+          },
+          {
+            "@reference": "../../students/Student/grade"
+          }
+        ]
+      }
+    ]
+  }
+}
