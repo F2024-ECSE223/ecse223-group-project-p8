@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.AddAndUpdateStudentController">
+   <children>
+
+       <ToolBar prefHeight="40.0" prefWidth="600.0">
+           <items>
+               <Button mnemonicParsing="false" onAction="#goBack" text="Back" />
+               <Button mnemonicParsing="false" text="Profile" />
+               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
+           </items>
+       </ToolBar>
+       <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #fc9d01;">
+           <children>
+               <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Account" />
+               <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Orders" />
+               <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Users" />
+               <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Students" />
+               <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="School" />
+           </children>
+       </VBox>
+      <Pane layoutX="120.0" layoutY="40.0" prefHeight="361.0" prefWidth="480.0">
+         <children>
+            <Label layoutX="22.0" layoutY="69.0" prefHeight="26.0" prefWidth="91.0" text="Student Name:" />
+            <Button layoutX="23.0" layoutY="159.0" mnemonicParsing="false" text="Add&amp;Update" />
+            <Label layoutX="22.0" layoutY="117.0" prefHeight="26.0" prefWidth="91.0" text="Grade:" />
+            <TextField layoutX="132.0" layoutY="69.0" />
+            <ComboBox layoutX="133.0" layoutY="117.0" prefWidth="150.0" />
+            <Label graphicTextGap="10.0" layoutX="22.0" layoutY="8.0" prefHeight="55.0" prefWidth="253.0" text="Smavel Ruzanna">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
