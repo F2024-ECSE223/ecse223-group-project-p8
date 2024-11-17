@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.AddAndUpdateStudentController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.AddAndUpdateStudentController">
    <children>
 
        <ToolBar prefHeight="40.0" prefWidth="600.0">
@@ -33,13 +33,18 @@
       <Pane layoutX="120.0" layoutY="40.0" prefHeight="361.0" prefWidth="480.0">
          <children>
             <Label layoutX="22.0" layoutY="69.0" prefHeight="26.0" prefWidth="91.0" text="Student Name:" />
-            <Button layoutX="23.0" layoutY="159.0" mnemonicParsing="false" text="Add&amp;Update" />
+            <Button layoutX="23.0" layoutY="159.0" mnemonicParsing="false" onAction="#addAndUpdateStudent" text="Add&amp;Update" />
             <Label layoutX="22.0" layoutY="117.0" prefHeight="26.0" prefWidth="91.0" text="Grade:" />
-            <TextField layoutX="132.0" layoutY="69.0" />
-            <ComboBox layoutX="133.0" layoutY="117.0" prefWidth="150.0" />
-            <Label graphicTextGap="10.0" layoutX="22.0" layoutY="8.0" prefHeight="55.0" prefWidth="253.0" text="Smavel Ruzanna">
+            <TextField fx:id="studentName" layoutX="132.0" layoutY="69.0" />
+            <ComboBox fx:id="gradeBox" layoutX="133.0" layoutY="117.0" prefWidth="150.0" />
+            <Label fx:id="title" graphicTextGap="10.0" layoutX="22.0" layoutY="8.0" prefHeight="55.0" prefWidth="253.0" text="Create a new student">
                <font>
                   <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="resultLabel" layoutX="23.0" layoutY="228.0">
+               <font>
+                  <Font size="33.0" />
                </font>
             </Label>
          </children>

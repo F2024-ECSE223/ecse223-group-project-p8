@@ -14,43 +14,40 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.net.URL;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
 public class ViewAllStudentsController {
-    @FXML
-    private VBox studentListVBox;
 
-    Stage previousStage;
+    @FXML private VBox studentListVBox;
 
-    static int ID = 1;
+    private Stage previousStage;
 
-    int ID_GAP = 30;
-    int NAME_GAP = 100;
-    int GRADE_GAP = 120;
-    int MODIFY_GAP = 100;
-    int DELETE_GAP = 100;
+    private static int ID = 1;
+
+    private static final int ID_GAP = 30;
+    private static final int NAME_GAP = 100;
+    private static final int GRADE_GAP = 120;
+    private static final int MODIFY_GAP = 100;
+    private static final int DELETE_GAP = 100;
 
     public void initialize() {
-        Date date = new Date(2023, 4, 20);
-        CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
-        Parent p1= new Parent("","","",1,coolSupplies);
-        Student s1 = new Student("",coolSupplies,new Grade("1",coolSupplies));
-        Order order1 = new Order(111, date, BundleItem.PurchaseLevel.Mandatory,p1,s1,coolSupplies);
-        Order order2 = new Order(112, date, BundleItem.PurchaseLevel.Mandatory,p1,s1,coolSupplies);
-        Order order3 = new Order(113, date, BundleItem.PurchaseLevel.Mandatory,p1,s1,coolSupplies);
-        Order order4 = new Order(114, date, BundleItem.PurchaseLevel.Mandatory,p1,s1,coolSupplies);
-        coolSupplies.addOrder(order1);
-        coolSupplies.addOrder(order2);
-        coolSupplies.addOrder(order3);
-        coolSupplies.addOrder(order4);
+//        Date date = new Date(2023, 4, 20);
+//        CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
+//        Parent p1= new Parent("","","",1,coolSupplies);
+//        Student s1 = new Student("Mike", coolSupplies, new Grade("2th", coolSupplies));
+//        Student s2 = new Student("baraba", coolSupplies, coolSupplies.getGrade(2));
+//        Student s3 = new Student("Anna", coolSupplies, new Grade("7th", coolSupplies));
+//        coolSupplies.addStudent(s1);
+//        coolSupplies.addStudent(s2);
+//        coolSupplies.addStudent(s3);
 
 //        List<TOOrder> toOrders = CoolSuppliesFeatureSet8Controller.viewOrders();
 //        for(TOOrder order : toOrders){
 //            System.out.println(order.getNumber());
 //        }
+        ID = 0;
         populateOrders();
 
     }
@@ -89,6 +86,25 @@ public class ViewAllStudentsController {
         Button deleteButton = new Button("delete");
         deleteButton.setPrefWidth(DELETE_GAP);
 
+        modifyButton.setOnAction(event ->
+        {
+            try {
+                modifyStudent(event, student);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        deleteButton.setOnAction(event ->
+        {
+            try {
+                deleteStudent(event,student);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
         ID = ID + 1;
         // Add all labels to the HBox
         studentRow.getChildren().addAll(
@@ -109,7 +125,6 @@ public class ViewAllStudentsController {
         headerRow.setStyle("-fx-font-weight: bold; -fx-background-color: #f0f0f0;"); // Optional styling
 
         // Create labels for each column header
-        // Create labels for each column
         Label id = new Label("ID");
         id.setPrefWidth(ID_GAP);
         Label nameLabel = new Label("Name");
@@ -145,12 +160,13 @@ public class ViewAllStudentsController {
 
     @FXML
     private void AddNewStudent(ActionEvent event) throws Exception {
-        URL url = new File("src/main/java/ca/mcgill/ecse/coolsupplies/javafx/fxml/pages/AddAndUpdateStudent.fxml").toURI().toURL();
-        FXMLLoader loader = new FXMLLoader(url);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/AddAndUpdateStudent.fxml"));
         Scene scene = new Scene(loader.load());
 
+        // get AddAndUpdateStudents controller and set the previous stage
         AddAndUpdateStudentController controller = loader.getController();
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+
         controller.setPreviousStage(stage);
         stage.setScene(scene);
     }
@@ -162,6 +178,27 @@ public class ViewAllStudentsController {
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close(); // Close the current stage
         }
+    }
+
+    @FXML
+    private void modifyStudent(ActionEvent event,Student student) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/AddAndUpdateStudent.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        // get AddAndUpdateSdtuents controller and set the current student
+        AddAndUpdateStudentController controller = loader.getController();
+        controller.setCurrentStudent(student);
+
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
+    @FXML
+    private void deleteStudent(ActionEvent event,Student student) throws IOException {
+        CoolSuppliesFeatureSet2Controller.deleteStudent(student.getName());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewAllStudents.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
     }
 
 }

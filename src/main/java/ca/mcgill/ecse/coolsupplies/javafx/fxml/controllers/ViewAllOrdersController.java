@@ -4,7 +4,11 @@ import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet8Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOOrder;
 import ca.mcgill.ecse.coolsupplies.model.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,17 +20,19 @@ public class ViewAllOrdersController {
     @FXML
     private VBox orderListVBox;
 
-    static int ID = 1;
+    private static int ID = 1;
 
-    int ID_GAP = 30;
-    int NUMBER_GAP = 100;
-    int DATE_GAP = 120;
-    int LEVEL_GAP = 100;
-    int PARENT_GAP = 100;
-    int STUDENT_GAP = 100;
-    int STATUS_GAP = 80;
-    int AUTHCODE_GAP = 150;
-    int PENCODE_GAP = 150;
+    private static final int ID_GAP = 30;
+    private static final int NUMBER_GAP = 100;
+    private static final int DATE_GAP = 120;
+    private static final int LEVEL_GAP = 100;
+    private static final int PARENT_GAP = 100;
+    private static final int STUDENT_GAP = 100;
+    private static final int STATUS_GAP = 80;
+    private static final int AUTHCODE_GAP = 150;
+    private static final int PENCODE_GAP = 200;
+    private static final int VIEW_GAP = 100;
+    private static final int DELETE_GAP = 100;
 
     public void initialize() {
         Date date = new Date(2023, 4, 20);
@@ -46,6 +52,7 @@ public class ViewAllOrdersController {
 //        for(TOOrder order : toOrders){
 //            System.out.println(order.getNumber());
 //        }
+        ID = 0;
         populateOrders();
 
     }
@@ -91,6 +98,19 @@ public class ViewAllOrdersController {
         authCodeLabel.setPrefWidth(AUTHCODE_GAP);
         Label penaltyAuthCodeLabel = new Label(order.getPenaltyAuthorizationCode());
         penaltyAuthCodeLabel.setPrefWidth(PENCODE_GAP);
+        Button viewButton = new Button("view");
+        viewButton.setPrefWidth(VIEW_GAP);
+        Button deleteButton = new Button("delete");
+        deleteButton.setPrefWidth(DELETE_GAP);
+
+        // Set view button action
+        viewButton.setOnAction(event -> {
+            try {
+                viewOrder(event, order);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         ID = ID + 1;
 
@@ -104,7 +124,9 @@ public class ViewAllOrdersController {
                 studentNameLabel,
                 statusLabel,
                 authCodeLabel,
-                penaltyAuthCodeLabel
+                penaltyAuthCodeLabel,
+                viewButton,
+                deleteButton
         );
 
         return orderRow;
@@ -135,6 +157,10 @@ public class ViewAllOrdersController {
         authCodeLabel.setPrefWidth(AUTHCODE_GAP);
         Label penaltyAuthCodeLabel = new Label("Penalty Authorization Code");
         penaltyAuthCodeLabel.setPrefWidth(PENCODE_GAP);
+        Label viewLabel = new Label("+");
+        viewLabel.setPrefWidth(VIEW_GAP);
+        Label deleteLabel = new Label("+");
+        deleteLabel.setPrefWidth(DELETE_GAP);
 
 
         // Add all labels to the HBox
@@ -147,15 +173,28 @@ public class ViewAllOrdersController {
                 studentNameLabel,
                 statusLabel,
                 authCodeLabel,
-                penaltyAuthCodeLabel
+                penaltyAuthCodeLabel,
+                viewLabel,
+                deleteLabel
         );
 
         return headerRow;
     }
 
     private void adjustContentWidth() {
-        double totalWidth = ID_GAP+NUMBER_GAP+DATE_GAP+LEVEL_GAP+PARENT_GAP+STATUS_GAP+STATUS_GAP+AUTHCODE_GAP+PENCODE_GAP; // Sum of all column widths
+        double totalWidth = ID_GAP+NUMBER_GAP+DATE_GAP+LEVEL_GAP+PARENT_GAP+STATUS_GAP+STATUS_GAP+AUTHCODE_GAP+PENCODE_GAP+VIEW_GAP+DELETE_GAP; // Sum of all column widths
         orderListVBox.setPrefWidth(totalWidth); // Set the total width of the VBox
+    }
+
+    @FXML
+    private void viewOrder(ActionEvent event, Order order) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrder.fxml"));
+        Scene scene = new Scene(loader.load());
+
+//        ViewOrderController viewOrderController= loader.getController();
+//        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+//        viewOrderController.setOrder(order);
+//        stage.setScene(scene);
     }
 
 }
