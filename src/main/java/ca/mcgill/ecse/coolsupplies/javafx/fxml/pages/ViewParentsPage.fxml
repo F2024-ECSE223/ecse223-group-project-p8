@@ -13,21 +13,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.UpdateAccountPageController">
+<AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ViewParentsPageController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="600.0">
         <items>
-          <Button mnemonicParsing="false" text="Back" />
+          <Button mnemonicParsing="false" onMouseClicked="#goBack" text="Back" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
         </items>
       </ToolBar>
       <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #fc9d01;">
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#UpdateAccountPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Account" />
-            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
-            <Button mnemonicParsing="false" onMouseClicked="#ViewParentsPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Users" />
-            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" />
-            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewAccount" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Account" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewParents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Users" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
          </children>
       </VBox>
       <GridPane hgap="10.0" layoutX="136.0" layoutY="60.0" prefHeight="40.0" prefWidth="227.0" vgap="5.0">
@@ -61,7 +61,7 @@
             </TableView>
          </children>
       </GridPane>
-      <Button layoutX="379.0" layoutY="69.0" mnemonicParsing="false" text="Update" />
-      <Button layoutX="450.0" layoutY="69.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="379.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#updateParent" text="Update" />
+      <Button layoutX="450.0" layoutY="69.0" mnemonicParsing="false" onMouseClicked="#deleteParent" text="Delete" />
    </children>
 </AnchorPane>

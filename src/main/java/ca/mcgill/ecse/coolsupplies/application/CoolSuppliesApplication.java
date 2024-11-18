@@ -8,9 +8,6 @@ public class CoolSuppliesApplication {
 
   private static CoolSupplies coolSupplies;
 
-  public static final boolean DARK_MODE = true;
-
-
   public static void main(String[] args) {
     // TODO Start the application user interface here
   }
