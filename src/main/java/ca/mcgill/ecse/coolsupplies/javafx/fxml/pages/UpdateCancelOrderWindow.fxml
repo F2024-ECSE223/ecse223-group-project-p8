@@ -11,12 +11,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="118.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="94.7158203125">
+      <Text layoutX="118.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="94.7158203125">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Text layoutX="118.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Purchase level" wrappingWidth="146.4599609375">
+      <Text layoutX="118.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Purchase level" wrappingWidth="146.4599609375">
          <font>
             <Font size="16.0" />
          </font>
@@ -26,9 +26,9 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <CheckBox layoutX="275.0" layoutY="199.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="104.0" text="Mandatory" />
-      <CheckBox layoutX="275.0" layoutY="229.0" mnemonicParsing="false" text="Mandatory &amp; Recommended" />
-      <CheckBox layoutX="275.0" layoutY="258.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="264.0" text="Mandatory &amp; Recommended &amp; Optional " />
+      <CheckBox layoutX="275.0" layoutY="234.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="104.0" text="Mandatory" />
+      <CheckBox layoutX="275.0" layoutY="264.0" mnemonicParsing="false" text="Mandatory &amp; Recommended" />
+      <CheckBox layoutX="275.0" layoutY="293.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="264.0" text="Mandatory &amp; Recommended &amp; Optional " />
       <ToolBar prefHeight="40.0" prefWidth="600.0">
          <items>
             <Button mnemonicParsing="false" text="Discard" />
@@ -37,7 +37,13 @@
       </ToolBar>
       <Button layoutX="499.0" layoutY="358.0" mnemonicParsing="false" text="Update" />
       <Separator layoutY="83.0" prefHeight="40.0" prefWidth="600.0" />
-      <ChoiceBox layoutX="274.0" layoutY="145.0" prefWidth="150.0" />
+      <ChoiceBox layoutX="274.0" layoutY="180.0" prefWidth="150.0" />
       <Button layoutX="426.0" layoutY="358.0" mnemonicParsing="false" text="Cancel" />
+      <ChoiceBox layoutX="274.0" layoutY="136.0" prefWidth="150.0" />
+      <Text layoutX="118.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID" wrappingWidth="94.7158203125">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
