@@ -119,4 +119,10 @@ public class StudentsPageController {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+    public void UpdateAccountPage(MouseEvent mouseEvent) {
+    }
+
+    public void ViewParentsPage(MouseEvent mouseEvent) {
+    }
 }
