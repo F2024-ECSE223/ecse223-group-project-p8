@@ -27,10 +27,11 @@
             <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
             <Button mnemonicParsing="false" onMouseClicked="#ViewParentsPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Users" />
             <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" />
+            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Parent - Student" />
             <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
          </children>
       </VBox>
-      <Text layoutX="144.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Students">
+      <Text layoutX="136.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent - Student">
          <font>
             <Font size="25.0" />
          </font>
@@ -49,6 +50,6 @@
       <TextField fx:id="studentTextField" layoutX="191.0" layoutY="114.0" prefHeight="26.0" prefWidth="120.0" />
       <Text layoutX="479.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent:" />
       <ChoiceBox fx:id="parentChoiceBox" layoutX="479.0" layoutY="115.0" prefHeight="26.0" prefWidth="95.0" />
-      <Label fx:id="msgLabel" layoutX="252.0" layoutY="73.0" text="Label" />
+      <Label fx:id="msgLabel" layoutX="322.0" layoutY="71.0" text="Label" />
    </children>
 </AnchorPane>
