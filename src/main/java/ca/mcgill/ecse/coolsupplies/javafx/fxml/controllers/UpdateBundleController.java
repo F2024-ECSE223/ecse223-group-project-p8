@@ -1,12 +1,14 @@
-package ca.mcgill.ecse.coolsupplies.controllers; /**
- * Sample Skeleton for 'AddItemToOrder.fxml' Controller Class
+/**
+ * Sample Skeleton for 'UpdateBundle.fxml' Controller Class
  */
+
+package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 
-public class AddItemToOrderController {
+public class UpdateBundleController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;

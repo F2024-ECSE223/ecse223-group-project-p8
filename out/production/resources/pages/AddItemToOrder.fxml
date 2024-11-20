@@ -232,7 +232,7 @@
                <effect>
                   <Glow />
                </effect></Button>
-            <Button mnemonicParsing="false" prefHeight="90.0" prefWidth="334.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
+            <Button fx:id="bundlesButtonMenu" mnemonicParsing="false" onAction="#goToBundlesPage" prefHeight="90.0" prefWidth="334.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>
