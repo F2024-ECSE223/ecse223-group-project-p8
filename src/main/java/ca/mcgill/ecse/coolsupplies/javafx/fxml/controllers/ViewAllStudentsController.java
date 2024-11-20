@@ -22,8 +22,6 @@ public class ViewAllStudentsController {
 
     @FXML private VBox studentListVBox;
 
-    private Stage previousStage;
-
     private static int ID = 1;
 
     private static final int ID_GAP = 30;
@@ -154,9 +152,6 @@ public class ViewAllStudentsController {
         studentListVBox.setPrefWidth(totalWidth); // Set the total width of the VBox
     }
 
-    public void setPreviousStage(Stage stage) {
-        this.previousStage = stage;
-    }
 
     @FXML
     private void AddNewStudent(ActionEvent event) throws Exception {
@@ -173,11 +168,6 @@ public class ViewAllStudentsController {
 
     @FXML
     private void goBack(ActionEvent event) {
-        if (previousStage != null) {
-            previousStage.show(); // Show the previous stage
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close(); // Close the current stage
-        }
     }
 
     @FXML

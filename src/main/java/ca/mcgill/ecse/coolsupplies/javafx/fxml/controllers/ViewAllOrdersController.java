@@ -1,9 +1,8 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet8Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOOrder;
-import ca.mcgill.ecse.coolsupplies.model.*;
+import ca.mcgill.ecse.coolsupplies.model.Order;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-import java.sql.Date;
+import java.io.IOException;
 import java.util.List;
 
 public class ViewAllOrdersController {
@@ -35,23 +35,6 @@ public class ViewAllOrdersController {
     private static final int DELETE_GAP = 100;
 
     public void initialize() {
-        Date date = new Date(2023, 4, 20);
-        CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
-        Parent p1= new Parent("","","",1,coolSupplies);
-        Student s1 = new Student("",coolSupplies,new Grade("1",coolSupplies));
-        Order order1 = new Order(111, date, BundleItem.PurchaseLevel.Mandatory,p1,s1,coolSupplies);
-        Order order2 = new Order(112, date, BundleItem.PurchaseLevel.Mandatory,p1,s1,coolSupplies);
-        Order order3 = new Order(113, date, BundleItem.PurchaseLevel.Mandatory,p1,s1,coolSupplies);
-        Order order4 = new Order(114, date, BundleItem.PurchaseLevel.Mandatory,p1,s1,coolSupplies);
-        coolSupplies.addOrder(order1);
-        coolSupplies.addOrder(order2);
-        coolSupplies.addOrder(order3);
-        coolSupplies.addOrder(order4);
-
-//        List<TOOrder> toOrders = CoolSuppliesFeatureSet8Controller.viewOrders();
-//        for(TOOrder order : toOrders){
-//            System.out.println(order.getNumber());
-//        }
         ID = 0;
         populateOrders();
 
@@ -100,7 +83,7 @@ public class ViewAllOrdersController {
         penaltyAuthCodeLabel.setPrefWidth(PENCODE_GAP);
         Button viewButton = new Button("view");
         viewButton.setPrefWidth(VIEW_GAP);
-        Button deleteButton = new Button("delete");
+        Button deleteButton = new Button("cancel");
         deleteButton.setPrefWidth(DELETE_GAP);
 
         // Set view button action
@@ -108,6 +91,15 @@ public class ViewAllOrdersController {
             try {
                 viewOrder(event, order);
             } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // Set view button action
+        deleteButton.setOnAction(event -> {
+            try {
+                deleteOrder(event,order);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -188,13 +180,26 @@ public class ViewAllOrdersController {
 
     @FXML
     private void viewOrder(ActionEvent event, Order order) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrder.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrderWindow.fxml"));
         Scene scene = new Scene(loader.load());
 
-//        ViewOrderController viewOrderController= loader.getController();
-//        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-//        viewOrderController.setOrder(order);
-//        stage.setScene(scene);
+        ViewOrderWindowController viewOrderController= loader.getController();
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        viewOrderController.setCurrentOrder(order);
+        stage.setScene(scene);
     }
+
+    @FXML
+    private void deleteOrder(ActionEvent event, Order order) throws IOException {
+        CoolSuppliesFeatureSet8Controller.cancelOrder(String.valueOf(order.getNumber()));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewAllOrders.fxml"));
+        Scene scene = new Scene(loader.load());
+        System.out.println("order canceled");
+
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+    }
+
+
 
 }

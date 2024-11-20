@@ -24,7 +24,6 @@ public class AddAndUpdateStudentController {
 
     @FXML private Label title;
 
-    private Stage previousStage;
     private Student currentStudent;
 
     public void initialize() {
@@ -35,17 +34,13 @@ public class AddAndUpdateStudentController {
         gradeBox.setValue(grades.get(0).getLevel());
     }
 
-
-    public void setPreviousStage(Stage stage) {
-        this.previousStage = stage;
-    }
     public void setCurrentStudent(Student student) {
         this.currentStudent = student;
         if(currentStudent == null){
             title.setText("Create a new student");
         }else{
             title.setText(currentStudent.getName());
-            //studentName.setText(currentStudent.getName());
+            studentName.setText(currentStudent.getName());
         }
     }
 
