@@ -162,7 +162,6 @@ public class ViewAllStudentsController {
         AddAndUpdateStudentController controller = loader.getController();
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 
-        controller.setPreviousStage(stage);
         stage.setScene(scene);
     }
 
@@ -190,5 +189,48 @@ public class ViewAllStudentsController {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
+
+    @FXML
+    private void viewAccount() throws IOException {
+        loadPage("/pages/AccountPage.fxml");
+    }
+
+    @FXML
+    private void goBack() throws IOException {
+        loadPage("/pages/UpdateItemPage.fxml");
+    }
+
+    @FXML
+    private void updateAccount() throws IOException {
+        loadPage("/pages/UpdateAccountPage.fxml");
+    }
+
+    @FXML
+    private void viewOrders() throws IOException {
+        loadPage("/pages/ViewAllOrders.fxml");
+    }
+
+    @FXML
+    private void viewParents() throws IOException {
+        loadPage("/pages/ViewParentsPage.fxml");
+    }
+
+    @FXML
+    private void viewStudents() throws IOException {
+        loadPage("/pages/ViewAllStudents.fxml");
+    }
+
+    @FXML
+    private void viewSchool() throws IOException {
+        loadPage("/pages/ViewSchool.fxml");
+    }
+
+    private void loadPage(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(loader.load());
+        Stage currentStage = (Stage) studentListVBox.getScene().getWindow();
+        currentStage.setScene(scene);
+    }
+
 
 }
