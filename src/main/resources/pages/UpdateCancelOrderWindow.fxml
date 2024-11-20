@@ -4,6 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -11,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="118.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="94.7158203125">
+      <Text layoutX="118.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Name" wrappingWidth="132.7158203125">
          <font>
             <Font size="16.0" />
          </font>
@@ -37,7 +38,6 @@
       </ToolBar>
       <Button layoutX="499.0" layoutY="358.0" mnemonicParsing="false" text="Update" />
       <Separator layoutY="83.0" prefHeight="40.0" prefWidth="600.0" />
-      <ChoiceBox layoutX="274.0" layoutY="180.0" prefWidth="150.0" />
       <Button layoutX="426.0" layoutY="358.0" mnemonicParsing="false" text="Cancel" />
       <ChoiceBox layoutX="274.0" layoutY="136.0" prefWidth="150.0" />
       <Text layoutX="118.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID" wrappingWidth="94.7158203125">
@@ -45,5 +45,6 @@
             <Font size="16.0" />
          </font>
       </Text>
+      <TextField layoutX="275.0" layoutY="180.0" prefHeight="26.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
