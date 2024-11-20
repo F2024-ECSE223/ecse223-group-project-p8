@@ -1,0 +1,353 @@
+namespace ca.mcgill.ecse.coolsupplies.model;
+
+class CoolSupplies {
+  depend ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
+  1 <@>- 0..1 SchoolAdmin admin;
+  1 <@>- * Student students;
+  1 <@>- * Parent parents;
+  1 <@>- * Item items;
+  1 <@>- * GradeBundle bundles;
+  1 <@>- * BundleItem bundleItems;
+  1 <@>- * Order orders;
+  1 <@>- * OrderItem orderItems;
+  1 <@>- * Grade grades;
+}
+
+class User {
+  abstract;
+  unique immutable email;
+  password;
+}
+
+class SchoolAdmin {
+  isA User;
+}
+
+class Parent {
+  depend ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
+  isA User;
+  name;
+  Integer phoneNumber;
+  0..1 -- * Student students;
+}
+
+class Student {
+  depend ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
+  unique name;
+}
+
+class Order {
+  depend ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
+  unique Integer number;
+  Date date;
+  PurchaseLevel level;
+  lazy authorizationCode;
+  lazy penaltyAuthorizationCode;
+  * -- 1 Parent parent;
+  * -- 1 Student student;
+}
+
+associationClass OrderItem {
+  Integer quantity;
+  * Order order;
+  * InventoryItem item;
+}
+
+class InventoryItem {
+  abstract;
+  unique name;
+}
+
+class Item {
+  isA InventoryItem;
+  Integer price;
+}
+
+class GradeBundle {
+  isA InventoryItem;
+  Integer discount;
+}
+
+associationClass BundleItem {
+  Integer quantity;
+  enum PurchaseLevel { Mandatory, Recommended, Optional }
+  PurchaseLevel level;
+  * GradeBundle bundle;
+  * Item item;
+}
+
+class Grade {
+  unique level;
+  1 -- 0..1 GradeBundle bundle;
+  1 -- * Student students;
+}
+
+class Order {
+ 
+Status{
+  Started{
+    addItemToOrder(OrderItem aItem) [orderItems.contains(aItem) == false] / {addItemToOrder(aItem);}
+     -> Started;
+
+    removeItemOrder(OrderItem aItem) [orderItems.contains(aItem) == true]/ { removeOrderItem(aItem);} -> Started;
+
+    updateItemOrder(int newQuantity, OrderItem aItem) [orderItems.contains(aItem) == true] / {aItem.setQuantity(newQuantity);} -> Started;
+
+    updateOrder(PurchaseLevel aPurchaseLevel, String studentName) / {;} -> Started;
+
+
+    orderHasBeenPaid(String aAuthorizationCode) / {
+setAuthorizationCode(aAuthorizationCode);
+    } -> Paid;
+        orderHasBeenPrepared(String aAuthorizationCode, String aPenaltyAuthorizationCode ) / {rejectPreparedOrder()   
+    } -> Started;
+
+    startSchoolYear() / { } -> Penalized;
+
+    cancel() / {cancelOrder();} -> Canceled;
+
+    private void cancelOrder(){
+            this.delete();
+    }
+    private void rejectPreparedOrder() {
+  throw new RuntimeException("Cannot prepare a started order");
+  }
+  
+      updateOrderEvent (PurchaseLevel purchaseLevel, Student student) / {updateOrder (purchaseLevel, student);} -> Started;
+
+    private void updateOrder(PurchaseLevel purchaseLevel, Student student){
+        this.setLevel(purchaseLevel);
+        this.setStudent(student);
+
+    }
+
+    add (OrderItem item) / {addItemToOrder(item);} -> Started;
+
+    private void addItemToOrder(OrderItem item){
+        this.addItemToOrder(item);
+    
+    }
+
+    updateQuantityEvent(int newQuantity, OrderItem item) / {updateQuantity(newQuantity, item);} -> Started;
+
+    private void updateQuantity(int newQuantity, OrderItem item) {
+      item.setQuantity(newQuantity)
+    }
+
+    delete(OrderItem item) / {deleteOrderItem(item);} -> Started;
+
+    private void deleteOrderItem(OrderItem item) {
+      item.delete();
+    }
+  }
+
+    
+
+   Paid{
+     orderHasBeenPaid(String aAuthorizationCode) / {
+rejectPayOrder();
+    } -> Paid;
+         orderHasBeenPrepared(String aAuthorizationCode, String aPenaltyAuthorizationCode ) / {rejectPreparedOrder()
+    } -> Paid;
+    startSchoolYear() / { } -> Prepared;
+
+    cancel() / {cancelOrder();} -> Canceled;
+
+    private void cancelOrder(){
+            this.delete();
+    }
+         private void rejectPreparedOrder() {
+  throw new RuntimeException("Cannot prepare a paid order");
+  }
+        private void rejectPayOrder() {
+  throw new RuntimeException("Cannot pay a paid order");
+  }
+
+  updateOrderEvent(PurchaseLevel purchaseLevel, Student student)/{rejectUpdate();} -> Paid;
+
+  private void rejectUpdate(){
+      throw new RuntimeException("Cannot update a paid order");
+  }
+
+  add (OrderItem item) / {rejectAdd();} -> Paid;
+
+  private void rejectAdd(){
+    throw new RuntimeException("Cannot add items to a paid order");
+  }
+
+  updateQuantityEvent(int newQuantity, OrderItem item)/{rejectUpdateQ();} -> Paid;
+
+  private void rejectUpdateQ(){
+    throw new RuntimeException("Cannot update items in a paid order");
+  }
+
+  delete (OrderItem item) / {rejectDelete();} -> Paid;
+
+  private void rejectDelete(){
+    throw new RuntimeException("Cannot delete items from a paid order");
+  }
+
+  }
+
+
+  Penalized {
+        orderHasBeenPaid(String aAuthorizationCode) / {
+rejectPayOrder();
+    } -> Penalized;
+      private void rejectPayOrder() {
+  throw new RuntimeException("Cannot pay a penalized order");
+  }
+    orderHasBeenPrepared(String aAuthorizationCode, String aPenaltyAuthorizationCode ) / {
+    setAuthorizationCode(aAuthorizationCode);
+setPenaltyAuthorizationCode(aPenaltyAuthorizationCode);    
+    } -> Prepared;
+
+    startSchoolYear() / {rejectStartYear();} -> Penalized;
+
+    private void rejectStartYear() {
+                throw new RuntimeException("The school year has already been started");
+    }
+
+    cancel() / {rejectCancelOrder();} -> Penalized;
+
+    private void rejectCancelOrder() {
+            throw new RuntimeException("Cannot cancel a penalized order");
+    }
+
+        private void rejectUpdate(){
+        throw new RuntimeException("Cannot update a penalized order");
+    }
+
+    add (OrderItem item) / {rejectAdd();} -> Penalized;
+
+    private void rejectAdd(){
+        throw new RuntimeException("Cannot add items to a penalized order");
+    }
+
+    updateQuantityEvent(int newQuantity, OrderItem item)/{rejectUpdateQ();} -> Penalized;
+
+    private void rejectUpdateQ(){
+        throw new RuntimeException("Cannot update items in a penalized order");
+    }
+
+    delete (OrderItem item) / {rejectDelete();} -> Penalized;
+
+    private void rejectDelete(){
+        throw new RuntimeException("Cannot delete items from a penalized order");
+    }
+  }
+
+   Prepared {
+      orderHasBeenPickedUp() / {} -> PickedUp;
+      orderHasBeenPaid(String aAuthorizationCode) / {
+rejectPayOrder();
+    } -> Prepared;
+         orderHasBeenPrepared(String aAuthorizationCode, String aPenaltyAuthorizationCode ) / {
+    rejectPreparedOrder()} -> Prepared;
+
+      startSchoolYear() / {rejectStartYear(); } -> Prepared;
+
+      private void rejectStartYear() {
+                      throw new RuntimeException("The school year has already been started");
+      }
+           
+    private void rejectPayOrder() {
+  throw new RuntimeException("Cannot pay a prepared order");
+  }
+  private void rejectPreparedOrder() {
+  throw new RuntimeException("Cannot prepare a prepared order");
+   }
+
+      cancel() / {rejectCancelOrder();} -> Prepared;
+
+      private void rejectCancelOrder() {
+              throw new RuntimeException("Cannot cancel a prepared order");
+      }
+
+      updateOrderEvent(PurchaseLevel purchaseLevel, Student student)/{rejectUpdate();} -> Prepared;
+
+    private void rejectUpdate(){
+        throw new RuntimeException("Cannot update a prepared order");
+    }
+
+    add (OrderItem item) / {rejectAdd();} -> Prepared;
+
+    private void rejectAdd(){
+        throw new RuntimeException("Cannot add items to a prepared order");
+    }    
+
+    updateQuantityEvent(int newQuantity, OrderItem item)/{rejectUpdateQ();} -> Prepared;
+
+    private void rejectUpdateQ(){
+        throw new RuntimeException("Cannot update items in a prepared order");
+    }
+
+    delete (OrderItem item) / {rejectDelete();} -> Prepared;
+
+    private void rejectDelete(){
+        throw new RuntimeException("Cannot delete items from a prepared order");
+    }
+   }
+
+  Canceled{
+        goToFinal() / {} -> Final; }
+
+  PickedUp{
+           orderHasBeenPaid(String aAuthorizationCode) / {
+rejectPayOrder();
+    } -> PickedUp;
+   orderHasBeenPrepared(String aAuthorizationCode, String aPenaltyAuthorizationCode ) / {
+    rejectPreparedOrder} -> PickedUp;
+
+      startSchoolYear() / { rejectStartYear();} -> PickedUp;
+
+      private void rejectStartYear() {
+                      throw new RuntimeException("The school year has already been started");
+      }
+
+      cancel() / {rejectCancelOrder();} -> PickedUp;
+ private void rejectPreparedOrder() {
+  throw new RuntimeException("Cannot prepare a picked up order");}
+      private void rejectCancelOrder() {
+              throw new RuntimeException("Cannot cancel a picked up order");
+      }
+          private void rejectPayOrder() {
+  throw new RuntimeException("Cannot pay a picked up order");
+  }
+        updateOrderEvent(PurchaseLevel purchaseLevel, Student student)/{rejectUpdate();} -> PickedUp;
+
+    private void rejectUpdate(){
+        throw new RuntimeException("Cannot update a picked up order");
+    }
+
+    add (OrderItem item) / {rejectAdd();} -> PickedUp;
+
+    private void rejectAdd(){
+        throw new RuntimeException("Cannot add items to a picked up order");
+    }
+
+    updateQuantityEvent(int newQuantity, OrderItem item)/{rejectUpdateQ();} -> PickedUp;
+
+    private void rejectUpdateQ(){
+        throw new RuntimeException("Cannot update items in a picked up order");
+    }
+
+    delete (OrderItem item) / {rejectDelete();} -> PickedUp;
+
+    private void rejectDelete(){
+        throw new RuntimeException("Cannot delete items from a picked up order");
+    }
+  }
+}
+
+}
+
+namespace -;
+
+
+class Order
+{
+  position 50 30 109 45;
+}
+//added: lazy inventoryItems
+//modified: parameters//$?[End_of_model]$?

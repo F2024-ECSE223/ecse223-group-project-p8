@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4af98958-da1b-4c97-9332-99aa4218b04c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse/coolsupplies/javafx/fxml/controllers/AddItemController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse/coolsupplies/javafx/fxml/controllers/EditItemController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse/coolsupplies/javafx/fxml/controllers/ItemsMenuController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse/coolsupplies/javafx/fxml/controllers/SetPenaltyCodesController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pages/AddItemPopup.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pages/AddItems.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pages/EditItemsPopup.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pages/ItemsShop.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pages/PayOrder.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pages/SetPenaltyCodes.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" afterPath="$PROJECT_DIR$/.project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.data" beforeDir="false" afterPath="$PROJECT_DIR$/app.data" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/application/CoolSuppliesApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/application/CoolSuppliesApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet1Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet1Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet2Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet2Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet3Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet3Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet4Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet4Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet5Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet5Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet6Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet6Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet7Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/CoolSuppliesFeatureSet7Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOBundleItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOBundleItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOGrade.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOGrade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOGradeBundle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOGradeBundle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOParent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOParent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOStudent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/controller/TOStudent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/BundleItem$PurchaseLevel.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/BundleItem$PurchaseLevel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/BundleItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/BundleItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/CoolSupplies.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/CoolSupplies.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Grade.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Grade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/GradeBundle.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/GradeBundle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/InventoryItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/InventoryItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Item.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Item.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Order.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Order.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/OrderItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/OrderItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Parent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Parent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/Student.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/ca/mcgill/ecse/coolsupplies/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse/coolsupplies/features/AddGradeBundleStepDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse/coolsupplies/features/AddGradeBundleStepDefinitions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse/coolsupplies/features/AddParentStepDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse/coolsupplies/features/AddParentStepDefinitions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse/coolsupplies/features/UpdateGradeBundleStepDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse/coolsupplies/features/UpdateGradeBundleStepDefinitions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse/coolsupplies/features/UpdateParentStepDefinitions.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/ca/mcgill/ecse/coolsupplies/features/UpdateParentStepDefinitions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/ca.mcgill.ecse.coolsupplies.features.CucumberFeaturesTestRunner.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/ca.mcgill.ecse.coolsupplies.features.CucumberFeaturesTestRunner.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/css/base-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/css/base-style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/js/report.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/js/report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/ca.mcgill.ecse.coolsupplies.features.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/ca.mcgill.ecse.coolsupplies.features.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/AddBundleItemToBundleItemsOfGradeBundle.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/AddGrade.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/AddGradeBundle.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/AddItem.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/AddOrder.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/AddParent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/AddStudent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/AddStudentToStudentsOfParent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/DeleteGrade.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/DeleteGradeBundle.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/DeleteItem.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/DeleteParent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/DeleteStudent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/GetBundleItemFromBundleItemsOfGradeBundle.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/GetGrade.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/GetGradeBundle.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/GetItem.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/GetOrder.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/GetParent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/GetStudent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/GetStudentFromStudentsOfParent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/ProcessOrder.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/RemoveBundleItemFromBundleItemsOfGradeBundle.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/RemoveStudentFromStudentsOfParent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/UpdateBundleItemInBundleItemsOfGradeBundle.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/UpdateGrade.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/UpdateGradeBundle.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/UpdateItem.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/UpdateParent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/UpdatePasswordOfSchoolAdmin.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/test/UpdateStudent.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-ca.mcgill.ecse.coolsupplies.features.CucumberFeaturesTestRunner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-ca.mcgill.ecse.coolsupplies.features.CucumberFeaturesTestRunner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse/coolsupplies/javafx/fxml/CoolSuppliesFxmlView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ca/mcgill/ecse/coolsupplies/javafx/fxml/CoolSuppliesFxmlView.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ca.mcgill.ecse.coolsupplies" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaFXApplication" />
+        <option value="Class" />
+        <option value="FxmlFile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2onq9tNlxYnfpcgDqUahDCmF7dA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.CucumberFeaturesTestRunner.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Upgrade Gradle wrapper.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ecse223-group-project-p8 [:App.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ecse223-group-project-p8 [:CoolSuppliesFxmlView.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/artim/OneDrive/Documents/University/Semester 3/223/Project - final/tehe/ecse223-group-project-p8&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Application.CoolSuppliesFxmlView">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ca.mcgill.ecse.coolsupplies.javafx.fxml.App" />
+      <module name="ca.mcgill.ecse.coolsupplies.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.mcgill.ecse.coolsupplies.javafx.fxml.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CoolSuppliesFxmlView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ca.mcgill.ecse.coolsupplies.javafx.fxml.CoolSuppliesFxmlView" />
+      <module name="ca.mcgill.ecse.coolsupplies.main" />
+      <option name="VM_PARAMETERS" value="--module-path C:\Users\artim\Downloads\openjfx-23.0.1_windows-x64_bin-sdk\javafx-sdk-23.0.1\lib --add-modules javafx.controls,javafx.fxml " />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ca.mcgill.ecse.coolsupplies.javafx.fxml.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CucumberFeaturesTestRunner" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ca.mcgill.ecse.coolsupplies.features.CucumberFeaturesTestRunner&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="ecse223-group-project-p8" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="ecse223-group-project-p8" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="Application.CoolSuppliesFxmlView" />
+      <item itemvalue="Gradle.CucumberFeaturesTestRunner" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.CoolSuppliesFxmlView" />
+        <item itemvalue="Gradle.CucumberFeaturesTestRunner" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4af98958-da1b-4c97-9332-99aa4218b04c" name="Changes" comment="" />
+      <created>1731515538753</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731515538753</updated>
+    </task>
+    <servers />
+  </component>
+</project>
