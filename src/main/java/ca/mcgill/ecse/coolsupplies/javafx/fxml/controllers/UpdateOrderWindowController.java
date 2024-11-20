@@ -1,5 +1,5 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-public class UpdateCancelOrderWindowController {
+public class UpdateOrderWindowController {
 
 }
