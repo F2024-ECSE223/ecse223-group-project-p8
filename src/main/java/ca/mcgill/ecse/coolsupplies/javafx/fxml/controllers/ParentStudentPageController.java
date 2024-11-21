@@ -63,16 +63,6 @@ public class ParentStudentPageController implements Initializable {
         studentChoiceBox.getItems().addAll(students);
     }
 
-    @FXML
-    void UpdateAccountPage(MouseEvent event) {
-
-    }
-
-    @FXML
-    void ViewParentsPage(MouseEvent event) {
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         msgLabel.setText("");
