@@ -35,6 +35,11 @@ public class StartOrderWindowController implements Initializable {
 
     }
 
+    @FXML
+    void goToAccount() {
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         parentLabel.setText("");
