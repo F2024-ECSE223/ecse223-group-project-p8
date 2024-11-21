@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -22,29 +21,26 @@ public class StudentsPageController implements Initializable {
     @FXML
     private AnchorPane ap;
     @FXML
-    private TextField studentTextField;
-    @FXML
     private Button Add;
     @FXML
     private Label msgLabel;
     @FXML
+    private ChoiceBox<TOStudent> studentChoiceBox;
+    @FXML
     private ChoiceBox<TOParent> parentChoiceBox;
 
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
-    String studentName;
-    String parentEmail;
-    //    TOStudent selectedStudent;
-//    TOParent selectedParent;
+    TOStudent selectedStudent;
+    TOParent selectedParent;
     List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
+    List<TOStudent> students;
 
     @FXML
     void addStudentToParent(ActionEvent event) {
         try {
-            studentName = studentTextField.getText();
-//            selectedStudent = CoolSuppliesFeatureSet2Controller.getStudent(studentName);
-            String msg = CoolSuppliesFeatureSet6Controller.addStudentToParent(studentName, parentEmail);
+            selectedStudent = studentChoiceBox.getValue();
+            String msg = CoolSuppliesFeatureSet6Controller.addStudentToParent(selectedStudent.getName(), selectedParent.getEmail());
             msgLabel.setText(msg);
-//            System.out.println(studentName);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -53,8 +49,8 @@ public class StudentsPageController implements Initializable {
     @FXML
     void deleteStudentFromParent(ActionEvent event) {
         try {
-            studentName = studentTextField.getText();
-            String msg = CoolSuppliesFeatureSet6Controller.deleteStudentFromParent(studentName, parentEmail);
+            selectedStudent = studentChoiceBox.getValue();
+            String msg = CoolSuppliesFeatureSet6Controller.addStudentToParent(selectedStudent.getName(), selectedParent.getEmail());
             msgLabel.setText(msg);
         } catch (Exception e) {
             System.out.println(e);
@@ -62,8 +58,9 @@ public class StudentsPageController implements Initializable {
     }
 
     void getParent(ActionEvent event) {
-        TOParent selectedParent = parentChoiceBox.getValue();
-        parentEmail = selectedParent.getEmail();
+        selectedParent = parentChoiceBox.getValue();
+        students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(selectedParent.getEmail());
+        studentChoiceBox.getItems().addAll(students);
     }
 
     @FXML
