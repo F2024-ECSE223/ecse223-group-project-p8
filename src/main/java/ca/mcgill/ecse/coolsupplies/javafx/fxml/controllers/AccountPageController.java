@@ -3,7 +3,6 @@ package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -19,7 +18,7 @@ public class AccountPageController {
     @FXML
     private Text nameField;
 
-    private Stage stage;
+//    private Stage stage;
 
     @FXML
     public void initialize() {
@@ -29,38 +28,23 @@ public class AccountPageController {
         nameField.setText("John Doe");
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
+//    public void setStage(Stage stage) {
+//        this.stage = stage;
+//    }
 
     @FXML
-    private void viewAccount() throws IOException {
-        loadPage("/pages/AccountPage.fxml");
+    private void viewAccounts() throws IOException {
+        loadPage("/pages/ViewAccountsPage.fxml");
     }
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/UpdateItemPage.fxml");
-    }
-
-    @FXML
-    private void updateAccount() throws IOException {
-        loadPage("/pages/UpdateAccountPage.fxml");
+        loadPage("/pages/AddItem.fxml");
     }
 
     @FXML
     private void viewOrders() throws IOException {
         loadPage("/pages/ViewAllOrders.fxml");
-    }
-
-    @FXML
-    private void viewParents() throws IOException {
-        loadPage("/pages/ViewParentsPage.fxml");
-    }
-
-    @FXML
-    private void viewStudents() throws IOException {
-        loadPage("/pages/ViewStudents.fxml");
     }
 
     @FXML

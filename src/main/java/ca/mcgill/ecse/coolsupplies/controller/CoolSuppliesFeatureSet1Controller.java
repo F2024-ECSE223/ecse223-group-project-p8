@@ -135,7 +135,7 @@ public class CoolSuppliesFeatureSet1Controller {
       } catch (RuntimeException e) {
         return e.getMessage();
       }
-      return "Parent account updated successfully.";
+      return "Account updated successfully.";
     }
     else {
       return "The parent does not exist.";
