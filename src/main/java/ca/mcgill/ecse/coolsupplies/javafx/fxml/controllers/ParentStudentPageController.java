@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class StudentsPageController implements Initializable {
+public class ParentStudentPageController implements Initializable {
 
     @FXML
     private AnchorPane ap;
