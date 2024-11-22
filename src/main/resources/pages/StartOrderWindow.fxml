@@ -52,7 +52,6 @@
       <DatePicker layoutX="333.0" layoutY="292.0" />
       <ChoiceBox fx:id="studentChoiceBox" layoutX="333.0" layoutY="220.0" prefHeight="26.0" prefWidth="95.0" />
       <ChoiceBox fx:id="levelChoiceBox" layoutX="333.0" layoutY="257.0" prefHeight="26.0" prefWidth="95.0" />
-      <Label fx:id="parentLabel" layoutX="332.0" layoutY="185.0" text="Label" />
       <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
          <children>
             <Button fx:id="ItemsMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Items" textFill="WHITE">
@@ -80,11 +79,12 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="535.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#goToAccount" text="Profile" />
+      <Button layoutX="535.0" layoutY="7.0" mnemonicParsing="false" onAction="#goToAccount" onMouseClicked="#goToAccount" text="Profile" />
       <Text layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
+      <ChoiceBox fx:id="parentChoiceBox" layoutX="333.0" layoutY="181.0" prefHeight="26.0" prefWidth="95.0" />
    </children>
 </AnchorPane>
