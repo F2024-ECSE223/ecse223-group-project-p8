@@ -5,7 +5,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -34,21 +33,19 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Button layoutX="457.0" layoutY="350.0" mnemonicParsing="false" text="Place Order" />
+      <Button layoutX="457.0" layoutY="350.0" mnemonicParsing="false" onAction="#placeOrder" text="Place Order" />
       <Separator layoutX="120.0" layoutY="84.0" prefHeight="40.0" prefWidth="481.0" />
       <Text layoutX="176.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID" wrappingWidth="104.0">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <TextField fx:id="idTextField" layoutX="354.0" layoutY="62.0" prefHeight="26.0" prefWidth="95.0" />
-      <Button layoutX="457.0" layoutY="62.0" mnemonicParsing="false" onAction="#selectID" text="Select" />
       <Text layoutX="176.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent Email" wrappingWidth="104.0">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <DatePicker layoutX="333.0" layoutY="292.0" />
+      <DatePicker fx:id="datePicker" layoutX="333.0" layoutY="292.0" />
       <ChoiceBox fx:id="studentChoiceBox" layoutX="333.0" layoutY="220.0" prefHeight="26.0" prefWidth="95.0" />
       <ChoiceBox fx:id="levelChoiceBox" layoutX="333.0" layoutY="257.0" prefHeight="26.0" prefWidth="95.0" />
       <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">

@@ -1,16 +1,18 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
 import ca.mcgill.ecse.coolsupplies.controller.*;
-import ca.mcgill.ecse.coolsupplies.model.BundleItem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
+import java.sql.Date;
 
 public class StartOrderWindowController implements Initializable {
 
@@ -19,31 +21,41 @@ public class StartOrderWindowController implements Initializable {
     @FXML
     private ChoiceBox<String> studentChoiceBox;
     @FXML
-    private ChoiceBox<BundleItem.PurchaseLevel> levelChoiceBox;
-    @FXML
-    private TextField idTextField;
+    private ChoiceBox<String> levelChoiceBox;
     @FXML
     private Label idLabel;
+    @FXML
+    private DatePicker datePicker;
 
-    int newID;
-    TOStudent selectedStudent;
-    TOParent selectedParent;
+    int id;
+    String parentEmail;
     List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
     List<TOStudent> students;
-    List<BundleItem.PurchaseLevel> levels = Arrays.asList(BundleItem.PurchaseLevel.values());
+    List<String> levels = Arrays.asList("Mandatory", "Recommended", "Optional");
     List<Integer> ids = new ArrayList<>();
 
+
     @FXML
-    void selectID(ActionEvent event) {
-        try {
-            newID = Integer.parseInt(idTextField.getText());
-            for(Integer id : ids) {
-                if(newID == id) {
-                    System.out.println("duplicate id");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+    void placeOrder(ActionEvent event) {
+        String studentName = studentChoiceBox.getValue();
+        Date date = Date.valueOf(datePicker.getValue());
+        String level = levelChoiceBox.getValue();
+        if (studentName != null && parentEmail != null && level != null) {
+            CoolSuppliesFeatureSet6Controller.startOrder(id,date,level, parentEmail,studentName);
+
+            ids.add(id);
+            id += 1;
+            idLabel.setText(String.valueOf(id));
+            parentChoiceBox.setValue(null);
+            studentChoiceBox.setValue(null);
+            levelChoiceBox.setValue(null);
+            datePicker.setValue(LocalDate.now());
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Selection Incomplete");
+            alert.setContentText("Please ensure all required fields are selected before placing the order.");
+            alert.showAndWait();
         }
     }
 
@@ -55,9 +67,9 @@ public class StartOrderWindowController implements Initializable {
     }
 
     void getParent(ActionEvent event) {
-        selectedParent = CoolSuppliesFeatureSet1Controller.getParent(parentChoiceBox.getValue());
-        if (selectedParent != null) {
-            students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(selectedParent.getEmail());
+        parentEmail = parentChoiceBox.getValue();
+        if (parentEmail != null) {
+            students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(parentEmail);
             List<String> studentNames = new ArrayList<>();
             for (TOStudent student : students) {
                 studentNames.add(student.getName());
@@ -79,12 +91,13 @@ public class StartOrderWindowController implements Initializable {
             ids.add(order.getNumber());
         }
         Collections.sort(ids);
-        String nextID = String.valueOf(ids.get(ids.size() - 1) + 1);
+        id = ids.get(ids.size() - 1) + 1;
 
-        idLabel.setText(nextID);
-        idTextField.setText(nextID);
+        idLabel.setText(String.valueOf(id));
         parentChoiceBox.getItems().addAll(parentNames);
         levelChoiceBox.getItems().addAll(levels);
+        datePicker.setValue(LocalDate.now());
+
         parentChoiceBox.setOnAction(this::getParent);
     }
 }
