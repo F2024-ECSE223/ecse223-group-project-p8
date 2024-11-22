@@ -33,7 +33,6 @@ public class StartOrderWindowController implements Initializable {
 
     private int id;
     private String parentEmail;
-    private List<TOParent> parents;
     private static final List<String> levels = Arrays.asList("Mandatory", "Recommended", "Optional");
     private List<Integer> ids = new ArrayList<>();
 
@@ -87,7 +86,7 @@ public class StartOrderWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        parents = CoolSuppliesFeatureSet1Controller.getParents();
+        List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
         List<String> parentNames = new ArrayList<>();
         for (TOParent parent : parents) {
             parentNames.add(parent.getEmail());
