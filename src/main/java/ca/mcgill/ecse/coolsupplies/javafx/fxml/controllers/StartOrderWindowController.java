@@ -18,30 +18,32 @@ public class StartOrderWindowController implements Initializable {
 
     @FXML
     private ChoiceBox<String> parentChoiceBox;
+
     @FXML
     private ChoiceBox<String> studentChoiceBox;
+
     @FXML
     private ChoiceBox<String> levelChoiceBox;
+
     @FXML
     private Label idLabel;
+
     @FXML
     private DatePicker datePicker;
 
-    int id;
-    String parentEmail;
-    List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
-    List<TOStudent> students;
-    List<String> levels = Arrays.asList("Mandatory", "Recommended", "Optional");
-    List<Integer> ids = new ArrayList<>();
-
+    private int id;
+    private String parentEmail;
+    private List<TOParent> parents;
+    private static final List<String> levels = Arrays.asList("Mandatory", "Recommended", "Optional");
+    private List<Integer> ids = new ArrayList<>();
 
     @FXML
-    void placeOrder(ActionEvent event) {
+    private void placeOrder(ActionEvent event) {
         String studentName = studentChoiceBox.getValue();
         Date date = Date.valueOf(datePicker.getValue());
         String level = levelChoiceBox.getValue();
         if (studentName != null && parentEmail != null && level != null) {
-            CoolSuppliesFeatureSet6Controller.startOrder(id,date,level, parentEmail,studentName);
+            CoolSuppliesFeatureSet6Controller.startOrder(id, date, level, parentEmail, studentName);
 
             ids.add(id);
             id += 1;
@@ -51,25 +53,29 @@ public class StartOrderWindowController implements Initializable {
             levelChoiceBox.setValue(null);
             datePicker.setValue(LocalDate.now());
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Order Created");
+            alert.setHeaderText(null);
+            alert.setContentText("A new order has been successfully created and added to the system.");
+            alert.showAndWait();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Selection Incomplete");
+            alert.setHeaderText(null);
             alert.setContentText("Please ensure all required fields are selected before placing the order.");
             alert.showAndWait();
         }
     }
 
-
-
     @FXML
-    void goToAccount() {
+    private void goToAccount() {
 
     }
 
-    void getParent(ActionEvent event) {
+    private void getParent(ActionEvent event) {
         parentEmail = parentChoiceBox.getValue();
         if (parentEmail != null) {
-            students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(parentEmail);
+            List<TOStudent> students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(parentEmail);
             List<String> studentNames = new ArrayList<>();
             for (TOStudent student : students) {
                 studentNames.add(student.getName());
@@ -81,6 +87,7 @@ public class StartOrderWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        parents = CoolSuppliesFeatureSet1Controller.getParents();
         List<String> parentNames = new ArrayList<>();
         for (TOParent parent : parents) {
             parentNames.add(parent.getEmail());
