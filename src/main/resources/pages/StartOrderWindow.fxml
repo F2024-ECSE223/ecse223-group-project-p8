@@ -41,14 +41,13 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <TextField fx:id="idTextField" layoutX="333.0" layoutY="142.0" prefHeight="26.0" prefWidth="95.0" />
-      <Button layoutX="440.0" layoutY="142.0" mnemonicParsing="false" text="Select" />
+      <TextField fx:id="idTextField" layoutX="354.0" layoutY="62.0" prefHeight="26.0" prefWidth="95.0" />
+      <Button layoutX="457.0" layoutY="62.0" mnemonicParsing="false" onAction="#selectID" text="Select" />
       <Text layoutX="176.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent Email" wrappingWidth="104.0">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <Label layoutX="333.0" layoutY="116.0" text="Please choose your order ID!" />
       <DatePicker layoutX="333.0" layoutY="292.0" />
       <ChoiceBox fx:id="studentChoiceBox" layoutX="333.0" layoutY="220.0" prefHeight="26.0" prefWidth="95.0" />
       <ChoiceBox fx:id="levelChoiceBox" layoutX="333.0" layoutY="257.0" prefHeight="26.0" prefWidth="95.0" />
@@ -86,5 +85,6 @@
          </font>
       </Text>
       <ChoiceBox fx:id="parentChoiceBox" layoutX="333.0" layoutY="181.0" prefHeight="26.0" prefWidth="95.0" />
+      <Label fx:id="idLabel" layoutX="333.0" layoutY="146.0" text="Label" />
    </children>
 </AnchorPane>

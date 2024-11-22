@@ -10,10 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class StartOrderWindowController implements Initializable {
 
@@ -25,16 +22,29 @@ public class StartOrderWindowController implements Initializable {
     private ChoiceBox<BundleItem.PurchaseLevel> levelChoiceBox;
     @FXML
     private TextField idTextField;
+    @FXML
+    private Label idLabel;
 
-    Integer id;
+    int newID;
     TOStudent selectedStudent;
     TOParent selectedParent;
     List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
     List<TOStudent> students;
     List<BundleItem.PurchaseLevel> levels = Arrays.asList(BundleItem.PurchaseLevel.values());
+    List<Integer> ids = new ArrayList<>();
 
+    @FXML
     void selectID(ActionEvent event) {
-
+        try {
+            newID = Integer.parseInt(idTextField.getText());
+            for(Integer id : ids) {
+                if(newID == id) {
+                    System.out.println("duplicate id");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 
@@ -52,6 +62,7 @@ public class StartOrderWindowController implements Initializable {
             for (TOStudent student : students) {
                 studentNames.add(student.getName());
             }
+            studentChoiceBox.getItems().clear();
             studentChoiceBox.getItems().addAll(studentNames);
         }
     }
@@ -62,7 +73,18 @@ public class StartOrderWindowController implements Initializable {
         for (TOParent parent : parents) {
             parentNames.add(parent.getEmail());
         }
+
+        List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
+        for (TOOrder order : orders) {
+            ids.add(order.getNumber());
+        }
+        Collections.sort(ids);
+        String nextID = String.valueOf(ids.get(ids.size() - 1) + 1);
+
+        idLabel.setText(nextID);
+        idTextField.setText(nextID);
         parentChoiceBox.getItems().addAll(parentNames);
         levelChoiceBox.getItems().addAll(levels);
+        parentChoiceBox.setOnAction(this::getParent);
     }
 }
