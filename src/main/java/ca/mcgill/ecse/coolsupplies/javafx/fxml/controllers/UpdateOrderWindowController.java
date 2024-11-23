@@ -23,13 +23,12 @@ public class UpdateOrderWindowController implements Initializable {
     private TOOrder order;
     String studentName;
     String level;
-    int id;
 
     @FXML
     private void updateOrder(ActionEvent event) {
         studentName = studentChoiceBox.getValue();
         level = levelChoiceBox.getValue();
-        id = Integer.parseInt(idChoiceBox.getValue());
+        int id = Integer.parseInt(idChoiceBox.getValue());
 
         CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
     }

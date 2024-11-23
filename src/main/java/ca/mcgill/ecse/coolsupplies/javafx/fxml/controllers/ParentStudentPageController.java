@@ -1,18 +1,20 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
-import ca.mcgill.ecse.coolsupplies.controller.*;
-import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
+import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet1Controller;
+import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet6Controller;
+import ca.mcgill.ecse.coolsupplies.controller.TOParent;
+import ca.mcgill.ecse.coolsupplies.controller.TOStudent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,52 +22,106 @@ public class ParentStudentPageController implements Initializable {
 
     @FXML
     private AnchorPane ap;
-    @FXML
-    private Button Add;
-    @FXML
-    private Label msgLabel;
-    @FXML
-    private ChoiceBox<TOStudent> studentChoiceBox;
-    @FXML
-    private ChoiceBox<TOParent> parentChoiceBox;
-
-    CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
-    TOStudent selectedStudent;
-    TOParent selectedParent;
-    List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
-    List<TOStudent> students;
 
     @FXML
-    void addStudentToParent(ActionEvent event) {
-        try {
-            selectedStudent = studentChoiceBox.getValue();
-            String msg = CoolSuppliesFeatureSet6Controller.addStudentToParent(selectedStudent.getName(), selectedParent.getEmail());
-            msgLabel.setText(msg);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+    private ChoiceBox<String> parentChoiceBox;
 
     @FXML
-    void deleteStudentFromParent(ActionEvent event) {
-        try {
-            selectedStudent = studentChoiceBox.getValue();
-            String msg = CoolSuppliesFeatureSet6Controller.addStudentToParent(selectedStudent.getName(), selectedParent.getEmail());
-            msgLabel.setText(msg);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+    private TableView<ParentStudent> parentStudentTable;
 
-    void getParent(ActionEvent event) {
+    @FXML
+    private TableColumn<ParentStudent, String> parentColumn;
+
+    @FXML
+    private TableColumn<ParentStudent, String> studentColumn;
+
+    @FXML
+    private Label studentLabel;
+
+
+    String msg;
+    String selectedParent;
+    ParentStudent selecteParentStudent;
+    ObservableList<ParentStudent> data = FXCollections.observableArrayList();
+
+    @FXML
+    private void addStudentToParent(ActionEvent event) {
         selectedParent = parentChoiceBox.getValue();
-        students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(selectedParent.getEmail());
-        studentChoiceBox.getItems().addAll(students);
+        if (selecteParentStudent != null && selectedParent != null) {
+            msg = CoolSuppliesFeatureSet6Controller.addStudentToParent(selecteParentStudent.studentName, selectedParent);
+            selecteParentStudent.setParentEmail(selectedParent);
+            parentStudentTable.refresh();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Add Student");
+            alert.setHeaderText(null);
+            alert.setContentText(msg);
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void deleteStudentFromParent(ActionEvent event) {
+        msg = CoolSuppliesFeatureSet6Controller.deleteStudentFromParent(selecteParentStudent.studentName, selecteParentStudent.parentEmail);
+        selecteParentStudent.setParentEmail(null);
+        parentStudentTable.refresh();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Remove Student");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        msgLabel.setText("");
-        parentChoiceBox.getItems().addAll(parents);
+        studentLabel.setText("Not Selected");
+        parentColumn.setCellValueFactory(new PropertyValueFactory<>("parentEmail")); // Match getter method
+        studentColumn.setCellValueFactory(new PropertyValueFactory<>("studentName")); // Match getter method
+
+        List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
+        for (TOParent parent : parents) {
+            List<TOStudent> students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(parent.getEmail());
+            for (TOStudent student : students) {
+                data.add(new ParentStudent(parent.getEmail(), student.getName()));
+            }
+        }
+
+        List<String> parentEmails = new ArrayList<>();
+        for (TOParent parent : parents) {
+            parentEmails.add(parent.getEmail());
+        }
+        parentChoiceBox.getItems().addAll(parentEmails);
+
+        parentStudentTable.setItems(data);
+
+        parentStudentTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                selecteParentStudent = parentStudentTable.getSelectionModel().getSelectedItem();
+                studentLabel.setText(selecteParentStudent.studentName);
+            }
+        });
+    }
+
+    public static class ParentStudent {
+        private String parentEmail;
+        private String studentName;
+
+        public ParentStudent(String parentEmail, String studentName) {
+            this.parentEmail = parentEmail;
+            this.studentName = studentName;
+        }
+
+        public String getParentEmail() {
+            return parentEmail;
+        }
+
+        public String getStudentName() {
+            return studentName;
+        }
+
+        public void setParentEmail(String newEmail) {
+            parentEmail = newEmail;
+        }
     }
 }

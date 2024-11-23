@@ -34,20 +34,18 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <Button layoutX="308.0" layoutY="170.0" mnemonicParsing="false" onAction="#addStudentToParent" prefHeight="26.0" prefWidth="45.0" text="Add" />
-      <Button layoutX="361.0" layoutY="170.0" mnemonicParsing="false" onAction="#deleteStudentFromParent" prefHeight="26.0" prefWidth="75.0" text="Remove" />
+      <Button fx:id="addStudentToParent" layoutX="408.0" layoutY="170.0" mnemonicParsing="false" onAction="#addStudentToParent" prefHeight="26.0" prefWidth="131.0" text="Add to this Parent" />
+      <Button fx:id="deleteStudentFromParent" layoutX="408.0" layoutY="126.0" mnemonicParsing="false" onAction="#deleteStudentFromParent" prefHeight="26.0" prefWidth="131.0" text="Remove from Parent" />
       <Separator layoutX="122.0" layoutY="93.0" prefHeight="29.0" prefWidth="482.0" />
-      <Text layoutX="138.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student:" />
-      <Text layoutX="139.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent:" />
-      <ChoiceBox fx:id="parentChoiceBox" layoutX="191.0" layoutY="128.0" prefHeight="26.0" prefWidth="95.0" />
-      <Label fx:id="msgLabel" layoutX="449.0" layoutY="175.0" text="msg" />
-      <ChoiceBox fx:id="studentChoiceBox" layoutX="483.0" layoutY="321.0" prefHeight="26.0" prefWidth="95.0" />
-      <TableView layoutX="139.0" layoutY="209.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="300.0">
+      <Text layoutX="139.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student:" />
+      <Text layoutX="142.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent:" />
+      <ChoiceBox fx:id="parentChoiceBox" layoutX="196.0" layoutY="170.0" prefHeight="26.0" prefWidth="172.0" />
+      <TableView fx:id="parentStudentTable" layoutX="139.0" layoutY="209.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="400.0">
          <columns>
-            <TableColumn prefWidth="150.0" text="Name" />
-            <TableColumn minWidth="1.0" prefWidth="150.0" text="Parent" />
+            <TableColumn fx:id="parentColumn" prefWidth="200.0" text="Parent Email" />
+            <TableColumn fx:id="studentColumn" minWidth="1.0" prefWidth="200.0" text="Student Name" />
          </columns>
       </TableView>
-      <Label layoutX="196.0" layoutY="175.0" text="Amy" />
+      <Label fx:id="studentLabel" layoutX="196.0" layoutY="130.0" text="Label" />
    </children>
 </AnchorPane>
