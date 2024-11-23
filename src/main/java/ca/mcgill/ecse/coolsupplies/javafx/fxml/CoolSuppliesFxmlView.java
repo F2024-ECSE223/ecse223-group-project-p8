@@ -25,14 +25,24 @@ public class CoolSuppliesFxmlView extends Application {
 //            primaryStage.setTitle("Parent-Student Page");
 //            primaryStage.show();
 
+//            // Load the ParentStudentPage.fxml file
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/StartOrderWindow.fxml"));
+//            Parent root = loader.load();
+//
+//            // Set the scene and stage
+//            Scene scene = new Scene(root);
+//            primaryStage.setScene(scene);
+//            primaryStage.setTitle("Start Order Window");
+//            primaryStage.show();
+
             // Load the ParentStudentPage.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/StartOrderWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/UpdateOrderWindow.fxml"));
             Parent root = loader.load();
 
             // Set the scene and stage
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Start Order Window");
+            primaryStage.setTitle("Update Order Window");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
