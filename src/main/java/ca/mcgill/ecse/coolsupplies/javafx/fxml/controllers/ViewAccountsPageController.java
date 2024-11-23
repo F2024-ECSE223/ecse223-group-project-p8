@@ -6,6 +6,7 @@ import ca.mcgill.ecse.coolsupplies.controller.TOParent;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Parent;
 import ca.mcgill.ecse.coolsupplies.model.SchoolAdmin;
+import ca.mcgill.ecse.coolsupplies.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,46 +16,57 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ViewAccountsPageController {
 
     @FXML
     private ChoiceBox<String> accountChoiceBox;
     @FXML
-    private TableView<?> overviewTable;
+    private TableView<TOParent> accounntTable;
+    @FXML
+    private TableColumn<TOParent, String> emailColumn;
+    @FXML
+    private TableColumn<TOParent, String> nameColumn;
+    @FXML
+    private TableColumn<TOParent, String> phoneNumberColumn;
 
-    private ObservableList<String> accountList;
+    private ObservableList<String> emailList;
+
 
     private static CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
     @FXML
     public void initialize() {
-//        List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
-//        SchoolAdmin admin = coolSupplies.getAdmin();
-//        List<String> accountNames = List.of();
-//
-//        accountNames.add(admin.getEmail());
-//
-//        for (int i = 0; i < coolSupplies.getParents().size(); i++){
-//            accountNames.add(parents.get(i).getEmail());
-//        }
+        refreshChoiceBox();
+        refreshList();
 
-        //need accounts present in the system to work
-        List<String> accountNames = List.of("jane.doe@gmail.com", "john.doe@gmail.com", "txt@moa.ca", "yeonjun@gmail.com", "admin@cool.ca");
-
-        accountList = FXCollections.observableArrayList(accountNames);
-
-        accountChoiceBox.setItems(accountList);
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        phoneNumberColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
     }
+
+    private ObservableList<TOParent> refreshList() {
+        ObservableList<TOParent> userList = FXCollections.observableArrayList();
+
+        List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
+        userList.addAll(parents);
+
+        accounntTable.setItems(userList);
+
+        return userList;
+    }
+
 
     @FXML
     private void updateAccount() throws IOException {
-        //todo
         String selectedParent = accountChoiceBox.getValue();
 
         if (selectedParent == null) {
@@ -62,16 +74,10 @@ public class ViewAccountsPageController {
             return;
         }
 
-        if (selectedParent == "admin@cool.ca"){
+        if (selectedParent.equals("admin@cool.ca")){
             loadPage("/pages/UpdateAdminPage.fxml");
         }
 
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/UpdateAccountPage.fxml"));
-//        Scene scene = new Scene(loader.load());
-//
-//        Stage stage = (Stage) accountChoiceBox.getScene().getWindow();
-//        stage.setScene(scene);
-//        stage.show();
         else{
             TOParent parent = CoolSuppliesFeatureSet1Controller.getParent(selectedParent);
 
@@ -80,12 +86,13 @@ public class ViewAccountsPageController {
 
             UpdateAccountPageController controller = loader.getController();
 
-            //controller.initialize(String.valueOf(parent.getPhoneNumber()), parent.getName(), selectedParent);
-            controller.initialize("12345678", "yeonjun", selectedParent);
+            controller.initialize(String.valueOf(parent.getPhoneNumber()), parent.getName(), selectedParent);
             Stage stage = (Stage) accountChoiceBox.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         }
+
+        refreshList();
     }
 
     @FXML
@@ -97,18 +104,31 @@ public class ViewAccountsPageController {
             showAlert("Error", "Please select a parent to delete.");
             return;
         }
-//
-//        String msg = CoolSuppliesFeatureSet1Controller.deleteParent(selectedParent);
-//
-//        showAlert("", msg);
-        showAlert("","Deleted");
-        accountList.remove(selectedParent);
+
+        String msg = CoolSuppliesFeatureSet1Controller.deleteParent(selectedParent);
+
+        showAlert("", msg);
+        refreshChoiceBox();
+        refreshList();
     }
 
     @FXML
-    private void addAccount() {
-        //todo
+    private void addAccount() throws IOException {
+        loadPage("/pages/AddAccountPage.fxml");
+        refreshChoiceBox();
+        refreshList();
+    }
 
+    private void refreshChoiceBox() {
+        accountChoiceBox.getItems().clear();
+
+        List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
+        SchoolAdmin admin = coolSupplies.getAdmin();
+
+        accountChoiceBox.getItems().add(admin.getEmail());
+        for (TOParent parent : parents) {
+            accountChoiceBox.getItems().add(parent.getEmail());
+        }
     }
 
     private void showAlert(String title, String message) {
@@ -136,7 +156,12 @@ public class ViewAccountsPageController {
 
     @FXML
     private void viewStudents() throws IOException {
-        loadPage("/pages/ViewStudents.fxml");
+        loadPage("/pages/ViewAllStudents.fxml");
+    }
+
+    @FXML
+    private void viewAssociations() throws IOException {
+        loadPage("/pages/ParentStudentPage.fxml");
     }
 
     @FXML

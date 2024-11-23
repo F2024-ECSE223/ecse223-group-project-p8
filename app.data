@@ -1,5 +1,13 @@
 {
   "CoolSupplies": {
+    "admin": {
+      "email": "admin@cool.ca",
+      "password": "ascadvds",
+      "canSetEmail": false,
+      "coolSupplies": {
+        "@reference": "../.."
+      }
+    },
     "students": [
       {
         "Student": {
@@ -27,7 +35,58 @@
       }
     ],
     "parents": [
-      ""
+      {
+        "Parent": [
+          {
+            "email": "john.doe@gmail.com",
+            "password": 456,
+            "canSetEmail": false,
+            "name": "John",
+            "phoneNumber": 5140098,
+            "students": [
+              ""
+            ],
+            "coolSupplies": {
+              "@reference": "../../.."
+            },
+            "orders": [
+              ""
+            ]
+          },
+          {
+            "email": "txt@moa.ca",
+            "password": "avdadvad",
+            "canSetEmail": false,
+            "name": "dubadu",
+            "phoneNumber": 4389972,
+            "students": [
+              ""
+            ],
+            "coolSupplies": {
+              "@reference": "../../.."
+            },
+            "orders": [
+              ""
+            ]
+          },
+          {
+            "email": "yeonjun@hybe.ca",
+            "password": "ascacs",
+            "canSetEmail": false,
+            "name": "YeonjunChoi",
+            "phoneNumber": 1111111,
+            "students": [
+              ""
+            ],
+            "coolSupplies": {
+              "@reference": "../../.."
+            },
+            "orders": [
+              ""
+            ]
+          }
+        ]
+      }
     ],
     "items": [
       ""

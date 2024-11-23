@@ -1,5 +1,9 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml;
 
+import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
+import ca.mcgill.ecse.coolsupplies.model.Parent;
+import ca.mcgill.ecse.coolsupplies.model.SchoolAdmin;
+import ca.mcgill.ecse.coolsupplies.model.Student;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -22,10 +26,21 @@ public class CoolSuppliesFxmlView extends Application {
     @Override
     public void start(Stage primaryStage) {
         instance = this;
+        CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
+
+//        Parent p1= new Parent("jane.doe@gmail.com","123","Jane",0123456,coolSupplies);
+//        Parent p2= new Parent("john.doe@gmail.com","456","John",5140098,coolSupplies);
+//        Parent p3= new Parent("txt@moa.ca","789","TXT",4389972,coolSupplies);
+//        Parent p4= new Parent("yeonjun2@gmail.com","abc","Yeonjun",8658462,coolSupplies);
+//        SchoolAdmin a = new SchoolAdmin("admin@cool.ca", "advdg", coolSupplies);
+//
+//        coolSupplies.addParent(p1);
+//        coolSupplies.addParent(p2);
+//        coolSupplies.addParent(p3);
+//        coolSupplies.addParent(p4);
+//        coolSupplies.setAdmin(a);
 
         try {
-            // ca/mcgill/ecse/coolsupplies/javafx/fxml/pages/AccountPage.fxml
-
             System.out.println(getClass().getResource(""));
             var root = (Pane) FXMLLoader.load(getClass().getResource("/pages/ViewAccountsPage.fxml"));
             var scene = new Scene(root);
@@ -40,19 +55,16 @@ public class CoolSuppliesFxmlView extends Application {
         }
     }
 
-    // Register the node for receiving refresh events
     public void registerRefreshEvent(Node node) {
         refreshableNodes.add(node);
     }
 
-    // Register multiple nodes for receiving refresh events
     public void registerRefreshEvent(Node... nodes) {
         for (var node: nodes) {
             refreshableNodes.add(node);
         }
     }
 
-    // remove the node from receiving refresh events
     public void removeRefreshableNode(Node node) {
         refreshableNodes.remove(node);
     }

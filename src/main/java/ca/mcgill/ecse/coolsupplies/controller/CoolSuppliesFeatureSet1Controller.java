@@ -98,7 +98,7 @@ public class CoolSuppliesFeatureSet1Controller {
       return e.getMessage();
     }
 
-    return "Parent added successfully.";
+    return "Account added successfully.";
   }
 
   /**

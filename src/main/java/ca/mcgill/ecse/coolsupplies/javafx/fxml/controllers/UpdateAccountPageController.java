@@ -30,7 +30,6 @@ public class UpdateAccountPageController {
 
     @FXML
     public void initialize(String phoneNumber, String name, String aEmail) {
-        //todo
         phoneNumberField.setText(phoneNumber);
         nameField.setText(name);
         emailText.setText(aEmail);
@@ -40,16 +39,13 @@ public class UpdateAccountPageController {
 
     @FXML
     private void saveAccount() throws IOException {
-        //todo
+        String newPhoneNumber = phoneNumberField.getText();
+        String newName = nameField.getText();
+        String newPassword = passwordField.getText();
 
-//        String newPhoneNumber = phoneNumberField.getText();
-//        String newName = nameField.getText();
-//        String newPassword = passwordField.getText();
+        String msg = CoolSuppliesFeatureSet1Controller.updateParent(email, newPassword, newName, Integer.parseInt(newPhoneNumber));
 
-//        String msg = CoolSuppliesFeatureSet1Controller.updateParent(email, newPassword, newName, Integer.parseInt(newPhoneNumber));
-//
-//        showAlert("", msg);
-        showAlert("","Saved");
+        showAlert("", msg);
 
         loadPage("/pages/ViewAccountsPage.fxml");
     }
@@ -104,7 +100,12 @@ public class UpdateAccountPageController {
 
     @FXML
     private void viewStudents() throws IOException {
-        loadPage("/pages/ViewStudents.fxml");
+        loadPage("/pages/ViewAllStudents.fxml");
+    }
+
+    @FXML
+    private void viewAssociations() throws IOException {
+        loadPage("/pages/ParentStudentPage.fxml");
     }
 
     @FXML

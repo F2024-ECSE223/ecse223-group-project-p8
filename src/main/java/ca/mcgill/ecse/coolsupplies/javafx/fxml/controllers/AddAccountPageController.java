@@ -11,33 +11,43 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class UpdateAdminPageController {
+public class AddAccountPageController {
+
+    @FXML
+    private TextField phoneNumberField;
+    @FXML
+    private TextField nameField;
     @FXML
     private TextField passwordField;
+    @FXML
+    private TextField emailField;
 
     private Stage stage;
 
-    private String email;
-
-
-    @FXML
-    public void initialize(String aEmail) {
-        email = aEmail;
-    }
+//    @FXML
+//    public void initialize(String phoneNumber, String name, String aEmail) {
+//    }
 
     @FXML
     private void saveAccount() throws IOException {
-        String newPassword = passwordField.getText();
+        //todo
 
-        if (newPassword != null){
-            String msg = CoolSuppliesFeatureSet1Controller.updateAdmin(newPassword);
-            showAlert("", msg);
-        }
-        else{
-            showAlert("", "Password cannot be null.");
+        String phoneNumber = phoneNumberField.getText();
+        String name = nameField.getText();
+        String password = passwordField.getText();
+        String email = emailField.getText();
+
+        if (!phoneNumber.matches("[0-9]+")){
+            showAlert("", "Phone number must be numbers only");
         }
 
-        loadPage("/pages/ViewAccountsPage.fxml");
+        String msg = CoolSuppliesFeatureSet1Controller.addParent(email, password, name, Integer.parseInt(phoneNumber));
+
+        showAlert("", msg);
+
+        if (msg == "Account added successfully."){
+            loadPage("/pages/ViewAccountsPage.fxml");
+        }
     }
 
     @FXML
@@ -48,7 +58,7 @@ public class UpdateAdminPageController {
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Scene scene = new Scene(loader.load());
-        Stage currentStage = (Stage) passwordField.getScene().getWindow();
+        Stage currentStage = (Stage) phoneNumberField.getScene().getWindow();
         currentStage.setScene(scene);
     }
 
