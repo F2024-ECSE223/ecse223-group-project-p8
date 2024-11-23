@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
-import ca.mcgill.ecse.coolsupplies.controller.TOBundleItem;
 import ca.mcgill.ecse.coolsupplies.controller.TOGradeBundle;
 import ca.mcgill.ecse.coolsupplies.model.*;
 import javafx.collections.FXCollections;
@@ -211,13 +210,13 @@ public class BundlesController {
     }
 
     @FXML
-    void goToAccount() {
-
+    void goToAccount() throws IOException {
+        loadPage("/pages/ViewAccountsPage.fxml");
     }
 
     @FXML
-    void goToItems() {
-
+    void goToItems() throws IOException {
+        loadPage("/pages/AddItems.fxml");
     }
 
     @FXML
@@ -246,7 +245,7 @@ public class BundlesController {
 
     @FXML
     private void goToNewOrder() throws IOException{
-        loadPage("/pages/AddItemToOrder.fxml");
+        loadPage("/pages/StartOrderWindow.fxml");
     }
 
     private void loadPage(String fxmlPath) throws IOException {
@@ -258,7 +257,6 @@ public class BundlesController {
 
     public void setBundleDiscount(String bundleName, int newDiscount) {
         CoolSuppliesApplication.getCoolSupplies().getBundles().stream().filter(b -> b.getName().equals(bundleName)).findFirst().ifPresent(bundle -> bundle.setDiscount(newDiscount));
-
         updateTable();
     }
 }
