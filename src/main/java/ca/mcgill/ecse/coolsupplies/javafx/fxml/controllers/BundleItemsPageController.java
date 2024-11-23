@@ -60,6 +60,12 @@ public class BundleItemsPageController {
     @FXML
     private TableView<TOBundleItem> table;
 
+    private BundlesController bundlesController;
+
+    // Setter method for bundlesController
+    public void setBundlesController(BundlesController controller) {
+        this.bundlesController = controller;
+    }
 
     //ERROR - THE BUNDLE SHOULD COME FROM PASSED DOWN INFO FROM THE PREVIOUS CONTROLLER INITIALLY, AND THEN THE DROPDOWN MENU
     private String currBundleName;
@@ -225,7 +231,12 @@ public class BundleItemsPageController {
             if (selIndex >= 0 && selBundleItem != null) {
                 deleteBundleItem(bundleItemName, bundleName);
                 table.getItems().remove(selBundleItem);
+
+                if (table.getItems().size() <= 1) {
+                    bundlesController.setBundleDiscount(bundleName, 0); //set discount to 0 if
+                }
             }
+
         }
 
         //no row was selected --> show alert
@@ -267,4 +278,11 @@ public class BundleItemsPageController {
         }
     }
  **/
+
+// Go to Bundles page when clicking BundlesMenuButton
+@FXML
+private void goToBundles() throws IOException{
+    loadPage("/pages/Bundles.fxml");
+}
+
 }

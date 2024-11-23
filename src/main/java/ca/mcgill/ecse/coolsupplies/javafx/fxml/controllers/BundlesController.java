@@ -230,6 +230,7 @@ public class BundlesController {
             Scene scene = new Scene(loader.load());
             BundleItemsPageController controller = loader.getController();
             controller.setBundle(selBundle.getName());
+            controller.setBundlesController(this);
             Stage stage = (Stage) AddBundleButton.getScene().getWindow();
             stage.setScene(scene);
         }
@@ -255,4 +256,9 @@ public class BundlesController {
         stage.setScene(scene);
     }
 
+    public void setBundleDiscount(String bundleName, int newDiscount) {
+        CoolSuppliesApplication.getCoolSupplies().getBundles().stream().filter(b -> b.getName().equals(bundleName)).findFirst().ifPresent(bundle -> bundle.setDiscount(newDiscount));
+
+        updateTable();
+    }
 }

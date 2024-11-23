@@ -30,7 +30,7 @@
                <font>
                   <Font size="17.0" />
                </font></Button>
-                <Button fx:id="BundlesMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
+                <Button fx:id="BundlesMenuButton" mnemonicParsing="false" onMouseClicked="#goToBundles" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
