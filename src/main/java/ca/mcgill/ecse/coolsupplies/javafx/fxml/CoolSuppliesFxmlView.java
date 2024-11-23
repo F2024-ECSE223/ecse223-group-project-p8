@@ -20,7 +20,7 @@ public class CoolSuppliesFxmlView extends Application {
     public void start(Stage primaryStage) {
         try {
 //            // Load the FXML file
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/UpdateBundle.fxml"));
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/Bundles.fxml"));
 //            Parent root = loader.load();
 //
 //            // Set up the scene and stage
@@ -28,7 +28,7 @@ public class CoolSuppliesFxmlView extends Application {
 //            primaryStage.setScene(scene);
 //            primaryStage.show();
 
-            URL url = new File("src/main/java/ca/mcgill/ecse/coolsupplies/javafx/fxml/pages/Bundles.fxml").toURI().toURL();
+            URL url = new File("src/main/resources/pages/Bundles.fxml").toURI().toURL();
             Parent root = FXMLLoader.load(url);
 
             // Set up the scene and stage
