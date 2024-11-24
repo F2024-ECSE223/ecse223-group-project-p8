@@ -26,16 +26,16 @@ public class CoolSuppliesFxmlView extends Application {
         //Parent p1= new ca.mcgill.ecse.coolsupplies.model.Parent("1","","",1,coolSupplies);
         //Student s1 = new Student("2",coolSupplies,new Grade("9",coolSupplies));
 
-        List<Student> s = coolSupplies.getStudents();
-        List<ca.mcgill.ecse.coolsupplies.model.Parent> p = coolSupplies.getParents();
-        Order order1 = new Order(111, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
-        Order order2 = new Order(112, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
-        Order order3 = new Order(113, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
-        Order order4 = new Order(114, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
-        coolSupplies.addOrder(order1);
-        coolSupplies.addOrder(order2);
-        coolSupplies.addOrder(order3);
-        coolSupplies.addOrder(order4);
+//        List<Student> s = coolSupplies.getStudents();
+//        List<ca.mcgill.ecse.coolsupplies.model.Parent> p = coolSupplies.getParents();
+//        Order order1 = new Order(111, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
+//        Order order2 = new Order(112, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
+//        Order order3 = new Order(113, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
+//        Order order4 = new Order(114, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
+//        coolSupplies.addOrder(order1);
+//        coolSupplies.addOrder(order2);
+//        coolSupplies.addOrder(order3);
+//        coolSupplies.addOrder(order4);
         try {
             // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewAllOrders.fxml"));
