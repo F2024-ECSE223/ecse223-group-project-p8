@@ -43,18 +43,16 @@ public class AddAndUpdateStudentController {
         this.currentStudent = student;
         if(currentStudent == null){
             title.setText("Create a new student");
-        }else{
-            title.setText(currentStudent.getName());
-            studentName.setText(currentStudent.getName());
-        }
-    }
-
-    public void setCurrentParent(TOParent parent){
-        this.currentParent = parent;
-        if(currentParent == null){
             parentLabel.setText("No parent associated");
         }else{
-            parentLabel.setText(currentParent.getEmail());
+            ParentStudentPageController.ParentStudent parentStudent = ParentStudentPageController.ParentStudent.getStudentWithName(currentStudent.getName());
+            if(parentStudent == null || parentStudent.getParentEmail() == null){
+                parentLabel.setText("No parent associated");
+            }else{
+                parentLabel.setText(parentStudent.getParentEmail());
+            }
+            title.setText(currentStudent.getName());
+            studentName.setText(currentStudent.getName());
         }
     }
 
