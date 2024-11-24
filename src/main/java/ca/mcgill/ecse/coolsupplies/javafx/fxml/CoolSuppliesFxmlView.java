@@ -1,52 +1,82 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml;
 
-import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
-import ca.mcgill.ecse.coolsupplies.model.*;
+import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
+import ca.mcgill.ecse.coolsupplies.model.Parent;
+import ca.mcgill.ecse.coolsupplies.model.SchoolAdmin;
+import ca.mcgill.ecse.coolsupplies.model.Student;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.sql.Date;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import javafx.event.Event;
+import javafx.event.EventType;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 
 public class CoolSuppliesFxmlView extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static final EventType<Event> REFRESH_EVENT = new EventType<>("REFRESH");
+    private static CoolSuppliesFxmlView instance;
+    private List<Node> refreshableNodes = new ArrayList<>();
 
     @Override
     public void start(Stage primaryStage) {
-        Date date = new Date(2023, 4, 20);
+        instance = this;
         CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
-        // uncomment these two lines when you first run the program, comment afterwards
-        //Parent p1= new ca.mcgill.ecse.coolsupplies.model.Parent("1","","",1,coolSupplies);
-        //Student s1 = new Student("2",coolSupplies,new Grade("9",coolSupplies));
+//        Parent p1= new Parent("jane.doe@gmail.com","123","Jane",0123456,coolSupplies);
+//        Parent p2= new Parent("john.doe@gmail.com","456","John",5140098,coolSupplies);
+//        Parent p3= new Parent("txt@moa.ca","789","TXT",4389972,coolSupplies);
+//        Parent p4= new Parent("yeonjun2@gmail.com","abc","Yeonjun",8658462,coolSupplies);
+//        SchoolAdmin a = new SchoolAdmin("admin@cool.ca", "advdg", coolSupplies);
+//
+//        coolSupplies.addParent(p1);
+//        coolSupplies.addParent(p2);
+//        coolSupplies.addParent(p3);
+//        coolSupplies.addParent(p4);
+//        coolSupplies.setAdmin(a);
 
-//        List<Student> s = coolSupplies.getStudents();
-//        List<ca.mcgill.ecse.coolsupplies.model.Parent> p = coolSupplies.getParents();
-//        Order order1 = new Order(111, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
-//        Order order2 = new Order(112, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
-//        Order order3 = new Order(113, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
-//        Order order4 = new Order(114, date, BundleItem.PurchaseLevel.Mandatory,p.get(0),s.get(0),coolSupplies);
-//        coolSupplies.addOrder(order1);
-//        coolSupplies.addOrder(order2);
-//        coolSupplies.addOrder(order3);
-//        coolSupplies.addOrder(order4);
         try {
-            // Load the FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewAllOrders.fxml"));
-            Parent root = loader.load();
-
-            // Set up the scene and stage
-            Scene scene = new Scene(root);
+            System.out.println(getClass().getResource(""));
+            var root = (Pane) FXMLLoader.load(getClass().getResource("/pages/ViewAccountsPage.fxml"));
+            var scene = new Scene(root);
             primaryStage.setScene(scene);
+            primaryStage.setMinWidth(600);
+            primaryStage.setMinHeight(400);
+            primaryStage.setTitle("CoolSupplies");
             primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace(); // Print stack trace for debugging
+            refresh();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+    public void registerRefreshEvent(Node node) {
+        refreshableNodes.add(node);
+    }
+
+    public void registerRefreshEvent(Node... nodes) {
+        for (var node: nodes) {
+            refreshableNodes.add(node);
+        }
+    }
+
+    public void removeRefreshableNode(Node node) {
+        refreshableNodes.remove(node);
+    }
+
+    public void refresh() {
+        for (Node node : refreshableNodes) {
+            node.fireEvent(new Event(REFRESH_EVENT));
+        }
+    }
+
+    public static CoolSuppliesFxmlView getInstance() {
+        return instance;
+    }
+
 }
