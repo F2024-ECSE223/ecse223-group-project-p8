@@ -37,6 +37,7 @@ public class UpdateOrderItemQuantityDialogController {
     }
 
     public void setQty(Integer itemQty){
+        qtySpinner.getValueFactory().setValue(itemQty);
     }
     //--------------------------------------------------------------------------------
 
