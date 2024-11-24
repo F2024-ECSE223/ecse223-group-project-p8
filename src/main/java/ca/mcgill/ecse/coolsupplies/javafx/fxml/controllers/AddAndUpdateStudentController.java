@@ -1,10 +1,6 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet2Controller;
-import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet7Controller;
-import ca.mcgill.ecse.coolsupplies.controller.TOGrade;
-import ca.mcgill.ecse.coolsupplies.controller.TOStudent;
-import ca.mcgill.ecse.coolsupplies.model.Student;
+import ca.mcgill.ecse.coolsupplies.controller.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +17,8 @@ import java.util.List;
 public class AddAndUpdateStudentController {
 
     @FXML
+    private Label parentLabel;
+    @FXML
     private ComboBox<String> gradeBox;
     @FXML
     private Label resultLabel;
@@ -30,6 +28,7 @@ public class AddAndUpdateStudentController {
     private Label title;
 
     private TOStudent currentStudent;
+    private TOParent currentParent;
 
     public void initialize() {
         List<TOGrade> grades = CoolSuppliesFeatureSet7Controller.getGrades();
@@ -37,6 +36,7 @@ public class AddAndUpdateStudentController {
             gradeBox.getItems().add(grade.getLevel());
         }
         gradeBox.setValue(grades.get(0).getLevel());
+        parentLabel.setText("No parent associated");
     }
 
     public void setCurrentStudent(TOStudent student) {
@@ -46,6 +46,15 @@ public class AddAndUpdateStudentController {
         }else{
             title.setText(currentStudent.getName());
             studentName.setText(currentStudent.getName());
+        }
+    }
+
+    public void setCurrentParent(TOParent parent){
+        this.currentParent = parent;
+        if(currentParent == null){
+            parentLabel.setText("No parent associated");
+        }else{
+            parentLabel.setText(currentParent.getEmail());
         }
     }
 
@@ -67,7 +76,7 @@ public class AddAndUpdateStudentController {
 
     @FXML
     private void viewAccounts() throws IOException {
-        loadPage("/pages/AccountPage.fxml");
+        loadPage("/pages/viewAccountsPage.fxml");
     }
 
     @FXML
@@ -82,7 +91,7 @@ public class AddAndUpdateStudentController {
 
     @FXML
     private void viewAssociations() throws IOException {
-        loadPage("/pages/ViewParentsPage.fxml");
+        loadPage("/pages/ParentStudentPage.fxml");
     }
 
     @FXML

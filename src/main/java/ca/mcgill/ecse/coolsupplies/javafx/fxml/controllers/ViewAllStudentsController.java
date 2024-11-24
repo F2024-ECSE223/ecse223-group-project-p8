@@ -1,7 +1,9 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import ca.mcgill.ecse.coolsupplies.controller.*;
-import ca.mcgill.ecse.coolsupplies.model.*;
+import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet2Controller;
+import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet7Controller;
+import ca.mcgill.ecse.coolsupplies.controller.TOGrade;
+import ca.mcgill.ecse.coolsupplies.controller.TOStudent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -132,12 +134,12 @@ public class ViewAllStudentsController {
 
     @FXML
     private void viewAccounts() throws IOException {
-        loadPage("/pages/AccountPage.fxml");
+        loadPage("/pages/ViewAccountsPage.fxml");
     }
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/UpdateItemPage.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML
@@ -147,7 +149,7 @@ public class ViewAllStudentsController {
 
     @FXML
     private void viewAssociations() throws IOException {
-        loadPage("/pages/ViewParentsPage.fxml");
+        loadPage("/pages/ParentStudentPage.fxml");
     }
 
     @FXML
