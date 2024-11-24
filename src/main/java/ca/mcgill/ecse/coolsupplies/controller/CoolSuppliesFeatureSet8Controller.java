@@ -8,16 +8,18 @@ import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 public class CoolSuppliesFeatureSet8Controller {
 
     private static final CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
     /**
      * @author Jyothsna Seema
-     *         Updates the order with new quantity and level
-     * @param levelName              The purchase level name
-     * @param orderNumber            The order number of the order to be updated
-     * @param studentName            The student name to be updated
+     * Updates the order with new quantity and level
+     * 
+     * @param levelName   The purchase level name
+     * @param orderNumber The order number of the order to be updated
+     * @param studentName The student name to be updated
      * @return indicates if the order was updated successfully
      */
     public static String updateOrder(String levelName, int orderNumber, String studentName) {
@@ -33,21 +35,19 @@ public class CoolSuppliesFeatureSet8Controller {
 
         if (!Order.hasWithNumber(orderNumber)) {
             return String.format("Order %d does not exist", orderNumber);
-        }
-        else if (student == null) {
+        } else if (student == null) {
             return String.format("Student %s does not exist.", studentName);
-        }
-        else if (student.getParent() != order.getParent()) {
-            return String.format("Student %s is not a child of the parent %s.", studentName, order.getParent().getEmail());
+        } else if (student.getParent() != order.getParent()) {
+            return String.format("Student %s is not a child of the parent %s.", studentName,
+                    order.getParent().getEmail());
         }
 
-        else if (!order.getStatusFullName().equals("Started")){
-            //Must separate because picked up needs to give an error message with space and lowercase
-            if(order.getStatusFullName().equals("PickedUp")){
+        else if (!order.getStatusFullName().equals("Started")) {
+            // Must separate because picked up needs to give an error message with space and lowercase
+            if (order.getStatusFullName().equals("PickedUp")) {
                 return "Cannot update a picked up order";
-            }
-            else{
-                return String.format("Cannot update a %s order",order.getStatusFullName().toLowerCase());
+            } else {
+                return String.format("Cannot update a %s order", order.getStatusFullName().toLowerCase());
             }
         }
 
@@ -65,9 +65,10 @@ public class CoolSuppliesFeatureSet8Controller {
 
     /**
      * Adds item to an order
+     * 
      * @author Jyothsna Seema, Snigdha Sen
-     * @param invName the name of item
-     * @param item the Inventory item object with that name
+     * @param invName     the name of item
+     * @param item        the Inventory item object with that name
      * @param orderNumber the order number of the order
      * @param newQuantity the quantity of the item of interest
      * @return indicates if the item was succesfully added to a specific order
@@ -153,8 +154,7 @@ public class CoolSuppliesFeatureSet8Controller {
         try {
             order.updateQuantityEvent(newQuantity, orderItem);
             CoolSuppliesPersistence.save();
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             return e.getMessage();
         }
 
@@ -163,9 +163,10 @@ public class CoolSuppliesFeatureSet8Controller {
 
     /**
      * @author Jyothsna Seema, Zhengxuan Zhao, Snigdha Sen
-     *         Deletes the order with new quantity and level
-     * @param itemName              The item name of the item to be delted
-     * @param orderNumber           The order number of the order to be updated
+     * Deletes the order with new quantity and level
+     * 
+     * @param itemName    The item name of the item to be delted
+     * @param orderNumber The order number of the order to be updated
      * @return indicates if the order was updated successfully
      */
     public static String deleteOrderItem(String itemName, String orderNumber) {
@@ -190,8 +191,7 @@ public class CoolSuppliesFeatureSet8Controller {
 
         if (orderItem == null) {
             return String.format("Item %s does not exist in the order %s.", itemName, orderNumber);
-        }
-        else if (order != null) {
+        } else if (order != null) {
             try {
                 int oItemIndex = order.indexOfOrderItem(orderItem);
                 OrderItem thisItem = order.getOrderItem(oItemIndex);
@@ -213,7 +213,7 @@ public class CoolSuppliesFeatureSet8Controller {
      * @return indicates if the penalty was successfully paid
      */
     public static String payPenaltyForOrder(String orderNumber, String penaltyAuthorizationCode,
-                                            String authorizationCode) {
+            String authorizationCode) {
         if (Order.hasWithNumber(Integer.parseInt(orderNumber))) {
             Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
             if (authorizationCode.length() == 0) {
@@ -270,6 +270,7 @@ public class CoolSuppliesFeatureSet8Controller {
         return ("Done");
 
     }
+
     /**
      * Cancels an order.
      *
@@ -286,38 +287,45 @@ public class CoolSuppliesFeatureSet8Controller {
 
                 order.delete();
                 CoolSuppliesPersistence.save();
-            }
-            catch (RuntimeException e) {
+            } catch (RuntimeException e) {
                 return e.getMessage();
             }
-        }
-        else{
+        } else {
             return "Order " + orderNumber + " does not exist";
         }
         return "Order deleted successfully";
     }
 
     /**
-     * A Helpeer method that determines if a bundle item is eligible to be included in an order
+     * A Helpeer method that determines if a bundle item is eligible to be included
+     * in an order
      * based on the order's purchase level.
      *
      * This method checks if the item's level (Mandatory, Recommended, or Optional)
-     * matches the purchase level of the order. The eligibility criteria are as follows:
-     * - If the order level is "Mandatory", only items with the "Mandatory" level are included.
-     * - If the order level is "Recommended", both "Mandatory" and "Recommended" items are included.
-     * - If the order level is "Optional", all items are included regardless of their level.
+     * matches the purchase level of the order. The eligibility criteria are as
+     * follows:
+     * - If the order level is "Mandatory", only items with the "Mandatory" level
+     * are included.
+     * - If the order level is "Recommended", both "Mandatory" and "Recommended"
+     * items are included.
+     * - If the order level is "Optional", all items are included regardless of
+     * their level.
      *
      * @author Mary Li
-     * @param orderLevel the purchase level of the order (Mandatory, Recommended, or Optional)
-     * @param itemLevel the purchase level of the item to be checked
-     * @return true if the item's level is eligible for inclusion in the order, false otherwise
+     * @param orderLevel the purchase level of the order (Mandatory, Recommended, or
+     *                   Optional)
+     * @param itemLevel  the purchase level of the item to be checked
+     * @return true if the item's level is eligible for inclusion in the order,
+     *         false otherwise
      */
-    private static boolean isLevelEligibleForOrder(BundleItem.PurchaseLevel orderLevel, BundleItem.PurchaseLevel itemLevel) {
+    private static boolean isLevelEligibleForOrder(BundleItem.PurchaseLevel orderLevel,
+            BundleItem.PurchaseLevel itemLevel) {
         switch (orderLevel) {
             case Mandatory:
                 return itemLevel == BundleItem.PurchaseLevel.Mandatory;
             case Recommended:
-                return itemLevel == BundleItem.PurchaseLevel.Mandatory || itemLevel == BundleItem.PurchaseLevel.Recommended;
+                return itemLevel == BundleItem.PurchaseLevel.Mandatory
+                        || itemLevel == BundleItem.PurchaseLevel.Recommended;
             case Optional:
                 return true;
             default:
@@ -328,12 +336,14 @@ public class CoolSuppliesFeatureSet8Controller {
     /**
      * Retrieves the details of a specific order by its index.
      * This method handles both regular items and GradeBundle items.
-     * For GradeBundle items, it adds each eligible bundle item separately and applies
+     * For GradeBundle items, it adds each eligible bundle item separately and
+     * applies
      * a discount if more than one item is included from the bundle.
      *
      * @author Mary Li, Zhengxuan Zhao
      * @param index the index of the order to view (1-based index)
-     * @return a TOOrder object containing the details of the specified order, or null if the index is out of bounds
+     * @return a TOOrder object containing the details of the specified order, or
+     *         null if the index is out of bounds
      */
     public static TOOrder viewOrder(String index) {
         Order order = Order.getWithNumber(Integer.parseInt(index));
@@ -377,8 +387,7 @@ public class CoolSuppliesFeatureSet8Controller {
                         itemName,
                         null,
                         unitPrice,
-                        null
-                );
+                        null);
                 toOrderItems.add(toOrderItem);
 
             } else if (inventoryItem instanceof GradeBundle) {
@@ -404,8 +413,7 @@ public class CoolSuppliesFeatureSet8Controller {
                                 itemName,
                                 gradeBundleName.isEmpty() ? null : gradeBundleName,
                                 unitPrice,
-                                null
-                        );
+                                null);
                         bundleOrderItems.add(toOrderItem);
                     }
                 }
@@ -436,8 +444,7 @@ public class CoolSuppliesFeatureSet8Controller {
 
         TOOrder toOrder = new TOOrder(
                 parentEmail, studentName, status, orderNumber, orderDate,
-                orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice
-        );
+                orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice);
         toOrder.setItems(toOrderItems);
 
         return toOrder;
@@ -446,7 +453,8 @@ public class CoolSuppliesFeatureSet8Controller {
     /**
      * Retrieves the details of all orders in the system.
      * This method handles both regular items and GradeBundle items.
-     * For GradeBundle items, it adds each eligible bundle item separately and applies
+     * For GradeBundle items, it adds each eligible bundle item separately and
+     * applies
      * a discount if more than one item is included from the bundle.
      *
      * Each order is returned as a TOOrder object containing its associated items
@@ -496,8 +504,7 @@ public class CoolSuppliesFeatureSet8Controller {
                             itemName,
                             null,
                             unitPrice,
-                            null
-                    );
+                            null);
                     toOrderItems.add(toOrderItem);
 
                 } else if (inventoryItem instanceof GradeBundle) {
@@ -523,8 +530,7 @@ public class CoolSuppliesFeatureSet8Controller {
                                     itemName,
                                     gradeBundleName.isEmpty() ? null : gradeBundleName,
                                     unitPrice,
-                                    null
-                            );
+                                    null);
                             bundleOrderItems.add(toOrderItem);
                         }
                     }
@@ -556,8 +562,7 @@ public class CoolSuppliesFeatureSet8Controller {
 
             TOOrder toOrder = new TOOrder(
                     parentEmail, studentName, status, orderNumber, orderDate,
-                    orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice
-            );
+                    orderLevel.toString(), authorizationCode, penaltyAuthorizationCode, totalPrice);
             toOrder.setItems(toOrderItems);
             toOrders.add(toOrder);
         }
@@ -573,9 +578,11 @@ public class CoolSuppliesFeatureSet8Controller {
      *
      * @param orderNumber the number of the order to process
      * @return a message indicating the result of the operation
-     * @throws RuntimeException if the school year has already been started for the order or the order does not exist
+     * @throws RuntimeException if the school year has already been started for the
+     *                          order or the order does not exist
      *
-     * @author Mary Li, Shengyi Zhong
+     * @author Mary Li
+     * @author Shengyi Zhong
      */
     public static String startYear(String orderNumber) {
         Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
@@ -598,7 +605,8 @@ public class CoolSuppliesFeatureSet8Controller {
      *
      * @param orderNumber the number of the order to pick up
      * @return a message indicating the result of the operation
-     * @throws RuntimeException if the order cannot be picked up due to its current status
+     * @throws RuntimeException if the order cannot be picked up due to its current
+     *                          status
      *
      * @author Shengyi Zhong
      */
