@@ -27,7 +27,7 @@
       </Text>
       <ToolBar prefHeight="40.0" prefWidth="600.0">
          <items>
-            <Button mnemonicParsing="false" text="Back" />
+            <Button fx:id="BackButton" mnemonicParsing="false" onAction="#goBack" text="Back" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
          </items>
       </ToolBar>

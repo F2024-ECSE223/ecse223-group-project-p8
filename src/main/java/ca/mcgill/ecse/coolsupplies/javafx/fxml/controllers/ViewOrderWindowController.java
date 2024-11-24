@@ -203,8 +203,8 @@ public class ViewOrderWindowController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/EditOrderItemsPage.fxml"));
         Scene scene = new Scene(loader.load());
 
-        EditOrderItemsPageController controller = loader.getController();
-        controller.setCurrentOrder(currentOrder);
+        //EditOrderItemsPageController controller = loader.getController();
+        //controller.setCurrentOrder(currentOrder);
 
         Stage stage = (Stage) updateOrderButton.getScene().getWindow();
         stage.setScene(scene);
@@ -221,7 +221,7 @@ public class ViewOrderWindowController {
         dialogStage.setScene(scene);
 
         SetPenaltyCodesController controller = loader.getController();
-        controller.setCurrentOrder(currentOrder);
+        //controller.setCurrentOrder(currentOrder);
 
         dialogStage.showAndWait();
         showOrderDetails();

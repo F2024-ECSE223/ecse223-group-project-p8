@@ -12,6 +12,13 @@ import ca.mcgill.ecse.coolsupplies.model.Grade;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+/**
+ * This class provides the controller methods for the Edit Bundle Dialog Box on the Bundles Page
+ *
+ * @author Jyothsna Seema
+ */
+
+
 public class EditBundleDialogController {
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
