@@ -32,7 +32,7 @@
       <Pane layoutX="120.0" layoutY="40.0" prefHeight="361.0" prefWidth="480.0">
          <children>
             <Label layoutX="22.0" layoutY="69.0" prefHeight="26.0" prefWidth="91.0" text="Student Name:" />
-            <Button layoutX="23.0" layoutY="159.0" mnemonicParsing="false" onAction="#addAndUpdateStudent" text="Add&amp;Update" />
+            <Button layoutX="23.0" layoutY="202.0" mnemonicParsing="false" onAction="#addAndUpdateStudent" prefHeight="26.0" prefWidth="66.0" text="ok" />
             <Label layoutX="22.0" layoutY="117.0" prefHeight="26.0" prefWidth="91.0" text="Grade:" />
             <TextField fx:id="studentName" layoutX="132.0" layoutY="69.0" />
             <ComboBox fx:id="gradeBox" layoutX="133.0" layoutY="117.0" prefWidth="150.0" />
@@ -46,6 +46,8 @@
                   <Font size="23.0" />
                </font>
             </Label>
+            <Label layoutX="23.0" layoutY="160.0" prefHeight="26.0" prefWidth="91.0" text="Parent Email:" />
+            <Label fx:id="parentLabel" layoutX="134.0" layoutY="165.0" text="Label" />
          </children>
       </Pane>
    </children>

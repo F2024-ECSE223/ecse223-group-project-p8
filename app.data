@@ -9,7 +9,30 @@
       }
     },
     "students": [
-      ""
+      {
+        "Student": {
+          "name": 111,
+          "coolSupplies": {
+            "@reference": "../../.."
+          },
+          "orders": [
+            ""
+          ],
+          "grade": {
+            "level": "7th",
+            "students": [
+              {
+                "Student": {
+                  "@reference": "../../.."
+                }
+              }
+            ],
+            "coolSupplies": {
+              "@reference": "../../../.."
+            }
+          }
+        }
+      }
     ],
     "parents": [
       ""
@@ -30,7 +53,11 @@
       ""
     ],
     "grades": [
-      ""
+      {
+        "Grade": {
+          "@reference": "../../students/Student/grade"
+        }
+      }
     ]
   }
 }
