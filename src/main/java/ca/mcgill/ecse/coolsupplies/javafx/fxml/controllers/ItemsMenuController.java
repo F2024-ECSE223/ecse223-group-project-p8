@@ -5,9 +5,6 @@ import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet3Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOItem;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Item;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,8 +20,11 @@ import java.util.List;
 
 import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet3Controller.deleteItem;
 
-//import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet3Controller.deleteItem;
-
+/**
+ * FXML controller for the items menu
+ * Sets up the table to view all the items, adds an items, edits an item, and remove it
+ * @author Artimice Mirchi
+ */
 public class ItemsMenuController {
     @FXML public Button addButton;
 
@@ -36,46 +36,15 @@ public class ItemsMenuController {
     @FXML public Button bundlesButton;
     @FXML public Button shopButton;
     @FXML public Button removeButton;
-
-
-
-    //private final ObservableList<Item> items = FXCollections.observableArrayList();
-    //private final TOItem<Item> items =
-
+    @FXML public Button profileButton;
     @FXML private Label resultLabel;
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
     TOItem selectedItem;
-    //TOParent selectedParent;
-    //List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
-    //List<TOStudent> students;
-    //gridpane, pane, button, vbox,
 
-   /* private void populateItems() {
-        List<TOItem> items = CoolSuppliesFeatureSet3Controller.getItems();
-        TableColumn<Item, String> nameColumn = null;
-        TableColumn<Item, String> priceColumn = null;
-        for (TOItem toItem : items) {
-            Item item = (Item) Item.getWithName(toItem.getName());
-            //TableColumn<Item, String> nameColumn = createNameItem(item);
-            nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-            priceColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPrice()).asObject().asString());
-        }
-       // nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        //priceColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPrice()).asObject().asString());
 
-    }*/
-
-    /*private TableColumn<Item, String> createNameItem(Item item) {
-        TableColumn<Item, String> nameColumn = new TableColumn<>();
-
-    }*/
-
+    @FXML
     void initialize () {
-        //List<TOItem> items = CoolSuppliesFeatureSet3Controller.getItems();
-
-       // populateItems();
-        //nameColumn.setCellValueFactory (cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getName()));
-
+        updateTable();
         assert addButton != null :  "fx:id=\"addButton\" was not injected: check your FXML file 'ItemsShop.fxml'.";
         assert editButton != null :  "fx:id=\"editButton\" was not injected: check your FXML file 'ItemsShop.fxml'.";
         assert itemDisplay != null :  "fx:id=\"itemDisplay\" was not injected: check your FXML file 'ItemsShop.fxml'.";
@@ -84,7 +53,13 @@ public class ItemsMenuController {
         assert bundlesButton != null :  "fx:id=\"bundlesButton\" was not injected: check your FXML file 'ItemsShop.fxml'.";
         assert shopButton != null :  "fx:id=\"shopButton\" was not injected: check your FXML file 'ItemsShop.fxml'.";
         assert removeButton != null :  "fx:id=\"removeButton\" was not injected: check your FXML file 'ItemsShop.fxml'.";
-
+        profileButton.setOnAction(event -> {
+            try {
+                handleProfileButton();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
         removeButton.setOnAction(event -> handleRemoveButton());
 
         bundlesButton.setOnAction(event -> {
@@ -122,19 +97,23 @@ public class ItemsMenuController {
             }
         });
 
-        updateTable();
 
-
+    }
+    @FXML
+    private void handleProfileButton() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewAccountsPage.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage currentStage = (Stage) bundlesButton.getScene().getWindow();
+        currentStage.setScene(scene);
     }
 
     private void updateTable() {
         List<TOItem> items = CoolSuppliesFeatureSet3Controller.getItems();
-        if (!items.isEmpty()) {
+        if (items.isEmpty() == false) {
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
             itemDisplay.setItems(FXCollections.observableArrayList(items));
-           // table.setItems(FXCollections.observableArrayList(bundles));
         }
         else {
             itemDisplay.setItems(FXCollections.observableArrayList());
@@ -146,18 +125,14 @@ public class ItemsMenuController {
     @FXML
     private void handleRemoveButton() {
         //try{
-            int index = itemDisplay.getSelectionModel().getSelectedIndex();
-            TOItem selItem = itemDisplay.getSelectionModel().getSelectedItem();
-            String itemName = selItem.getName();
-            System.out.println(3);
+        int index = itemDisplay.getSelectionModel().getSelectedIndex();
+        TOItem selItem = itemDisplay.getSelectionModel().getSelectedItem();
+        String itemName = selItem.getName();
 
-            if (index >= 0 && selItem != null) {
-                deleteItem(itemName);
-                itemDisplay.getItems().remove(selItem);
-                System.out.println(2);
-                //updateTable();
-
-            }
+        if (index >= 0 && selItem != null) {
+            deleteItem(itemName);
+            itemDisplay.getItems().remove(selItem);
+        }
     }
 
     @FXML

@@ -20,6 +20,10 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
+/**
+ * FXML controller class that allows to set the penalty and payment codes for an order
+ * @author Artimice Mirchi
+ */
 public class SetPenaltyCodesController {
     @FXML
     private AnchorPane ap;
@@ -60,11 +64,6 @@ public class SetPenaltyCodesController {
         });
 
     }
-    /*public Order getOrder(int index)
-    {
-        Order aOrder = orders.get(index);
-        return aOrder;
-    }*/
 
     private void handleConfirmButton() {
         String payment = paymentCode.getText();
@@ -88,11 +87,6 @@ public class SetPenaltyCodesController {
     }
 
     private void exitWindow() throws IOException {
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ItemsShop.fxml"));
-        Scene scene = new Scene(loader.load());
-        Stage shop = new Stage();
-        shop.setScene(scene);
-        shop.show();*/
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.hide();
 //change the loader...
