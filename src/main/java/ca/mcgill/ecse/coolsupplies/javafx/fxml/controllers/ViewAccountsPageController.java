@@ -141,7 +141,7 @@ public class ViewAccountsPageController {
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/AddItem.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML

@@ -172,11 +172,10 @@ public class ItemsMenuController {
 
     @FXML
     private void handleBundleButton() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/BundleItemsPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/Bundles.fxml"));
         Scene scene = new Scene(loader.load());
-        Stage currentStage = (Stage) resultLabel.getScene().getWindow();
+        Stage currentStage = (Stage) bundlesButton.getScene().getWindow();
         currentStage.setScene(scene);
-
 
     }
 

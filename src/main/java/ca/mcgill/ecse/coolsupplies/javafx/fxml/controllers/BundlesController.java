@@ -220,7 +220,7 @@ public class BundlesController {
 
     @FXML
     void goToItems() throws IOException {
-        loadPage("/pages/AddItems.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML
