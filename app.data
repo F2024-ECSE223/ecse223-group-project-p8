@@ -1,0 +1,36 @@
+{
+  "CoolSupplies": {
+    "admin": {
+      "email": "admin@cool.ca",
+      "password": "2#Er",
+      "canSetEmail": false,
+      "coolSupplies": {
+        "@reference": "../.."
+      }
+    },
+    "students": [
+      ""
+    ],
+    "parents": [
+      ""
+    ],
+    "items": [
+      ""
+    ],
+    "bundles": [
+      ""
+    ],
+    "bundleItems": [
+      ""
+    ],
+    "orders": [
+      ""
+    ],
+    "orderItems": [
+      ""
+    ],
+    "grades": [
+      ""
+    ]
+  }
+}
