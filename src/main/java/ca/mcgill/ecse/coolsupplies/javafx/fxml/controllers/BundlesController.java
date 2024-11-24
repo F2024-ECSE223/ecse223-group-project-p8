@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.*;
 
 /**
- * This class provides the controller methods for the Bundles page
+ * This class provides the controller methods for the Bundles Page
  *
  * @author Jyothsna Seema
  */
