@@ -105,10 +105,6 @@ public class ViewAllStudentsController {
     }
 
     @FXML
-    private void goBack(ActionEvent event) {
-    }
-
-    @FXML
     private void updateStudent(ActionEvent event,TOStudent student) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/AddAndUpdateStudent.fxml"));
         Scene scene = new Scene(loader.load());
