@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.GradePageController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="600.0">
+         <items>
+            <Button mnemonicParsing="false" onMouseClicked="#goBack" text="Back" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
+         </items>
+      </ToolBar>
+      <GridPane hgap="10.0" layoutX="118.0" layoutY="113.0" vgap="5.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="101.0" text="Grade Name:" />
+            <TextField fx:id="gradeNameTextField" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+            <Button fx:id="addGradeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addGradeClicked" text="Add Grade" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </GridPane>
+      <Separator layoutX="120.0" layoutY="198.0" prefHeight="5.0" prefWidth="480.0" />
+      <GridPane hgap="10.0" layoutX="118.0" layoutY="201.0" vgap="5.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="108.0" text="Select Grade:" />
+            <ChoiceBox fx:id="gradeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" />
+            <Button fx:id="deleteGradeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#deleteGradeClicked" text="Delete" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" />
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="122.0" text="New Name:" GridPane.rowIndex="1" />
+            <TextField fx:id="newGradeNameTextField" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+            <Button fx:id="updateGradeButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateGradeClicked" text="Update" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </GridPane>
+      <Separator layoutX="120.0" layoutY="321.0" prefHeight="5.0" prefWidth="480.0" />
+      <Button fx:id="startSchoolYearButton" layoutX="448.0" layoutY="335.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startSchoolYearClicked" text="Start School Year" />
+      <Text layoutX="154.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="School">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #fc9d01;">
+         <children>
+            <Button mnemonicParsing="false" onMouseClicked="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Accounts" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Parent - Student" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
