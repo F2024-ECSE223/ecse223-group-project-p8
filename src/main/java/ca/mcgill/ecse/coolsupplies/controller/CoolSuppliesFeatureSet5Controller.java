@@ -80,7 +80,7 @@ public class CoolSuppliesFeatureSet5Controller {
    * @param itemName The name of the bundle item to be updated
    * @param bundleName The name of the grade bundle at which the bundle item in question is to be updated
    * @param newQuantity The updated quantity of the bundle item in question
-   * @param newlevel The updated purchase level of the bundle item in question (Mandatory, Recommended, or Optional)
+   * @param newLevel The updated purchase level of the bundle item in question (Mandatory, Recommended, or Optional)
    * @return indicates if the bundle item of a grade bundle has been successfully updated
    * @author Snigdha Sen
    */

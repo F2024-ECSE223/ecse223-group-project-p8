@@ -15,7 +15,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-//for the additem popup
+
+/**
+ * FXML controller class to add an item by setting a name and a price
+ * @author Artimice Mirchi
+ */
 public class AddItemController {
     @FXML public TextField price;
     @FXML private AnchorPane ap;
@@ -23,8 +27,6 @@ public class AddItemController {
     @FXML public Button addButton;
     @FXML public TextField nameField;
     @FXML public TextField priceField;
-
-    //public static Item currItem;
 
     @FXML
     private URL location;
@@ -40,11 +42,7 @@ public class AddItemController {
         assert priceField != null : "fx:id=\"priceField\" was not injected: check your FXML file 'AddItemPopup.fxml'.";
 
         addButton.setOnAction(event -> {
-           // try {
                 handleAddButton();
-            //} catch (IOException e) {
-               // throw new RuntimeException(e);
-            //}
         });
 
         cancelButton.setOnAction(event -> {
@@ -57,26 +55,12 @@ public class AddItemController {
 
     }
 
-    void goToBundlesPage() throws IOException {
-       // loadPage
-
-    }
-
-    @FXML
-    private void loadPage(String fxmlPath) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Scene scene = new Scene(loader.load());
-      //  Stage currentStage = (Stage) chooseItemLabel.getScene().getWindow();
-        //currentStage.setScene(scene);
-    }
 
     @FXML
     private void handleAddButton() {
         String nameItem = nameField.getText();
         String priceItem = priceField.getText();
         if (!nameItem.isEmpty() && !priceItem.isEmpty()) {
-            //System.out.println(2);
-            //currItem = new Item(nameItem, Integer.parseInt(priceItem), coolSupplies);
             CoolSuppliesFeatureSet3Controller.addItem(nameItem, Integer.parseInt(priceItem));
             System.out.println(nameItem);
             System.out.println(priceItem);
@@ -97,5 +81,3 @@ public class AddItemController {
 
     }
 }
-
-//tableview: cant edit the fields within each row, but u can sleect a row, can click a row, click the button, can do whatever there

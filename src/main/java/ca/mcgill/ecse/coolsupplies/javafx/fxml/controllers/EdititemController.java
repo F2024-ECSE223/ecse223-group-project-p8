@@ -13,6 +13,11 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 
+/**
+ * FXML controller class to edit the name and price of an item
+ * @author Artimice Mirchi
+ */
+
 public class EdititemController {
     @FXML
     private AnchorPane ap;
@@ -28,15 +33,13 @@ public class EdititemController {
 
     @FXML
     public TextField priceField;
-   private TOItem currItem;
+    private TOItem currItem;
 
-   public void setItem(TOItem currItem) {
-       this.currItem = currItem;
+    public void setItem(TOItem currItem) {
+        this.currItem = currItem;
 
 
-   }
-
-    //private Item currItem;
+    }
 
     public void initialize() {
         editButton.setOnAction(event -> handleEditButton());
@@ -55,7 +58,6 @@ public class EdititemController {
     private void handleEditButton() {
         String nameItem = nameField.getText();
         String priceItem = priceField.getText();
-        //Item currItem = (Item) Item.getWithName(currentName.getText());
         if (!nameItem.isEmpty() && !priceItem.isEmpty()) {
             CoolSuppliesFeatureSet3Controller.updateItem(currItem.getName(), nameItem, Integer.parseInt(priceItem));}
     }
