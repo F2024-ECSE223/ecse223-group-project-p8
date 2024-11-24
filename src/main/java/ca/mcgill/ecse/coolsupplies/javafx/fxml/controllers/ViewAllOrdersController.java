@@ -175,9 +175,9 @@ public class ViewAllOrdersController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrderWindow.fxml"));
         Scene scene = new Scene(loader.load());
 
-        ViewOrderWindowController viewOrderController= loader.getController();
+//        ViewOrderWindowController viewOrderController= loader.getController();
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        viewOrderController.setCurrentOrder(order);
+//        viewOrderController.setCurrentOrder(order);
         stage.setScene(scene);
     }
 
