@@ -64,6 +64,20 @@ public class BundlesController {
     @FXML
     private TableView<TOGradeBundle> table;
 
+    // method that sets the discount of a bundle
+    public void setBundleDiscount(String bundleName, int newDiscount) {
+        CoolSuppliesApplication.getCoolSupplies().getBundles().stream().filter(b -> b.getName().equals(bundleName)).findFirst().ifPresent(bundle -> bundle.setDiscount(newDiscount));
+        updateTable();
+    }
+
+    // helper method for loading pages
+    private void loadPage(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) AddBundleButton.getScene().getWindow();
+        stage.setScene(scene);
+    }
+
     @FXML
     void goToAddBundleItemDialog() throws IOException {
         String fxmlPath = "/pages/AddBundleDialog.fxml";
@@ -75,11 +89,6 @@ public class BundlesController {
         dialog.setDialogPane(addBundleDialogPane);
         dialog.showAndWait();
         updateTable();
-
-        /**
-         //----------------------TEST---------------------------------------------
-         printBundleDetails();
-         **/
     }
 
     @FXML
@@ -113,14 +122,11 @@ public class BundlesController {
             alert.showAndWait();
         }
 
-/**
- //-------------------------Test------------------------------------
- printBundleDetails();
- **/
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+
         assert AddBundleButton != null : "fx:id=\"AddBundleButton\" was not injected: check your FXML file 'Bundles.fxml'.";
         assert EditBundleButton != null : "fx:id=\"EditBundleButton\" was not injected: check your FXML file 'Bundles.fxml'.";
         assert ItemsMenuButton != null : "fx:id=\"ItemsMenuButton\" was not injected: check your FXML file 'Bundles.fxml'.";
@@ -134,42 +140,11 @@ public class BundlesController {
         assert ProfileButton != null : "fx:id=\"ProfileButton\" was not injected: check your FXML file 'Bundles.fxml'.";
         assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'Bundles.fxml'.";
 
-        /**
-        BundleItem.PurchaseLevel rec = BundleItem.PurchaseLevel.valueOf("Recommended");
-        BundleItem.PurchaseLevel mand = BundleItem.PurchaseLevel.valueOf("Mandatory");
-
-        Grade grade1 = new Grade("grade1", coolSupplies);
-        Grade grade2 = new Grade("grade2", coolSupplies);
-        Grade grade3 = new Grade("grade3", coolSupplies);
-
-        GradeBundle bundle1 = new GradeBundle("bundle1", 20, coolSupplies, grade1);
-        GradeBundle bundle2 = new GradeBundle("bundle2", 20, coolSupplies, grade2);
-        GradeBundle bundle3 = new GradeBundle("bundle3", 20, coolSupplies, grade3);
-
-        //bundle1 = 2 rec pencils + 4 rec erasers
-        //bundle2 = 4 mand erasers
-        //bundle 3 = empty
-        Item pencil = new Item("pencil", 1, coolSupplies);
-        BundleItem bundlePencil = new BundleItem(2, rec, coolSupplies, bundle1, pencil);
-        Item eraser = new Item("eraser", 2, coolSupplies);
-        BundleItem bundleEraser1 = new BundleItem(4, rec, coolSupplies, bundle1, eraser);
-        BundleItem bundleEraser2 = new BundleItem(4, mand, coolSupplies, bundle2, eraser);
-**/
         updateTable();
     }
 
     private void updateTable() {
         List<TOGradeBundle> bundles = ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.getBundles();
-
-        // Debugging: Print details of each bundle
-//        if (bundles != null && !bundles.isEmpty()) {
-//            System.out.println("Bundles retrieved:");
-//            for (TOGradeBundle bundle : bundles) {
-//                System.out.println("Bundle Name: " + bundle.getName());
-//                System.out.println("Grade Level: " + bundle.getGradeLevel());
-//                System.out.println("Discount: " + bundle.getDiscount());
-//            }
-//        }
 
         if (!bundles.isEmpty()) {
             bundleName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -185,6 +160,7 @@ public class BundlesController {
         }
 
     }
+
     @FXML
     public void removeSelectedBundle() {
         try {
@@ -209,16 +185,7 @@ public class BundlesController {
         }
     }
 
-    @FXML
-    void goToAccount() throws IOException {
-        loadPage("/pages/ViewAccountsPage.fxml");
-    }
-
-    @FXML
-    void goToItems() throws IOException {
-        loadPage("/pages/AddItems.fxml");
-    }
-
+    // handle "Manage Items" button
     @FXML
     private void goToBundleItems() throws IOException {
         TOGradeBundle selBundle = table.getSelectionModel().getSelectedItem();
@@ -227,9 +194,11 @@ public class BundlesController {
         if(selIndex >= 0 && selBundle != null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/BundleItemsPage.fxml"));
             Scene scene = new Scene(loader.load());
+
             BundleItemsPageController controller = loader.getController();
             controller.setBundle(selBundle.getName());
             controller.setBundlesController(this);
+
             Stage stage = (Stage) AddBundleButton.getScene().getWindow();
             stage.setScene(scene);
         }
@@ -243,20 +212,20 @@ public class BundlesController {
         }
     }
 
+    // handle menu buttons
+    @FXML
+    void goToAccount() throws IOException {
+        loadPage("/pages/ViewAccountsPage.fxml");
+    }
+
+    @FXML
+    void goToItems() throws IOException {
+        loadPage("/pages/AddItems.fxml");
+    }
+
     @FXML
     private void goToNewOrder() throws IOException{
         loadPage("/pages/StartOrderWindow.fxml");
     }
 
-    private void loadPage(String fxmlPath) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Scene scene = new Scene(loader.load());
-        Stage stage = (Stage) AddBundleButton.getScene().getWindow();
-        stage.setScene(scene);
-    }
-
-    public void setBundleDiscount(String bundleName, int newDiscount) {
-        CoolSuppliesApplication.getCoolSupplies().getBundles().stream().filter(b -> b.getName().equals(bundleName)).findFirst().ifPresent(bundle -> bundle.setDiscount(newDiscount));
-        updateTable();
-    }
 }
