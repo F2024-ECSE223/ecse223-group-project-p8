@@ -1,36 +1,52 @@
 {
   "CoolSupplies": {
+    "admin": {
+      "email": "admin@cool.ca",
+      "password": "2#Er",
+      "canSetEmail": false,
+      "coolSupplies": {
+        "@reference": "../.."
+      }
+    },
     "students": [
+      ""
+    ],
+    "parents": [
       {
-        "Student": {
-          "name": "Barbara",
+        "Parent": {
+          "email": "1@gmail.com",
+          "password": "afdsv",
+          "canSetEmail": false,
+          "name": "M",
+          "phoneNumber": 1111111,
+          "students": [
+            ""
+          ],
           "coolSupplies": {
             "@reference": "../../.."
           },
           "orders": [
             ""
-          ],
-          "grade": {
-            "level": "6th",
-            "students": [
-              {
-                "Student": {
-                  "@reference": "../../.."
-                }
-              }
-            ],
-            "coolSupplies": {
-              "@reference": "../../../.."
-            }
-          }
+          ]
         }
       }
     ],
-    "parents": [
-      ""
-    ],
     "items": [
-      ""
+      {
+        "Item": {
+          "name": "A",
+          "orderItems": [
+            ""
+          ],
+          "price": 1,
+          "coolSupplies": {
+            "@reference": "../../.."
+          },
+          "bundleItems": [
+            ""
+          ]
+        }
+      }
     ],
     "bundles": [
       ""
@@ -45,22 +61,7 @@
       ""
     ],
     "grades": [
-      {
-        "Grade": [
-          {
-            "level": "5th",
-            "students": [
-              ""
-            ],
-            "coolSupplies": {
-              "@reference": "../../.."
-            }
-          },
-          {
-            "@reference": "../../students/Student/grade"
-          }
-        ]
-      }
+      ""
     ]
   }
 }
