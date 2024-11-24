@@ -1,7 +1,6 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
 import ca.mcgill.ecse.coolsupplies.controller.*;
-import ca.mcgill.ecse.coolsupplies.model.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

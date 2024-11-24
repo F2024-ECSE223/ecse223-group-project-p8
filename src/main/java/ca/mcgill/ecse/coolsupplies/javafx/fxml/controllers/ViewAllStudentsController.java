@@ -1,7 +1,9 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import ca.mcgill.ecse.coolsupplies.controller.*;
-import ca.mcgill.ecse.coolsupplies.model.*;
+import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet2Controller;
+import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet7Controller;
+import ca.mcgill.ecse.coolsupplies.controller.TOGrade;
+import ca.mcgill.ecse.coolsupplies.controller.TOStudent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
