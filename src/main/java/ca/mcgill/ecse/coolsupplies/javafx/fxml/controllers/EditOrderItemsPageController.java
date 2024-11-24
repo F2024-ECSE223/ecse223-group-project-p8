@@ -10,8 +10,8 @@ import java.util.List;
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet8Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOOrder;
-import ca.mcgill.ecse.coolsupplies.controller.TOOrderItem;
 import ca.mcgill.ecse.coolsupplies.model.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +31,7 @@ public class EditOrderItemsPageController {
     private Button BackButton;
 
     @FXML
-    private TableColumn<TOOrderItem, Integer> QuantityColumn;
+    private TableColumn<OrderItem, Integer> QuantityColumn;
 
     @FXML
     private Button RemoveButton;
@@ -49,7 +49,7 @@ public class EditOrderItemsPageController {
     private ChoiceBox<String> itemDropDownMenu;
 
     @FXML
-    private TableColumn<TOOrderItem, String> itemNameColumn;
+    private TableColumn<OrderItem, String> itemNameColumn;
 
     @FXML
     private Button ordersButtonMenu;
@@ -67,22 +67,16 @@ public class EditOrderItemsPageController {
     private Button studentsButtonMenu;
 
     @FXML
-    private TableView<TOOrderItem> table;
+    private TableView<OrderItem> table;
 
     @FXML
     private Button updateQtyButton;
 
     //TO CONNECT WITH OLD PAGES ---------------------------------------
-    private TOOrder selOrder;
-    private Integer selOrderID;
+    private Integer selOrderID = 1;
 
     public void setCurrentOrder(TOOrder order){
-        this.selOrder = order;
-        setOrderName(String.valueOf(order.getNumber()));
-    }
-
-    public void setOrderName(String orderName){
-        this.selOrderID = Integer.parseInt(orderName);
+        this.selOrderID = order.getNumber();
     }
     //--------------------------------------------------------------------------------
 
@@ -125,7 +119,7 @@ public class EditOrderItemsPageController {
 
         try {
             int selIndex = table.getSelectionModel().getSelectedIndex();
-            TOOrderItem selOrderItem = table.getSelectionModel().getSelectedItem();
+            OrderItem selOrderItem = table.getSelectionModel().getSelectedItem();
 
             if (selIndex >= 0 && selOrderItem != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -134,13 +128,14 @@ public class EditOrderItemsPageController {
                 //Pass down OrderID, Order Item and Quantity we want to update
                 UpdateOrderItemQuantityDialogController controller = loader.getController();
                 controller.setOrderID(this.selOrderID);
-                controller.setOrderItem(selOrderItem.getItemName());
+                controller.setOrderItem(selOrderItem.getItem().getName());
                 Order order = Order.getWithNumber(this.selOrderID);
                 List<OrderItem> orderItems = order.getOrderItems();
 
                 for(OrderItem orderItem : orderItems){
-                    if(orderItem.getItem().getName().equals(selOrderItem.getItemName())){
+                    if(orderItem.getItem().getName().equals(selOrderItem.getItem().getName())){
                         controller.setQty(orderItem.getQuantity());
+                        break;
                     }
                 }
 
@@ -180,7 +175,7 @@ public class EditOrderItemsPageController {
         }
 
         else {
-            updateTable(selOrderID); //or just add to table?????
+            updateTable(selOrderID);
         }
     }
 
@@ -189,8 +184,8 @@ public class EditOrderItemsPageController {
     void remove() {
         try {
             int selIndex = table.getSelectionModel().getSelectedIndex();
-            TOOrderItem selOrderItem = table.getSelectionModel().getSelectedItem();
-            String orderItemName = selOrderItem.getItemName();
+            OrderItem selOrderItem = table.getSelectionModel().getSelectedItem();
+            String orderItemName = selOrderItem.getItem().getName();
 
             //selected row is valid
             if (selIndex >= 0 && selOrderItem != null) {
@@ -211,10 +206,10 @@ public class EditOrderItemsPageController {
 
     //Update TableView
     private void updateTable(Integer orderID){
-        List<TOOrderItem> orderItems = selOrder.getItems();
+        List<OrderItem> orderItems = Order.getWithNumber(orderID).getOrderItems();
 
         if (!orderItems.isEmpty()) {
-            itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+            itemNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getItem().getName()));
             QuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
             table.setItems(FXCollections.observableArrayList(orderItems));

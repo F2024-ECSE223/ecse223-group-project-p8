@@ -27,7 +27,6 @@ public class UpdateOrderItemQuantityDialogController {
     //TO CONNECT WITH OLD PAGE ---------------------------------------
     private Integer selOrderID;
     private String selOrderItemName;
-    private Integer oldQty;
 
     public void setOrderID(Integer orderID){
         this.selOrderID = orderID;
@@ -38,7 +37,6 @@ public class UpdateOrderItemQuantityDialogController {
     }
 
     public void setQty(Integer itemQty){
-        this.oldQty = itemQty;
     }
     //--------------------------------------------------------------------------------
 
@@ -68,23 +66,27 @@ public class UpdateOrderItemQuantityDialogController {
         Button cancelButton = (Button) dialogPane.lookupButton(ButtonType.CANCEL);
 
         //If Finish or Cancel buttons clicked, proceed to their respective actions
+        if(finishButton != null){
         finishButton.setOnAction(event -> {
             finish();
-        });
+        });}
 
-        cancelButton.setOnAction(event -> {
-            cancel();
-        });
-
-        //Initialize Quantity Spinner with og Quantity
-        SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
-        qtySpinner.setValueFactory(valueFactory);
-
-        if (oldQty != null) {
-            qtySpinner.getValueFactory().setValue(oldQty);
+        else{
+            System.out.println("Finish not found");
         }
 
+        if(cancelButton != null){
+        cancelButton.setOnAction(event -> {
+            cancel();
+        });}
 
+        else{
+            System.out.println("Cancel not found");
+        }
+
+        //Initialize Quantity Spinner
+        SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE, 1);
+        qtySpinner.setValueFactory(valueFactory);
     }
 
 }
