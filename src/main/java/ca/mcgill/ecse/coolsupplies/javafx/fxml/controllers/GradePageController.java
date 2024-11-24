@@ -16,9 +16,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Controller class for adding, updating, and deleting a grade, and starting the school year.
+ * 
+ * @author Jiatian Liu
+ */
 public class GradePageController {
 
     @FXML private Button addGradeButton;
@@ -50,6 +54,11 @@ public class GradePageController {
         }
     }
 
+    /**
+    * Adds a new grade.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     public void addGradeClicked(ActionEvent event) {
         String name = gradeNameTextField.getText();
@@ -65,6 +74,11 @@ public class GradePageController {
         }
     }
 
+    /**
+    * Deletes the selected grade.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     void deleteGradeClicked(ActionEvent event) {
         String grade = gradeChoiceBox.getValue();
@@ -80,6 +94,11 @@ public class GradePageController {
         }
     }
 
+    /**
+    * Updates the name of the selected grade.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     void updateGradeClicked(ActionEvent event) {
         String grade = gradeChoiceBox.getValue();
@@ -108,7 +127,7 @@ public class GradePageController {
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/AddItem.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML
@@ -133,7 +152,7 @@ public class GradePageController {
 
     @FXML
     private void viewSchool() throws IOException {
-        loadPage("/pages/ViewSchool.fxml");
+        loadPage("/pages/GradePage.fxml");
     }
 
     private void loadPage(String fxmlPath) throws IOException {
@@ -143,22 +162,21 @@ public class GradePageController {
         stage.setScene(scene);
     }
 
+    /**
+    * Starts the school year for all orders.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     void startSchoolYearClicked(ActionEvent event) throws IOException {
         List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
         for (TOOrder order : orders) {
             CoolSuppliesFeatureSet8Controller.startYear(String.valueOf(order.getNumber()));
         }
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/StartSchoolYearPopUp.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle("Start School Year");
-        dialogStage.initModality(Modality.APPLICATION_MODAL); 
-        dialogStage.setScene(scene);
-
-        dialogStage.showAndWait();
+        showAlert("", "School year started successfully.");
+        refreshChoiceBox();
+        gradeNameTextField.setText("");
+        newGradeNameTextField.setText(""); 
     }
 
 }
