@@ -1,15 +1,15 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Item;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class AddBundleItemDialogController {
 

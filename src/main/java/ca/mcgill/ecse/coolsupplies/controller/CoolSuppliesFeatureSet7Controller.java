@@ -43,7 +43,7 @@ public class CoolSuppliesFeatureSet7Controller {
     } catch (RuntimeException e) {
       return e.getMessage();
     }
-    return "";
+    return "Grade added successfully.";
   }
 
   /**
@@ -71,7 +71,7 @@ public class CoolSuppliesFeatureSet7Controller {
     } catch (RuntimeException e) {
       return e.getMessage();
     }
-    return "";
+    return "Grade updated successfully.";
   }
 
   /**
@@ -92,7 +92,7 @@ public class CoolSuppliesFeatureSet7Controller {
     } catch (RuntimeException e) {
       return e.getMessage();
     }
-    return "";
+    return "Grade deleted successfully.";
   }
 
   /**

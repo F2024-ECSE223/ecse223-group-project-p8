@@ -1,8 +1,13 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.TOGradeBundle;
-import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
+import ca.mcgill.ecse.coolsupplies.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,15 +17,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.deleteBundle;
+import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.*;
 
 /**
- * This class provides the controller methods for the Bundles Page
+ * This class provides the controller methods for the Bundles page
  *
  * @author Jyothsna Seema
  */
@@ -85,7 +85,7 @@ public class BundlesController {
     }
 
     @FXML
-    void goToAddBundleItemDialog() throws IOException {
+    void goToAddBundleDialog() throws IOException {
         String fxmlPath = "/pages/AddBundleDialog.fxml";
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -226,7 +226,7 @@ public class BundlesController {
 
     @FXML
     void goToItems() throws IOException {
-        loadPage("/pages/AddItems.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML

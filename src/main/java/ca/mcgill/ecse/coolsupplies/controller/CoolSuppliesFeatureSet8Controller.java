@@ -15,7 +15,8 @@ public class CoolSuppliesFeatureSet8Controller {
 
     /**
      * @author Jyothsna Seema
-     *         Updates the order with new quantity and level
+     * Updates the order with new quantity and level
+     * 
      * @param levelName   The purchase level name
      * @param orderNumber The order number of the order to be updated
      * @param studentName The student name to be updated
@@ -162,7 +163,8 @@ public class CoolSuppliesFeatureSet8Controller {
 
     /**
      * @author Jyothsna Seema, Zhengxuan Zhao, Snigdha Sen
-     *         Deletes the order with new quantity and level
+     * Deletes the order with new quantity and level
+     * 
      * @param itemName    The item name of the item to be delted
      * @param orderNumber The order number of the order to be updated
      * @return indicates if the order was updated successfully

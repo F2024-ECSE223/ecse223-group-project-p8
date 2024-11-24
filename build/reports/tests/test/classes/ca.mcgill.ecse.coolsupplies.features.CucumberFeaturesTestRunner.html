@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - CucumberFeaturesTestRunner</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>CucumberFeaturesTestRunner</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/ca.mcgill.ecse.coolsupplies.features.html">ca.mcgill.ecse.coolsupplies.features</a> &gt; CucumberFeaturesTestRunner</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">5</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.667s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">Successfully update the password of a school admin in the system(Update Password of School Admin </td>
+<td class="success">0.602s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Unsuccessfully update the password of a school admin in the system with invalid values #1(Update Password of School Admin </td>
+<td class="success">0.020s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Unsuccessfully update the password of a school admin in the system with invalid values #2(Update Password of School Admin </td>
+<td class="success">0.017s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Unsuccessfully update the password of a school admin in the system with invalid values #3(Update Password of School Admin </td>
+<td class="success">0.015s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Unsuccessfully update the password of a school admin in the system with invalid values #4(Update Password of School Admin </td>
+<td class="success">0.013s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>
+Scenario Outline: Successfully update the password of a school admin in the system                              ?[90m# src/test/resources/UpdatePasswordOfSchoolAdmin.feature:16?[0m
+  ?[32mGiven ?[0m?[32mthe following school admin entities exists in the system (p7)?[0m                                           ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_exists_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mWhen ?[0m?[32mthe school admin attempts to update school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m in the system with password ?[0m?[32m?[1m&quot;2#Er&quot;?[0m?[32m (p7)?[0m ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_attempts_to_update_school_admin_in_the_system_with_password_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe number of school admin entities in the system shall be ?[0m?[32m?[1m&quot;1&quot;?[0m?[32m (p7)?[0m                                      ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_number_of_school_admin_entities_in_the_system_shall_be_p7(java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m with password ?[0m?[32m?[1m&quot;2#Er&quot;?[0m?[32m shall exist in the system (p7)?[0m                     ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_with_password_shall_exist_in_the_system_p7(java.lang.String,java.lang.String)?[0m
+
+Scenario Outline: Unsuccessfully update the password of a school admin in the system with invalid values       ?[90m# src/test/resources/UpdatePasswordOfSchoolAdmin.feature:29?[0m
+  ?[32mGiven ?[0m?[32mthe following school admin entities exists in the system (p7)?[0m                                          ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_exists_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mWhen ?[0m?[32mthe school admin attempts to update school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m in the system with password ?[0m?[32m?[1m&quot;123&quot;?[0m?[32m (p7)?[0m ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_attempts_to_update_school_admin_in_the_system_with_password_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe number of school admin entities in the system shall be ?[0m?[32m?[1m&quot;1&quot;?[0m?[32m (p7)?[0m                                     ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_number_of_school_admin_entities_in_the_system_shall_be_p7(java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m with password ?[0m?[32m?[1m&quot;123&quot;?[0m?[32m shall not exist in the system (p7)?[0m                 ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_with_password_shall_not_exist_in_the_system_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe following school admin entities shall exist in the system (p7)?[0m                                      ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_shall_exist_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mThen ?[0m?[32mthe error ?[0m?[32m?[1m&quot;Password must be at least four characters long.&quot;?[0m?[32m shall be raised (p7)?[0m                        ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_error_shall_be_raised_p7(java.lang.String)?[0m
+
+Scenario Outline: Unsuccessfully update the password of a school admin in the system with invalid values                                           ?[90m# src/test/resources/UpdatePasswordOfSchoolAdmin.feature:30?[0m
+  ?[32mGiven ?[0m?[32mthe following school admin entities exists in the system (p7)?[0m                                                                              ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_exists_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mWhen ?[0m?[32mthe school admin attempts to update school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m in the system with password ?[0m?[32m?[1m&quot;WeWe&quot;?[0m?[32m (p7)?[0m                                    ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_attempts_to_update_school_admin_in_the_system_with_password_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe number of school admin entities in the system shall be ?[0m?[32m?[1m&quot;1&quot;?[0m?[32m (p7)?[0m                                                                         ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_number_of_school_admin_entities_in_the_system_shall_be_p7(java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m with password ?[0m?[32m?[1m&quot;WeWe&quot;?[0m?[32m shall not exist in the system (p7)?[0m                                                    ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_with_password_shall_not_exist_in_the_system_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe following school admin entities shall exist in the system (p7)?[0m                                                                          ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_shall_exist_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mThen ?[0m?[32mthe error ?[0m?[32m?[1m&quot;Password must contain a special character out of !#$, an upper case character, and a lower case character.&quot;?[0m?[32m shall be raised (p7)?[0m ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_error_shall_be_raised_p7(java.lang.String)?[0m
+
+Scenario Outline: Unsuccessfully update the password of a school admin in the system with invalid values                                           ?[90m# src/test/resources/UpdatePasswordOfSchoolAdmin.feature:31?[0m
+  ?[32mGiven ?[0m?[32mthe following school admin entities exists in the system (p7)?[0m                                                                              ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_exists_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mWhen ?[0m?[32mthe school admin attempts to update school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m in the system with password ?[0m?[32m?[1m&quot;!WWW&quot;?[0m?[32m (p7)?[0m                                    ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_attempts_to_update_school_admin_in_the_system_with_password_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe number of school admin entities in the system shall be ?[0m?[32m?[1m&quot;1&quot;?[0m?[32m (p7)?[0m                                                                         ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_number_of_school_admin_entities_in_the_system_shall_be_p7(java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m with password ?[0m?[32m?[1m&quot;!WWW&quot;?[0m?[32m shall not exist in the system (p7)?[0m                                                    ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_with_password_shall_not_exist_in_the_system_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe following school admin entities shall exist in the system (p7)?[0m                                                                          ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_shall_exist_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mThen ?[0m?[32mthe error ?[0m?[32m?[1m&quot;Password must contain a special character out of !#$, an upper case character, and a lower case character.&quot;?[0m?[32m shall be raised (p7)?[0m ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_error_shall_be_raised_p7(java.lang.String)?[0m
+
+Scenario Outline: Unsuccessfully update the password of a school admin in the system with invalid values                                           ?[90m# src/test/resources/UpdatePasswordOfSchoolAdmin.feature:32?[0m
+  ?[32mGiven ?[0m?[32mthe following school admin entities exists in the system (p7)?[0m                                                                              ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_exists_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mWhen ?[0m?[32mthe school admin attempts to update school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m in the system with password ?[0m?[32m?[1m&quot;!eee&quot;?[0m?[32m (p7)?[0m                                    ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_attempts_to_update_school_admin_in_the_system_with_password_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe number of school admin entities in the system shall be ?[0m?[32m?[1m&quot;1&quot;?[0m?[32m (p7)?[0m                                                                         ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_number_of_school_admin_entities_in_the_system_shall_be_p7(java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe school admin ?[0m?[32m?[1m&quot;admin@cool.ca&quot;?[0m?[32m with password ?[0m?[32m?[1m&quot;!eee&quot;?[0m?[32m shall not exist in the system (p7)?[0m                                                    ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_school_admin_with_password_shall_not_exist_in_the_system_p7(java.lang.String,java.lang.String)?[0m
+  ?[32mThen ?[0m?[32mthe following school admin entities shall exist in the system (p7)?[0m                                                                          ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_following_school_admin_entities_shall_exist_in_the_system_p7(io.cucumber.datatable.DataTable)?[0m
+  ?[32mThen ?[0m?[32mthe error ?[0m?[32m?[1m&quot;Password must contain a special character out of !#$, an upper case character, and a lower case character.&quot;?[0m?[32m shall be raised (p7)?[0m ?[90m# ca.mcgill.ecse.coolsupplies.features.UpdatePasswordOfSchoolAdminStepDefinitions.the_error_shall_be_raised_p7(java.lang.String)?[0m
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>?[32m?[1m┌─────────────────────────────────────────────────────────────────────────────┐?[0m
+?[32m?[1m│?[0m Share your Cucumber Report with your team at ?[36m?[1m?[4mhttps://reports.cucumber.io?[0m    ?[32m?[1m│?[0m
+?[32m?[1m│?[0m Activate publishing with one of the following:                              ?[32m?[1m│?[0m
+?[32m?[1m│?[0m                                                                             ?[32m?[1m│?[0m
+?[32m?[1m│?[0m src/test/resources/cucumber.properties:    ?[36mcucumber.publish.enabled?[0m=?[36mtrue?[0m    ?[32m?[1m│?[0m
+?[32m?[1m│?[0m Environment variable:                      ?[36mCUCUMBER_PUBLISH_ENABLED?[0m=?[36mtrue?[0m    ?[32m?[1m│?[0m
+?[32m?[1m│?[0m JUnit:                                     ?[36m@CucumberOptions?[0m(publish = ?[36mtrue?[0m) ?[32m?[1m│?[0m
+?[32m?[1m│?[0m                                                                             ?[32m?[1m│?[0m
+?[32m?[1m│?[0m More information at ?[36mhttps://reports.cucumber.io/docs/cucumber-jvm?[0m           ?[32m?[1m│?[0m
+?[32m?[1m│?[0m                                                                             ?[32m?[1m│?[0m
+?[32m?[1m│?[0m To disable this message, add ?[1mcucumber.publish.quiet?[0m?[1m=?[0m?[1mtrue?[0m to                 ?[32m?[1m│?[0m
+?[32m?[1m│?[0m ?[1msrc/test/resources/cucumber.properties?[0m                                      ?[32m?[1m│?[0m
+?[32m?[1m└─────────────────────────────────────────────────────────────────────────────┘?[0m
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.8</a> at 2024年11月23日 00:05:01</p>
+</div>
+</div>
+</body>
+</html>

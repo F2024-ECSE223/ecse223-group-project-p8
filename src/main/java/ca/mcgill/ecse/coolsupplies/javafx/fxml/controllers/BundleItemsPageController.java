@@ -2,8 +2,7 @@ package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.TOBundleItem;
-import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
-import ca.mcgill.ecse.coolsupplies.model.GradeBundle;
+import ca.mcgill.ecse.coolsupplies.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller.deleteBundleItem;
+import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller.*;
 
 public class BundleItemsPageController {
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
