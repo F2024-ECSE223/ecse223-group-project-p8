@@ -46,11 +46,13 @@ public class StartOrderWindowController implements Initializable {
         String studentName = studentChoiceBox.getValue();
         Date date = Date.valueOf(datePicker.getValue());
         String level = levelChoiceBox.getValue();
+
         if (studentName != null && parentEmail != null && level != null) {
             CoolSuppliesFeatureSet6Controller.startOrder(id, date, level, parentEmail, studentName);
 
             ids.add(id);
             id += 1;
+
             idLabel.setText(String.valueOf(id));
             parentChoiceBox.setValue(null);
             studentChoiceBox.setValue(null);
@@ -62,6 +64,8 @@ public class StartOrderWindowController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("A new order has been successfully created and added to the system.");
             alert.showAndWait();
+
+            reloadOrders();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Selection Incomplete");
@@ -70,6 +74,7 @@ public class StartOrderWindowController implements Initializable {
             alert.showAndWait();
         }
     }
+
 
     private void getParent(ActionEvent event) {
         parentEmail = parentChoiceBox.getValue();
@@ -98,10 +103,10 @@ public class StartOrderWindowController implements Initializable {
         }
         Collections.sort(ids);
 
-        if (ids.size() != 0) {
-            id = ids.get(ids.size() - 1) + 1;
-        } else {
+        if (ids.isEmpty()) {
             id = 0;
+        } else {
+            id = ids.get(ids.size() - 1) + 1;
         }
 
         idLabel.setText(String.valueOf(id));
@@ -111,6 +116,24 @@ public class StartOrderWindowController implements Initializable {
 
         parentChoiceBox.setOnAction(this::getParent);
     }
+
+    private void reloadOrders() {
+        List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
+        ids.clear();
+        for (TOOrder order : orders) {
+            ids.add(order.getNumber());
+        }
+        Collections.sort(ids);
+
+        if (!ids.isEmpty()) {
+            id = ids.get(ids.size() - 1) + 1;
+        } else {
+            id = 0;
+        }
+
+        idLabel.setText(String.valueOf(id));
+    }
+
 
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
