@@ -19,6 +19,12 @@ import java.util.ResourceBundle;
 
 import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.deleteBundle;
 
+/**
+ * This class provides the controller methods for the Bundles Page
+ *
+ * @author Jyothsna Seema
+ */
+
 public class BundlesController {
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
