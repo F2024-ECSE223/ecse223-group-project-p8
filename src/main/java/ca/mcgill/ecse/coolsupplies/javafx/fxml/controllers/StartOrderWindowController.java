@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -97,19 +96,8 @@ public class StartOrderWindowController implements Initializable {
             parentNames.add(parent.getEmail());
         }
 
-        List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
-        for (TOOrder order : orders) {
-            ids.add(order.getNumber());
-        }
-        Collections.sort(ids);
+        reloadOrders();
 
-        if (ids.isEmpty()) {
-            id = 0;
-        } else {
-            id = ids.get(ids.size() - 1) + 1;
-        }
-
-        idLabel.setText(String.valueOf(id));
         parentChoiceBox.getItems().addAll(parentNames);
         levelChoiceBox.getItems().addAll(levels);
         datePicker.setValue(LocalDate.now());
@@ -128,7 +116,7 @@ public class StartOrderWindowController implements Initializable {
         if (!ids.isEmpty()) {
             id = ids.get(ids.size() - 1) + 1;
         } else {
-            id = 0;
+            id = 1;
         }
 
         idLabel.setText(String.valueOf(id));
