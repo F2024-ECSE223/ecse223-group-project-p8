@@ -78,7 +78,7 @@ public class ViewAllOrdersController {
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/UpdateItemPage.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML
