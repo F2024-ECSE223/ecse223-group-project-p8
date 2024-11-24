@@ -10,43 +10,49 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ItemsMenuController">
     <children>
-        <TextField alignment="CENTER" minHeight="27.0" minWidth="600.0" prefHeight="27.0" prefWidth="600.0" style="-fx-background-color: #fea71b;" text="Items">
+        <TextField alignment="CENTER" minHeight="40.0" minWidth="600.0" prefHeight="34.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
             <font>
                 <Font size="48.0" />
             </font>
         </TextField>
-        <Button fx:id="addButton" layoutX="520.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add Item" />
-        <TableView fx:id="itemDisplay" layoutX="161.0" layoutY="79.0" prefHeight="305.0" prefWidth="429.0">
+        <Button fx:id="addButton" layoutX="520.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add Item" />
+        <TableView fx:id="itemDisplay" layoutX="161.0" layoutY="100.0" prefHeight="284.0" prefWidth="429.0">
             <columns>
                 <TableColumn fx:id="nameColumn" prefWidth="225.60003662109375" text="Name" />
                 <TableColumn fx:id="priceColumn" prefWidth="228.7999267578125" text="Price" />
             </columns>
         </TableView>
-        <Text fill="WHITE" layoutX="267.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items" textAlignment="CENTER" wrappingWidth="111.36285400390625">
+        <Text layoutX="5.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" textAlignment="CENTER" wrappingWidth="111.36285400390625">
             <font>
-                <Font size="18.0" />
+                <Font size="14.0" />
             </font>
         </Text>
-      <Button fx:id="editButton" layoutX="449.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleEditButton" text="Edit Item" />
-      <AnchorPane prefHeight="400.0" prefWidth="133.0" style="-fx-background-color: #0e2c46;">
+      <Button fx:id="editButton" layoutX="449.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleEditButton" text="Edit Item" />
+      <AnchorPane layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
          <children>
-                  <Button fx:id="shopButton" mnemonicParsing="false" onAction="#handleShopButton" prefHeight="44.0" prefWidth="135.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE" translateY="96.0">
+                  <Button fx:id="shopButton" mnemonicParsing="false" onAction="#handleShopButton" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE" translateY="96.0">
                       <font>
-                          <Font size="20.0" />
+                          <Font size="17.0" />
                       </font>
                   </Button>
-                  <Button fx:id="bundlesButton" mnemonicParsing="false" onAction="#handleBundleButton" prefHeight="44.0" prefWidth="135.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE" translateY="48.0">
+                  <Button fx:id="bundlesButton" mnemonicParsing="false" onAction="#handleBundleButton" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE" translateY="48.0">
                       <font>
-                          <Font size="20.0" />
+                          <Font size="17.0" />
                       </font>
                   </Button>
-                  <Button fx:id="itemsButton" blendMode="COLOR_DODGE" minWidth="119.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="135.0" style="-fx-background-color: #0e2c46;" text="Items" textFill="WHITE">
+                  <Button fx:id="itemsButton" blendMode="COLOR_DODGE" minWidth="119.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Items" textFill="WHITE">
                       <font>
-                          <Font size="20.0" />
+                          <Font size="17.0" />
                       </font>
                   </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="removeButton" layoutX="356.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleRemoveButton" text="Remove Item" />
+      <Button fx:id="removeButton" layoutX="355.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleRemoveButton" text="Remove Item" />
+      <Button fx:id="profileButton" layoutX="534.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleProfileButton" text="Profile" />
+      <Text layoutX="161.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>
