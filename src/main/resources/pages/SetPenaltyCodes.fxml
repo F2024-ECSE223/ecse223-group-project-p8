@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.SetPenaltyCodesController">
+<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.SetPenaltyCodesController">
     <children>
         <Text layoutX="14.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Set Authorization Codes">
             <font>
@@ -28,7 +28,8 @@
         </Text>
         <TextField fx:id="paymentCode" layoutX="200.0" layoutY="117.0" prefHeight="26.0" prefWidth="89.0" />
         <TextField fx:id="penaltyCode" layoutX="200.0" layoutY="172.0" prefHeight="26.0" prefWidth="89.0" />
-        <Button fx:id="cancelButton" layoutX="160.0" layoutY="326.0" mnemonicParsing="false" text="Cancel" />
-        <Button fx:id="confirmButton" layoutX="231.0" layoutY="326.0" mnemonicParsing="false" text="Confirm" />
+        <Button fx:id="cancelButton" layoutX="106.0" layoutY="326.0" mnemonicParsing="false" text="Cancel" />
+        <Button fx:id="payButton" layoutX="169.0" layoutY="326.0" mnemonicParsing="false" text="Pay" />
+      <Button fx:id="payPenaltyButton" layoutX="213.0" layoutY="326.0" mnemonicParsing="false" text="Pay Penalty" />
     </children>
 </AnchorPane>

@@ -1,8 +1,6 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet8Controller;
@@ -11,8 +9,6 @@ import ca.mcgill.ecse.coolsupplies.controller.TOOrderItem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -21,6 +17,11 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+* Controller class for viewing and managing an individual order.
+*
+* @author Jiatian Liu
+*/
 public class ViewOrderWindowController {
 
     @FXML private Label authorizationCodeLabel;
@@ -57,13 +58,23 @@ public class ViewOrderWindowController {
     
     @FXML
     public void initialize() {
+    }
+
+    /**
+    * Sets the current order to be displayed and updates the UI.
+    *
+    * @author Jiatian Liu
+    */
+    public void setCurrentOrder(TOOrder order) {
+        this.currentOrder = order;
         showOrderDetails();
     }
 
-    public void setCurrentOrder(TOOrder order) {
-        this.currentOrder = order;
-    }
-
+    /**
+    * Displays the details of the current order on the UI.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     private void showOrderDetails() {
         if (currentOrder != null) {
@@ -119,6 +130,11 @@ public class ViewOrderWindowController {
         }
     }
 
+    /**
+    * Formats the list of order items for display.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     private String getFormattedItems() {
         StringBuilder formattedItems = new StringBuilder();
@@ -131,13 +147,13 @@ public class ViewOrderWindowController {
         for (TOOrderItem item : items) {
             formattedItems.append(item.getQuantity())
                     .append(", ")
-                    .append(item.getItemName() != null ? item.getItemName() : "")
+                    .append(item.getItemName() != null ? item.getItemName() : " ")
                     .append(", ")
-                    .append(item.getGradeBundleName() != null ? item.getGradeBundleName() : "")
+                    .append(item.getGradeBundleName() != null ? item.getGradeBundleName() : " ")
                     .append(", $")
                     .append(item.getPrice())
                     .append(", ")
-                    .append(item.getDiscount() != null ? item.getDiscount() : "")
+                    .append(item.getDiscount() != null ? item.getDiscount() : " ")
                     .append("\n");
         }
 
@@ -146,7 +162,7 @@ public class ViewOrderWindowController {
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/AddItem.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML
@@ -189,6 +205,11 @@ public class ViewOrderWindowController {
         alert.showAndWait();
     }
 
+    /**
+    * Cancels the current order and navigates to the orders page if successful.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     void cancelOrderClicked(ActionEvent event) throws IOException {
         String msg = CoolSuppliesFeatureSet8Controller.cancelOrder(String.valueOf(currentOrder.getNumber()));
@@ -198,18 +219,28 @@ public class ViewOrderWindowController {
         }
     }
 
+    /**
+    * Navigates to the Edit Order Items page.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     void editItemsClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/EditOrderItemsPage.fxml"));
         Scene scene = new Scene(loader.load());
 
-        //EditOrderItemsPageController controller = loader.getController();
-        //controller.setCurrentOrder(currentOrder);
+        EditOrderItemsPageController controller = loader.getController();
+        controller.setCurrentOrder(currentOrder);
 
         Stage stage = (Stage) updateOrderButton.getScene().getWindow();
         stage.setScene(scene);
     }
 
+    /**
+    * Opens the payment window.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     void payOrderClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/SetPenaltyCodes.fxml"));
@@ -221,20 +252,30 @@ public class ViewOrderWindowController {
         dialogStage.setScene(scene);
 
         SetPenaltyCodesController controller = loader.getController();
-        //controller.setCurrentOrder(currentOrder);
+        controller.setItem(currentOrder);
 
         dialogStage.showAndWait();
-        showOrderDetails();
+        setCurrentOrder(CoolSuppliesFeatureSet8Controller.viewOrder(String.valueOf(currentOrder.getNumber())));
     }
 
+    /**
+    * Marks the order as picked up.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     void pickUpOrderClicked(ActionEvent event) {
         String msg = CoolSuppliesFeatureSet8Controller.pickUpOrder(String.valueOf(currentOrder.getNumber()));
 
         showAlert("", msg);
-        showOrderDetails();
+        setCurrentOrder(CoolSuppliesFeatureSet8Controller.viewOrder(String.valueOf(currentOrder.getNumber())));
     }
 
+    /**
+    * Navigates to the Update Order page.
+    *
+    * @author Jiatian Liu
+    */
     @FXML
     void updateOrderClicked(ActionEvent event) throws IOException {
         loadPage("/pages/UpdateOrderWindow.fxml");

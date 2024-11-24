@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
@@ -100,6 +102,25 @@ public class UpdateOrderWindowController implements Initializable {
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/ViewOrderWindow.fxml");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrderWindow.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        if (order == null){
+            showAlert("Error","Please select an order.");
+        }else {
+            ViewOrderWindowController viewOrderController= loader.getController();
+            Stage stage = (Stage) BackButton.getScene().getWindow();
+            viewOrderController.setCurrentOrder(CoolSuppliesFeatureSet8Controller.viewOrder(String.valueOf(order.getNumber())));
+            stage.setScene(scene);
+        }
     }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
 }
