@@ -12,32 +12,32 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.StudentsPageController">
+<AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.BundleItemsPageController">
     <children>
         <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
             <items>
             <AnchorPane>
                <children>
                       <Text layoutX="10.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
-                  <Button layoutX="537.0" mnemonicParsing="false" text="Profile" />
+                  <Button fx:id="ProfileButton" layoutX="537.0" mnemonicParsing="false" onMouseClicked="#goToProfilePage" text="Profile" />
                </children>
             </AnchorPane>
             </items>
         </ToolBar>
         <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
             <children>
-                <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Items" textFill="WHITE">
+                <Button fx:id="ItemsMenuButton" mnemonicParsing="false" onMouseClicked="#goToItemsPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Items" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font></Button>
-                <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
+                <Button fx:id="BundlesMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
                <effect>
                   <Glow />
                </effect></Button>
-                <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Shop" textFill="WHITE">
+                <Button fx:id="ShopMenuButton" mnemonicParsing="false" onMouseClicked="#goToNewOrderPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="New Order" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font></Button>
@@ -48,18 +48,18 @@
                 <Font size="25.0" />
             </font>
         </Text>
-        <Button layoutX="135.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="45.0" text="Add" />
-        <Button layoutX="195.0" layoutY="114.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" text="Remove" />
-        <TableView layoutX="136.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="450.0">
+        <Button fx:id="AddButton" layoutX="135.0" layoutY="114.0" mnemonicParsing="false" onMouseClicked="#goToAddBundleItemDialog" prefHeight="26.0" prefWidth="45.0" text="Add" />
+        <Button fx:id="RemoveButton" layoutX="195.0" layoutY="114.0" mnemonicParsing="false" onAction="#removeSelectedItem" prefHeight="26.0" prefWidth="75.0" text="Remove" />
+        <TableView fx:id="table" layoutX="136.0" layoutY="170.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="218.0" prefWidth="450.0">
             <columns>
-                <TableColumn prefWidth="152.66665649414062" text="Item Name" />
-                <TableColumn minWidth="0.0" prefWidth="122.66668701171875" text="Quantity" />
-                <TableColumn minWidth="1.0" prefWidth="176.666748046875" text="Purchase Level" />
-            <TableColumn prefWidth="75.0" text="Column X" />
+                <TableColumn fx:id="itemName" prefWidth="152.66665649414062" text="Item Name" />
+                <TableColumn fx:id="qty" minWidth="0.0" prefWidth="122.66668701171875" text="Quantity" />
+                <TableColumn fx:id="purchaseLvl" minWidth="1.0" prefWidth="176.666748046875" text="Purchase Level" />
             </columns>
         </TableView>
         <Separator layoutX="120.0" layoutY="141.0" prefHeight="29.0" prefWidth="479.0" />
         <Text layoutX="447.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle:" />
-        <ChoiceBox layoutX="494.0" layoutY="65.0" prefHeight="26.0" prefWidth="95.0" />
+        <ChoiceBox fx:id="BundleDropDownMenu" layoutX="494.0" layoutY="65.0" prefHeight="26.0" prefWidth="95.0" />
+      <Button fx:id="UpdateSelectedRowButton" layoutX="456.0" layoutY="115.0" mnemonicParsing="false" onAction="#goToUpdateBundleItemDialog" text="Update Selected Item" />
     </children>
 </AnchorPane>

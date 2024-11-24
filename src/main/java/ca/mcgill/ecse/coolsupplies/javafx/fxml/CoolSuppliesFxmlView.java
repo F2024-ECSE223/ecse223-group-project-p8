@@ -21,13 +21,15 @@ public class CoolSuppliesFxmlView extends Application {
     public void start(Stage primaryStage) throws IOException {
         try {
             // Load the FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ShopPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/EditOrderItemsPage.fxml"));
             Parent root = loader.load();
 
             // Set up the scene and stage
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
+
+
         } catch (Exception e) {
             e.printStackTrace(); // Print stack trace for debugging
         }
