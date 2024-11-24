@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.BundlesController">
+    <children>
+        <Label alignment="CENTER" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <Button fx:id="ProfileButton" layoutX="535.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#goToAccount" text="Profile" />
+        <Text layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Text>
+        <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
+            <children>
+                <Button fx:id="ItemsMenuButton" mnemonicParsing="false" onMouseClicked="#goToItems" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Items" textFill="WHITE">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Button>
+                <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </Button>
+                <Button fx:id="NewOrderMenuButton" mnemonicParsing="false" onMouseClicked="#goToNewOrder" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
+        <TableView fx:id="table" layoutX="135.0" layoutY="170.0" prefHeight="222.0" prefWidth="450.0">
+            <columns>
+                <TableColumn fx:id="bundleName" prefWidth="150.0" text="Name" />
+                <TableColumn fx:id="gradeLvl" prefWidth="150.0" text="Grade" />
+                <TableColumn fx:id="discount" prefWidth="150.0" text="Discount" />
+            </columns>
+        </TableView>
+        <Text layoutX="144.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bundles">
+            <font>
+                <Font size="25.0" />
+            </font>
+        </Text>
+        <Button fx:id="AddBundleButton" layoutX="144.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#goToAddBundleItemDialog" text="Add Bundle" />
+        <Button fx:id="EditBundleButton" layoutX="497.0" layoutY="115.0" mnemonicParsing="false" onAction="#goToEditBundleDialog" text="Edit Bundle" />
+        <Separator layoutX="120.0" layoutY="141.0" prefHeight="29.0" prefWidth="479.0" />
+      <Button fx:id="RemoveBundleButton" layoutX="241.0" layoutY="115.0" mnemonicParsing="false" onAction="#removeSelectedBundle" text="Remove Bundle" />
+      <Button fx:id="ManageItemsButton" layoutX="489.0" layoutY="64.0" mnemonicParsing="false" onMouseClicked="#goToBundleItems" text="Manage Items" />
+    </children>
+</AnchorPane>
