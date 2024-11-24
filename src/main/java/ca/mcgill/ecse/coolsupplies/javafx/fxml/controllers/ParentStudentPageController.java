@@ -1,9 +1,6 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet1Controller;
-import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet6Controller;
-import ca.mcgill.ecse.coolsupplies.controller.TOParent;
-import ca.mcgill.ecse.coolsupplies.controller.TOStudent;
+import ca.mcgill.ecse.coolsupplies.controller.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ParentStudentPageController implements Initializable {
@@ -50,7 +48,7 @@ public class ParentStudentPageController implements Initializable {
     String msg;
     String selectedParent;
     ParentStudent selecteParentStudent;
-    ObservableList<ParentStudent> data = FXCollections.observableArrayList();
+    static ObservableList<ParentStudent> data = FXCollections.observableArrayList();
 
     @FXML
     private void addStudentToParent(ActionEvent event) {
@@ -87,20 +85,21 @@ public class ParentStudentPageController implements Initializable {
         parentColumn.setCellValueFactory(new PropertyValueFactory<>("parentEmail")); // Match getter method
         studentColumn.setCellValueFactory(new PropertyValueFactory<>("studentName")); // Match getter method
 
+        List<TOStudent> students = CoolSuppliesFeatureSet2Controller.getStudents();
         List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
-        for (TOParent parent : parents) {
-            List<TOStudent> students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(parent.getEmail());
-            for (TOStudent student : students) {
-                data.add(new ParentStudent(parent.getEmail(), student.getName()));
-            }
-        }
 
+        // Populate parentStudentList
+        ParentStudent.initializeList(students, parents);
+
+        // Populate parentChoiceBox
         List<String> parentEmails = new ArrayList<>();
         for (TOParent parent : parents) {
             parentEmails.add(parent.getEmail());
         }
         parentChoiceBox.getItems().addAll(parentEmails);
 
+        // Populate parentStudentTable
+        data.setAll(ParentStudent.parentStudentList);
         parentStudentTable.setItems(data);
 
         parentStudentTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -111,9 +110,11 @@ public class ParentStudentPageController implements Initializable {
         });
     }
 
+
     public static class ParentStudent {
         private String parentEmail;
         private String studentName;
+        private static List<ParentStudent> parentStudentList = new ArrayList<>();
 
         public ParentStudent(String parentEmail, String studentName) {
             this.parentEmail = parentEmail;
@@ -130,6 +131,34 @@ public class ParentStudentPageController implements Initializable {
 
         public void setParentEmail(String newEmail) {
             parentEmail = newEmail;
+        }
+
+        public static void initializeList(List<TOStudent> students, List<TOParent> parents) {
+            for (TOStudent student : students) {
+                if (null == ParentStudent.getStudentWithName(student.getName())) {
+                    ParentStudent newStudent = new ParentStudent(null, student.getName());
+                    ParentStudent.parentStudentList.add(newStudent);
+                }
+            }
+
+            for (TOParent parent : parents) {
+                List<TOStudent> theirKids = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(parent.getEmail());
+                for (TOStudent student : theirKids) {
+                    ParentStudent thisStudent = ParentStudent.getStudentWithName(student.getName());
+                    if (thisStudent != null) {
+                        thisStudent.setParentEmail(parent.getEmail());
+                    }
+                }
+            }
+        }
+
+        public static ParentStudent getStudentWithName (String studentName) {
+            for (ParentStudent parentStudent : parentStudentList) {
+                if (Objects.equals(parentStudent.studentName, studentName)) {
+                    return parentStudent;
+                }
+            }
+            return null;
         }
     }
 
