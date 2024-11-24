@@ -22,11 +22,11 @@
       </ToolBar>
       <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #fc9d01;">
          <children>
-            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Account" />
-            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
+            <Button mnemonicParsing="false" onAction="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Accounts" />
+            <Button mnemonicParsing="false" onAction="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
             <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" />
-            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Parent - Student" />
-            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
+            <Button mnemonicParsing="false" onAction="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Parent - Student" />
+            <Button mnemonicParsing="false" onAction="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
          </children>
       </VBox>
       <Text layoutX="136.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent - Student">

@@ -8,11 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,5 +127,37 @@ public class ParentStudentPageController implements Initializable {
         public void setParentEmail(String newEmail) {
             parentEmail = newEmail;
         }
+    }
+
+    private void loadPage(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        AnchorPane newPage = loader.load();
+        Stage currentStage = (Stage) ap.getScene().getWindow();
+        currentStage.setScene(new Scene(newPage));
+    }
+
+    @FXML
+    private void viewAccounts() throws IOException {
+        loadPage("/pages/ViewAccountsPage.fxml");
+    }
+
+    @FXML
+    private void viewOrders() throws IOException {
+        loadPage("/pages/ViewAllOrders.fxml");
+    }
+
+    @FXML
+    private void viewStudents() throws IOException {
+        loadPage("/pages/ViewAllStudents.fxml");
+    }
+
+    @FXML
+    private void viewAssociations() throws IOException {
+        loadPage("/pages/ParentStudentPage.fxml");
+    }
+
+    @FXML
+    private void viewSchool() throws IOException {
+        loadPage("/pages/ViewSchool.fxml");
     }
 }
