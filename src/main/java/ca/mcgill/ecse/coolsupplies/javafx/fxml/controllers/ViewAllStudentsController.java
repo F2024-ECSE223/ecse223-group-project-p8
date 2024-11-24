@@ -132,12 +132,12 @@ public class ViewAllStudentsController {
 
     @FXML
     private void viewAccounts() throws IOException {
-        loadPage("/pages/AccountPage.fxml");
+        loadPage("/pages/ViewAccountsPage.fxml");
     }
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/UpdateItemPage.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML
@@ -147,7 +147,7 @@ public class ViewAllStudentsController {
 
     @FXML
     private void viewAssociations() throws IOException {
-        loadPage("/pages/ViewParentsPage.fxml");
+        loadPage("/pages/ParentStudentPage.fxml");
     }
 
     @FXML

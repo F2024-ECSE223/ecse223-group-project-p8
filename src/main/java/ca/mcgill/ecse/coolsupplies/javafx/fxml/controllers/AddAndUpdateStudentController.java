@@ -77,7 +77,7 @@ public class AddAndUpdateStudentController {
 
     @FXML
     private void viewAccounts() throws IOException {
-        loadPage("/pages/AccountPage.fxml");
+        loadPage("/pages/viewAccountsPage.fxml");
     }
 
     @FXML
@@ -92,7 +92,7 @@ public class AddAndUpdateStudentController {
 
     @FXML
     private void viewAssociations() throws IOException {
-        loadPage("/pages/ViewParentsPage.fxml");
+        loadPage("/pages/ParentStudentPage.fxml");
     }
 
     @FXML
