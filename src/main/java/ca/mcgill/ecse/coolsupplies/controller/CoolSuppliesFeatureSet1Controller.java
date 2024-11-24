@@ -31,6 +31,18 @@ public class CoolSuppliesFeatureSet1Controller {
    */
   public static String updateAdmin(String password) {
     if (coolSupplies.hasAdmin()){
+      if (password.length() < 4){
+        return "Password must be at least four characters long.";
+      }
+
+      String specialCharacterPattern = "[!#$]";
+      String upperCasePattern = "[A-Z]";
+      String lowerCasePattern = "[a-z]";
+
+      if (!password.matches(".*" + specialCharacterPattern + ".*") || !password.matches(".*" + upperCasePattern + ".*") || !password.matches(".*" + lowerCasePattern + ".*")){
+        return "Password must contain a special character out of !#$, an upper case character, and a lower case character.";
+      }
+
       SchoolAdmin schoolAdmin = coolSupplies.getAdmin();
       schoolAdmin.setPassword(password);
       try {
@@ -98,7 +110,7 @@ public class CoolSuppliesFeatureSet1Controller {
       return e.getMessage();
     }
 
-    return "Parent added successfully.";
+    return "Account added successfully.";
   }
 
   /**
@@ -135,7 +147,7 @@ public class CoolSuppliesFeatureSet1Controller {
       } catch (RuntimeException e) {
         return e.getMessage();
       }
-      return "Parent account updated successfully.";
+      return "Account updated successfully.";
     }
     else {
       return "The parent does not exist.";

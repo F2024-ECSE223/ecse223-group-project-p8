@@ -1,30 +1,15 @@
 {
   "CoolSupplies": {
-    "students": [
-      {
-        "Student": {
-          "name": "Barbara",
-          "coolSupplies": {
-            "@reference": "../../.."
-          },
-          "orders": [
-            ""
-          ],
-          "grade": {
-            "level": "6th",
-            "students": [
-              {
-                "Student": {
-                  "@reference": "../../.."
-                }
-              }
-            ],
-            "coolSupplies": {
-              "@reference": "../../../.."
-            }
-          }
-        }
+    "admin": {
+      "email": "admin@cool.ca",
+      "password": "2#Er",
+      "canSetEmail": false,
+      "coolSupplies": {
+        "@reference": "../.."
       }
+    },
+    "students": [
+      ""
     ],
     "parents": [
       ""
@@ -45,22 +30,7 @@
       ""
     ],
     "grades": [
-      {
-        "Grade": [
-          {
-            "level": "5th",
-            "students": [
-              ""
-            ],
-            "coolSupplies": {
-              "@reference": "../../.."
-            }
-          },
-          {
-            "@reference": "../../students/Student/grade"
-          }
-        ]
-      }
+      ""
     ]
   }
 }
