@@ -1,13 +1,8 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.TOGradeBundle;
-import ca.mcgill.ecse.coolsupplies.model.*;
+import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +12,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.deleteBundle;
 
 public class BundlesController {
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
