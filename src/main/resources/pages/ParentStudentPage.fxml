@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ParentStudentPageController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="600.0">
+         <items>
+            <Button mnemonicParsing="false" text="Back" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
+         </items>
+      </ToolBar>
+      <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #fc9d01;">
+         <children>
+            <Button mnemonicParsing="false" onAction="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Accounts" />
+            <Button mnemonicParsing="false" onAction="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
+            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" />
+            <Button mnemonicParsing="false" onAction="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Parent - Student" />
+            <Button mnemonicParsing="false" onAction="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
+         </children>
+      </VBox>
+      <Text layoutX="136.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent - Student">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Button fx:id="addStudentToParent" layoutX="408.0" layoutY="170.0" mnemonicParsing="false" onAction="#addStudentToParent" prefHeight="26.0" prefWidth="131.0" text="Add to this Parent" />
+      <Button fx:id="deleteStudentFromParent" layoutX="408.0" layoutY="126.0" mnemonicParsing="false" onAction="#deleteStudentFromParent" prefHeight="26.0" prefWidth="131.0" text="Remove from Parent" />
+      <Separator layoutX="122.0" layoutY="93.0" prefHeight="29.0" prefWidth="482.0" />
+      <Text layoutX="139.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student:" />
+      <Text layoutX="142.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent:" />
+      <ChoiceBox fx:id="parentChoiceBox" layoutX="196.0" layoutY="170.0" prefHeight="26.0" prefWidth="172.0" />
+      <TableView fx:id="parentStudentTable" layoutX="139.0" layoutY="209.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="178.0" prefWidth="400.0">
+         <columns>
+            <TableColumn fx:id="parentColumn" prefWidth="200.0" text="Parent Email" />
+            <TableColumn fx:id="studentColumn" minWidth="1.0" prefWidth="200.0" text="Student Name" />
+         </columns>
+      </TableView>
+      <Label fx:id="studentLabel" layoutX="196.0" layoutY="130.0" text="Label" />
+   </children>
+</AnchorPane>
