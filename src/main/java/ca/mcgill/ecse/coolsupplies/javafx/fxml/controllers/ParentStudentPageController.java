@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,6 +27,9 @@ public class ParentStudentPageController implements Initializable {
 
     @FXML
     private AnchorPane ap;
+
+    @FXML
+    private VBox parentStudentVBox;
 
     @FXML
     private ChoiceBox<String> parentChoiceBox;
@@ -132,13 +136,19 @@ public class ParentStudentPageController implements Initializable {
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         AnchorPane newPage = loader.load();
-        Stage currentStage = (Stage) ap.getScene().getWindow();
+        Stage currentStage = (Stage) parentStudentVBox.getScene().getWindow();
         currentStage.setScene(new Scene(newPage));
     }
+
 
     @FXML
     private void viewAccounts() throws IOException {
         loadPage("/pages/ViewAccountsPage.fxml");
+    }
+
+    @FXML
+    private void goBack() throws IOException {
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML
@@ -147,17 +157,17 @@ public class ParentStudentPageController implements Initializable {
     }
 
     @FXML
-    private void viewStudents() throws IOException {
-        loadPage("/pages/ViewAllStudents.fxml");
-    }
-
-    @FXML
     private void viewAssociations() throws IOException {
         loadPage("/pages/ParentStudentPage.fxml");
     }
 
     @FXML
+    private void viewStudents() throws IOException {
+        loadPage("/pages/ViewAllStudents.fxml");
+    }
+
+    @FXML
     private void viewSchool() throws IOException {
-        loadPage("/pages/ViewSchool.fxml");
+        loadPage("/pages/GradePage.fxml");
     }
 }
