@@ -3,11 +3,13 @@ package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet2Controller;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet7Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOGrade;
+import ca.mcgill.ecse.coolsupplies.controller.TOStudent;
 import ca.mcgill.ecse.coolsupplies.model.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,13 +20,16 @@ import java.util.List;
 
 public class AddAndUpdateStudentController {
 
-    @FXML private ComboBox gradeBox;
-    @FXML private Label resultLabel;
-    @FXML private TextField studentName;
+    @FXML
+    private ComboBox<String> gradeBox;
+    @FXML
+    private Label resultLabel;
+    @FXML
+    private TextField studentName;
+    @FXML
+    private Label title;
 
-    @FXML private Label title;
-
-    private Student currentStudent;
+    private TOStudent currentStudent;
 
     public void initialize() {
         List<TOGrade> grades = CoolSuppliesFeatureSet7Controller.getGrades();
@@ -34,7 +39,7 @@ public class AddAndUpdateStudentController {
         gradeBox.setValue(grades.get(0).getLevel());
     }
 
-    public void setCurrentStudent(Student student) {
+    public void setCurrentStudent(TOStudent student) {
         this.currentStudent = student;
         if(currentStudent == null){
             title.setText("Create a new student");
@@ -46,18 +51,18 @@ public class AddAndUpdateStudentController {
 
     @FXML
     private void addAndUpdateStudent(ActionEvent event){
+        String msg = "";
         if(currentStudent != null){
-            resultLabel.setText(CoolSuppliesFeatureSet2Controller.updateStudent(
+            msg = CoolSuppliesFeatureSet2Controller.updateStudent(
                     currentStudent.getName(),
                     studentName.getText(),
-                    gradeBox.getValue().toString()
-            ));
+                    gradeBox.getValue());
+
         }else {
-            resultLabel.setText(
-                    CoolSuppliesFeatureSet2Controller.addStudent(
-                            studentName.getText(), gradeBox.getValue().toString()
-                    ));
+            msg = CoolSuppliesFeatureSet2Controller.addStudent(
+                            studentName.getText(), gradeBox.getValue());
         }
+        showAlert("",msg);
     }
 
     @FXML
@@ -87,7 +92,7 @@ public class AddAndUpdateStudentController {
 
     @FXML
     private void viewSchool() throws IOException {
-        loadPage("/pages/ViewSchool.fxml");
+        loadPage("/pages/GradePage.fxml");
     }
 
     private void loadPage(String fxmlPath) throws IOException {
@@ -95,5 +100,13 @@ public class AddAndUpdateStudentController {
         Scene scene = new Scene(loader.load());
         Stage currentStage = (Stage) resultLabel.getScene().getWindow();
         currentStage.setScene(scene);
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
