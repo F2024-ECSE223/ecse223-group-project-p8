@@ -19,6 +19,12 @@ import javafx.stage.Stage;
 
 import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.*;
 
+/**
+ * This class provides the controller methods for the Bundles page
+ *
+ * @author Jyothsna Seema
+ */
+
 public class BundlesController {
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
 
@@ -79,7 +85,7 @@ public class BundlesController {
     }
 
     @FXML
-    void goToAddBundleItemDialog() throws IOException {
+    void goToAddBundleDialog() throws IOException {
         String fxmlPath = "/pages/AddBundleDialog.fxml";
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));

@@ -58,7 +58,7 @@
                 <Font size="25.0" />
             </font>
         </Text>
-        <Button fx:id="AddBundleButton" layoutX="144.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#goToAddBundleItemDialog" text="Add Bundle" />
+        <Button fx:id="AddBundleButton" layoutX="144.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#goToAddBundleDialog" text="Add Bundle" />
         <Button fx:id="EditBundleButton" layoutX="497.0" layoutY="115.0" mnemonicParsing="false" onAction="#goToEditBundleDialog" text="Edit Bundle" />
         <Separator layoutX="120.0" layoutY="141.0" prefHeight="29.0" prefWidth="479.0" />
       <Button fx:id="RemoveBundleButton" layoutX="241.0" layoutY="115.0" mnemonicParsing="false" onAction="#removeSelectedBundle" text="Remove Bundle" />
