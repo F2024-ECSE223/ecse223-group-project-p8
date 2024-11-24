@@ -20,10 +20,10 @@ public class ViewAllOrdersController {
     @FXML
     private VBox orderListVBox;
 
-    private static int ID = 1;
+//  private static int ID = 1;
 
-    private static final int ID_GAP = 30;
-    private static final int NUMBER_GAP = 100;
+    private static final int ID_GAP = 20;
+    private static final int NUMBER_GAP = 80;
     private static final int DATE_GAP = 120;
     private static final int LEVEL_GAP = 100;
     private static final int PARENT_GAP = 100;
@@ -35,7 +35,7 @@ public class ViewAllOrdersController {
     private static final int DELETE_GAP = 100;
 
     public void initialize() {
-        ID = 0;
+        //ID = 0;
         populateOrders();
 
     }
@@ -63,8 +63,8 @@ public class ViewAllOrdersController {
         orderRow.setSpacing(10); // Adjust spacing between columns
 
         // Create labels for each column
-        Label id = new Label(String.valueOf(ID));
-        id.setPrefWidth(ID_GAP);
+//        Label id = new Label(String.valueOf(ID));
+//        id.setPrefWidth(ID_GAP);
         Label numberLabel = new Label(String.valueOf(order.getNumber()));
         numberLabel.setPrefWidth(NUMBER_GAP);
         Label dateLabel = new Label(order.getDate().toString());
@@ -83,8 +83,8 @@ public class ViewAllOrdersController {
         penaltyAuthCodeLabel.setPrefWidth(PENCODE_GAP);
         Button viewButton = new Button("view");
         viewButton.setPrefWidth(VIEW_GAP);
-        Button deleteButton = new Button("cancel");
-        deleteButton.setPrefWidth(DELETE_GAP);
+//        Button cancelButton = new Button("cancel");
+//        cancelButton.setPrefWidth(DELETE_GAP);
 
         // Set view button action
         viewButton.setOnAction(event -> {
@@ -95,30 +95,28 @@ public class ViewAllOrdersController {
             }
         });
 
-        // Set view button action
-        deleteButton.setOnAction(event -> {
-            try {
-                deleteOrder(event,order);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+//        // Set view button action
+//        cancelButton.setOnAction(event -> {
+//            try {
+//                deleteOrder(event,order);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
 
-        ID = ID + 1;
+       // ID = ID + 1;
 
         // Add all labels to the HBox
         orderRow.getChildren().addAll(
-                id,
+                statusLabel,
+                //id,
                 numberLabel,
                 dateLabel,
                 levelLabel,
                 parentEmailLabel,
                 studentNameLabel,
-                statusLabel,
-                authCodeLabel,
-                penaltyAuthCodeLabel,
-                viewButton,
-                deleteButton
+                viewButton
+                //cancelButton
         );
 
         return orderRow;
@@ -131,8 +129,8 @@ public class ViewAllOrdersController {
         headerRow.setStyle("-fx-font-weight: bold; -fx-background-color: #f0f0f0;"); // Optional styling
 
         // Create labels for each column header
-        Label id = new Label("ID");
-        id.setPrefWidth(ID_GAP);
+//        Label id = new Label("ID");
+//        id.setPrefWidth(ID_GAP);
         Label numberLabel = new Label("Number");
         numberLabel.setPrefWidth(NUMBER_GAP);
         Label dateLabel = new Label("Date");
@@ -141,40 +139,34 @@ public class ViewAllOrdersController {
         levelLabel.setPrefWidth(LEVEL_GAP);
         Label parentEmailLabel = new Label("Parent Email");
         parentEmailLabel.setPrefWidth(PARENT_GAP);
-        Label studentNameLabel = new Label("Student Email");
+        Label studentNameLabel = new Label("Student Name");
         studentNameLabel.setPrefWidth(STUDENT_GAP);
         Label statusLabel = new Label("Status");
         statusLabel.setPrefWidth(STATUS_GAP);
-        Label authCodeLabel = new Label("Authorization Code");
-        authCodeLabel.setPrefWidth(AUTHCODE_GAP);
-        Label penaltyAuthCodeLabel = new Label("Penalty Authorization Code");
-        penaltyAuthCodeLabel.setPrefWidth(PENCODE_GAP);
         Label viewLabel = new Label("+");
         viewLabel.setPrefWidth(VIEW_GAP);
-        Label deleteLabel = new Label("+");
-        deleteLabel.setPrefWidth(DELETE_GAP);
+//        Label cancelLabel = new Label("+");
+//        cancelLabel.setPrefWidth(DELETE_GAP);
 
 
         // Add all labels to the HBox
         headerRow.getChildren().addAll(
-                id,
+                statusLabel,
+                //id,
                 numberLabel,
                 dateLabel,
                 levelLabel,
                 parentEmailLabel,
                 studentNameLabel,
-                statusLabel,
-                authCodeLabel,
-                penaltyAuthCodeLabel,
-                viewLabel,
-                deleteLabel
+                viewLabel
+                //cancelLabel
         );
 
         return headerRow;
     }
 
     private void adjustContentWidth() {
-        double totalWidth = ID_GAP+NUMBER_GAP+DATE_GAP+LEVEL_GAP+PARENT_GAP+STATUS_GAP+STATUS_GAP+AUTHCODE_GAP+PENCODE_GAP+VIEW_GAP+DELETE_GAP; // Sum of all column widths
+        double totalWidth = ID_GAP+NUMBER_GAP+DATE_GAP+LEVEL_GAP+PARENT_GAP+STATUS_GAP+STATUS_GAP+VIEW_GAP; // Sum of all column widths
         orderListVBox.setPrefWidth(totalWidth); // Set the total width of the VBox
     }
 
@@ -194,14 +186,13 @@ public class ViewAllOrdersController {
         CoolSuppliesFeatureSet8Controller.cancelOrder(String.valueOf(order.getNumber()));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewAllOrders.fxml"));
         Scene scene = new Scene(loader.load());
-        System.out.println("order canceled");
 
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
 
     @FXML
-    private void viewAccount() throws IOException {
+    private void viewAccounts() throws IOException {
         loadPage("/pages/AccountPage.fxml");
     }
 
@@ -211,17 +202,12 @@ public class ViewAllOrdersController {
     }
 
     @FXML
-    private void updateAccount() throws IOException {
-        loadPage("/pages/UpdateAccountPage.fxml");
-    }
-
-    @FXML
     private void viewOrders() throws IOException {
         loadPage("/pages/ViewAllOrders.fxml");
     }
 
     @FXML
-    private void viewParents() throws IOException {
+    private void viewAssociations() throws IOException {
         loadPage("/pages/ViewParentsPage.fxml");
     }
 
@@ -235,12 +221,20 @@ public class ViewAllOrdersController {
         loadPage("/pages/ViewSchool.fxml");
     }
 
+
+    // load start a new Order page
+    @FXML
+    private void startOrder() throws IOException {
+        loadPage("/pages/ViewSchool.fxml");
+    }
+
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Scene scene = new Scene(loader.load());
         Stage currentStage = (Stage) orderListVBox.getScene().getWindow();
         currentStage.setScene(scene);
     }
+
 
 
 

@@ -31,21 +31,7 @@ public class ViewAllStudentsController {
     private static final int DELETE_GAP = 100;
 
     public void initialize() {
-//        Date date = new Date(2023, 4, 20);
-//        CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
-//        Parent p1= new Parent("","","",1,coolSupplies);
-//        Student s1 = new Student("Mike", coolSupplies, new Grade("2th", coolSupplies));
-//        Student s2 = new Student("baraba", coolSupplies, coolSupplies.getGrade(2));
-//        Student s3 = new Student("Anna", coolSupplies, new Grade("7th", coolSupplies));
-//        coolSupplies.addStudent(s1);
-//        coolSupplies.addStudent(s2);
-//        coolSupplies.addStudent(s3);
-
-//        List<TOOrder> toOrders = CoolSuppliesFeatureSet8Controller.viewOrders();
-//        for(TOOrder order : toOrders){
-//            System.out.println(order.getNumber());
-//        }
-        ID = 0;
+        ID = 1;
         populateOrders();
 
     }
@@ -191,7 +177,7 @@ public class ViewAllStudentsController {
     }
 
     @FXML
-    private void viewAccount() throws IOException {
+    private void viewAccounts() throws IOException {
         loadPage("/pages/AccountPage.fxml");
     }
 
@@ -201,17 +187,12 @@ public class ViewAllStudentsController {
     }
 
     @FXML
-    private void updateAccount() throws IOException {
-        loadPage("/pages/UpdateAccountPage.fxml");
-    }
-
-    @FXML
     private void viewOrders() throws IOException {
         loadPage("/pages/ViewAllOrders.fxml");
     }
 
     @FXML
-    private void viewParents() throws IOException {
+    private void viewAssociations() throws IOException {
         loadPage("/pages/ViewParentsPage.fxml");
     }
 
