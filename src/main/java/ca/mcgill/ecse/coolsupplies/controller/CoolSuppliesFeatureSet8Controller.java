@@ -73,7 +73,7 @@ public class CoolSuppliesFeatureSet8Controller {
      * @param newQuantity the quantity of the item of interest
      * @return indicates if the item was succesfully added to a specific order
      */
-    public static String addItemToOrder(String invName, InventoryItem item, String orderNumber, int newQuantity) {
+    public static String addItemToOrder(String invName, String orderNumber, int newQuantity) {
         if (newQuantity <= 0) {
             return "Quantity must be greater than 0.";
         }
@@ -91,6 +91,7 @@ public class CoolSuppliesFeatureSet8Controller {
             }
         }
 
+        InventoryItem item = InventoryItem.getWithName(invName);
         if (item == null || !InventoryItem.hasWithName(invName)) {
             return String.format("Item %s does not exist.", invName);
         }
@@ -632,6 +633,24 @@ public class CoolSuppliesFeatureSet8Controller {
         } else {
             return "Cannot pickup a " + currentStatus.toString().toLowerCase() + " order";
         }
+    }
+
+    /**
+     * Retrieves a temporary list of items and bundles in a given order.
+     *
+     * @param orderNumber the order number
+     * @return a list of TOOrderItem objects
+     *
+     * @author Jiatian Liu
+     */
+    public static List<TOOrderItem> getTemporaryItemList(String orderNumber) {
+        Order order = Order.getWithNumber(Integer.parseInt(orderNumber));
+        List<OrderItem> orderItems = order.getOrderItems();
+        List<TOOrderItem> toOrderItems = new ArrayList<>();
+        for (OrderItem item : orderItems) {
+            toOrderItems.add(new TOOrderItem(item.getQuantity(), item.getItem().getName(), null, 0, null));
+        }
+        return toOrderItems;
     }
 
 }

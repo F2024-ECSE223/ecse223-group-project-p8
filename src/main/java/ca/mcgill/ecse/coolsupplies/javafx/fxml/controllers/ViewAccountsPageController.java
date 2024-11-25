@@ -166,7 +166,7 @@ public class ViewAccountsPageController {
 
     @FXML
     private void viewSchool() throws IOException {
-        loadPage("/pages/ViewSchool.fxml");
+        loadPage("/pages/GradePage.fxml");
     }
 
     private void loadPage(String fxmlPath) throws IOException {
