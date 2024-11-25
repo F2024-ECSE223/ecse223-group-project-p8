@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -24,25 +25,28 @@
     <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
         <children>
             <Button mnemonicParsing="false" onMouseClicked="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Accounts" textFill="WHITE">
-            <font>
-               <Font size="16.0" />
-            </font></Button>
+                <font>
+                    <Font size="16.0" />
+                </font></Button>
             <Button mnemonicParsing="false" onMouseClicked="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Orders" textFill="WHITE">
-            <font>
-               <Font size="16.0" />
-            </font></Button>
-            <Button mnemonicParsing="false" onMouseClicked="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Students" textFill="WHITE">
-            <font>
-               <Font size="16.0" />
-            </font></Button>
+                <font>
+                    <Font size="16.0" />
+                </font></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Students" textFill="WHITE">
+                <font>
+                    <Font size="16.0" />
+                </font>
+                <effect>
+                    <Glow />
+                </effect></Button>
             <Button mnemonicParsing="false" onMouseClicked="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Parent - Student" textFill="WHITE">
-            <font>
-               <Font size="13.0" />
-            </font></Button>
+                <font>
+                    <Font size="13.0" />
+                </font></Button>
             <Button mnemonicParsing="false" onMouseClicked="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="School" textFill="WHITE">
-            <font>
-               <Font size="16.0" />
-            </font></Button>
+                <font>
+                    <Font size="16.0" />
+                </font></Button>
         </children>
     </VBox>
     <GridPane hgap="5.0" layoutX="145.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="434.0" vgap="5.0">
@@ -58,12 +62,12 @@
                 </columns>
             </TableView>
         </children>
-      <columnConstraints>
-         <ColumnConstraints />
-      </columnConstraints>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
+        <columnConstraints>
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
     </GridPane>
     <Label layoutX="143.0" layoutY="60.0" prefHeight="17.0" prefWidth="95.0" text="Delete Student:" />
     <Button layoutX="433.0" layoutY="88.0" mnemonicParsing="false" onAction="#AddNewStudent" prefHeight="26.0" prefWidth="146.0" text="+ Add a new student" />

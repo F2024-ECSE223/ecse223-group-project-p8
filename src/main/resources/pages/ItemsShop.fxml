@@ -12,11 +12,11 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ItemsMenuController">
     <children>
-      <Label alignment="CENTER" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
+        <Label alignment="CENTER" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
         <Button fx:id="addButton" layoutX="520.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add Item" />
         <TableView fx:id="itemDisplay" layoutX="161.0" layoutY="100.0" prefHeight="284.0" prefWidth="429.0">
             <columns>
@@ -37,27 +37,27 @@
                 <Font size="25.0" />
             </font>
         </Text>
-      <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
-         <children>
-            <Button fx:id="itemsButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Items" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-               <effect>
-                  <Glow />
-               </effect>
-            </Button>
-            <Button fx:id="bundlesButton" mnemonicParsing="false" onAction="#handleBundleButton" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="shopButton" mnemonicParsing="false" onAction="#handleShopButton" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Button>
-         </children>
-      </VBox>
+        <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
+            <children>
+                <Button fx:id="itemsButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Items" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </Button>
+                <Button fx:id="bundlesButton" mnemonicParsing="false" onAction="#handleBundleButton" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+                <Button fx:id="shopButton" mnemonicParsing="false" onAction="#handleShopButton" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+            </children>
+        </VBox>
     </children>
 </AnchorPane>

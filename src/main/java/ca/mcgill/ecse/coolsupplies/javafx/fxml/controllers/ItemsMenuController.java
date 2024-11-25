@@ -137,9 +137,9 @@ public class ItemsMenuController {
 
     @FXML
     private void handleShopButton() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ShopPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/StartOrderWindow.fxml"));
         Scene scene = new Scene(loader.load());
-        Stage currentStage = (Stage) resultLabel.getScene().getWindow();
+        Stage currentStage = (Stage) bundlesButton.getScene().getWindow();
         currentStage.setScene(scene);
 
 
