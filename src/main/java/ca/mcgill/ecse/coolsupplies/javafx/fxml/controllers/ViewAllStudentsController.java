@@ -158,8 +158,8 @@ public class ViewAllStudentsController {
      */
     @FXML
     private void deleteStudent(ActionEvent event) throws IOException {
-        String name = studentIndex.getText();
-        String msg = CoolSuppliesFeatureSet2Controller.deleteStudent(name);
+        TOStudent selStudentItem = studentTable.getSelectionModel().getSelectedItem();
+        String msg = CoolSuppliesFeatureSet2Controller.deleteStudent(selStudentItem.getName());
         showAlert("", msg);
         loadPage("/pages/ViewAllStudents.fxml");
     }

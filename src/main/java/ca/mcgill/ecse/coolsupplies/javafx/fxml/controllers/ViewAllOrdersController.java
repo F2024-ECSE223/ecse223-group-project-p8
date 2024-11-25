@@ -2,18 +2,17 @@ package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet8Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOOrder;
+import ca.mcgill.ecse.coolsupplies.controller.TOStudent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,6 +43,9 @@ public class ViewAllOrdersController {
     private TableColumn<TOOrder, String> c_parent;
     @FXML
     private TableColumn<TOOrder, String> c_student;
+    @FXML
+    private TableColumn<TOOrder, Void> c_view;
+
 
     /**
      * Initializes the controller by setting up the table columns and populating the table with order data.
@@ -67,6 +69,39 @@ public class ViewAllOrdersController {
         List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
         orderList.addAll(orders);
         orderTable.setItems(orderList);
+        addButtonToTable();
+    }
+
+    /**
+     * Adds a "View" button to the edit column for each student row.
+     */
+    private void addButtonToTable() {
+        Callback<TableColumn<TOOrder, Void>, TableCell<TOOrder, Void>> cellFactory = param -> new TableCell<>() {
+            private final Button btn = new Button("View");
+
+            {
+                btn.setOnAction(event -> {
+                    TOOrder order = getTableView().getItems().get(getIndex());
+                    try {
+                        viewOrder(event, order);
+                    }catch (Exception e) {
+                        showAlert("","Error: order does not exist.");
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        };
+
+        c_view.setCellFactory(cellFactory);
     }
 
     /**
@@ -76,12 +111,9 @@ public class ViewAllOrdersController {
      * @throws Exception if an error occurs during the process.
      */
     @FXML
-    private void viewOrder(ActionEvent event) throws Exception {
+    private void viewOrder(ActionEvent event, TOOrder order) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrderWindow.fxml"));
         Scene scene = new Scene(loader.load());
-
-        String index = orderIndex.getText();
-        TOOrder order = CoolSuppliesFeatureSet8Controller.viewOrder(index);
         if (order == null) {
             showAlert("", "Error: order does not exist.");
         } else {

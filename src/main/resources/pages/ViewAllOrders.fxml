@@ -4,13 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ViewAllOrdersController">
@@ -42,6 +42,9 @@
                     <TableColumn fx:id="c_level" prefWidth="100.0" text="Level" />
                     <TableColumn fx:id="c_parent" prefWidth="150.0" text="Parent Email" />
                     <TableColumn fx:id="c_student" prefWidth="100.0" text="Student Name" />
+                    <TableColumn fx:id="c_view" prefWidth="100.0" text="View" />
+
+
                 </columns>
             </TableView>
         </children>
@@ -52,9 +55,10 @@
          <RowConstraints />
       </rowConstraints>
     </GridPane>
-    <Label layoutX="143.0" layoutY="60.0" prefHeight="17.0" prefWidth="95.0" text="View order:" wrapText="true" />
+    <Label layoutX="145.0" layoutY="89.0" prefHeight="17.0" prefWidth="95.0" text="Orders" wrapText="true">
+      <font>
+         <Font size="19.0" />
+      </font></Label>
     <Button layoutX="434.0" layoutY="88.0" mnemonicParsing="false" onAction="#startOrder" prefHeight="26.0" prefWidth="146.0" text="+ Start a new order" />
-    <Button layoutX="267.0" layoutY="88.0" mnemonicParsing="false" onAction="#viewOrder" prefHeight="26.0" prefWidth="81.0" text="View" />
-    <TextField fx:id="orderIndex" layoutX="144.0" layoutY="88.0" prefHeight="26.0" prefWidth="111.0" />
 
 </AnchorPane>
