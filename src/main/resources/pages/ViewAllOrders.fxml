@@ -5,6 +5,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,20 +14,38 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ViewAllOrdersController">
-    <ToolBar prefHeight="40.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ViewAllOrdersController">
+    <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
         <items>
             <Button mnemonicParsing="false" onMouseClicked="#goBack" text="Back" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
         </items>
     </ToolBar>
-    <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #fc9d01;">
+    <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
         <children>
-            <Button mnemonicParsing="false" onMouseClicked="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Accounts" />
-            <Button mnemonicParsing="false" onMouseClicked="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Orders" />
-            <Button mnemonicParsing="false" onMouseClicked="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Students" />
-            <Button mnemonicParsing="false" onMouseClicked="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Parent - Student" />
-            <Button mnemonicParsing="false" onMouseClicked="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="School" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Accounts" textFill="WHITE">
+            <font>
+               <Font size="16.0" />
+            </font></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Orders" textFill="WHITE">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <effect>
+               <Glow />
+            </effect></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Students" textFill="WHITE">
+            <font>
+               <Font size="16.0" />
+            </font></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="Parent - Student" textFill="WHITE">
+            <font>
+               <Font size="13.0" />
+            </font></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #hand;" text="School" textFill="WHITE">
+            <font>
+               <Font size="16.0" />
+            </font></Button>
         </children>
     </VBox>
     <GridPane hgap="5.0" layoutX="145.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="443.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="443.0" vgap="5.0">

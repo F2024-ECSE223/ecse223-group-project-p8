@@ -6,18 +6,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.AddItemController">
+<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.AddItemController">
     <children>
-        <TextField fx:id="priceField" layoutX="88.0" layoutY="162.0" prefHeight="26.0" prefWidth="184.0" />
-        <Text layoutX="20.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="184.1390380859375">
+        <TextField fx:id="priceField" layoutX="88.0" layoutY="193.0" prefHeight="26.0" prefWidth="184.0" />
+
+        <Text layoutX="14.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="51.19999999999982">
+
             <font>
                 <Font size="14.0" />
             </font>
         </Text>
         <TextField fx:id="nameField" layoutX="88.0" layoutY="118.0" prefHeight="26.0" prefWidth="184.0" />
         <Button fx:id="addButton" layoutX="214.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleAddButton" text="Add" />
-        <Button fx:id="cancelButton" layoutX="154.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" />
-        <Text layoutX="20.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" wrappingWidth="184.1390380859375">
+        <Button fx:id="cancelButton" layoutX="143.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleCancelButton" text="Cancel" />
+
+        <Text layoutX="20.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" wrappingWidth="38.399999999999864">
+
             <font>
                 <Font size="14.0" />
             </font>

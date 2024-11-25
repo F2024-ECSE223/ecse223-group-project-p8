@@ -28,12 +28,12 @@
             <children>
                 <Button fx:id="ItemsMenuButton" mnemonicParsing="false" onAction="#goToItems" onMouseClicked="#goToItems" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Items" textFill="WHITE">
                     <font>
-                        <Font size="17.0" />
+                        <Font size="16.0" />
                     </font>
                 </Button>
                 <Button fx:id="BundlesMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
                     <font>
-                        <Font size="17.0" />
+                        <Font size="16.0" />
                     </font>
                     <effect>
                         <Glow />
@@ -41,7 +41,7 @@
                 </Button>
                 <Button fx:id="NewOrderMenuButton" mnemonicParsing="false" onAction="#goToNewOrder" onMouseClicked="#goToNewOrder" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
                     <font>
-                        <Font size="17.0" />
+                        <Font size="16.0" />
                     </font>
                 </Button>
             </children>

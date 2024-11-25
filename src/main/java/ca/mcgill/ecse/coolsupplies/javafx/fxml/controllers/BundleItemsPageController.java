@@ -2,7 +2,8 @@ package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.TOBundleItem;
-import ca.mcgill.ecse.coolsupplies.model.*;
+import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
+import ca.mcgill.ecse.coolsupplies.model.GradeBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller.*;
+import static ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller.deleteBundleItem;
+
+/**
+ * This class provides the controller methods for the Bundle Items Page for a single bundle
+ * This page allows users to view bundle items of any bundle selected from the Bundles page or through the bundles drop-down
+ * It also allows users to add/remove a bundle item to a given bundle or update a bundle item's quantity, or purchase level
+ *
+ * @author Snigdha Sen
+ */
 
 public class BundleItemsPageController {
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
@@ -60,21 +69,39 @@ public class BundleItemsPageController {
     private TableView<TOBundleItem> table;
 
     private BundlesController bundlesController;
+    private String currBundleName;
 
-    // Setter method for bundlesController
+    //TO CONNECT WITH OLD PAGE/ SCENE, BUNDLE PAGE ----------------------------------------------------
+    /**
+     * Sets the bundlesController global variable from the previous "Bundle" controller
+     *
+     * @param controller BundlesController controller
+     */
     public void setBundlesController(BundlesController controller) {
         this.bundlesController = controller;
     }
 
-    //ERROR - THE BUNDLE SHOULD COME FROM PASSED DOWN INFO FROM THE PREVIOUS CONTROLLER INITIALLY, AND THEN THE DROPDOWN MENU
-    private String currBundleName;
+    /**
+     * Sets the name of the bundle we want to edit and puts it in the bundle drop down.
+     *
+     * @param selBundleName The name of the bundle whose items we want to view/edit
+     */
     public void setBundle(String selBundleName){
         this.currBundleName = selBundleName;
         BundleDropDownMenu.setValue(currBundleName);
         updateTable(BundleDropDownMenu.getValue());
     }
+    //--------------------------------------------------------------------------------------------------
 
     //NAVIGATION
+
+    /**
+     * Loads a new page
+     *
+     * @param fxmlPath The relative path to the FXML file in question
+     *
+     * @throws IOException If there is an error loading the file
+     */
     @FXML
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -83,6 +110,12 @@ public class BundleItemsPageController {
         currentStage.setScene(scene);
     }
 
+    /**
+     * Opens up the dialog to add a bundle item to the current bundle
+     *
+     * @throws IOException If there is an error loading the file
+     *
+     */
     @FXML
     void goToAddBundleItemDialog() throws IOException {
         String fxmlPath = "/pages/AddBundleItemDialog.fxml";
@@ -96,13 +129,15 @@ public class BundleItemsPageController {
         dialog.setDialogPane(addBundleItemDialogPane);
         dialog.showAndWait();
         updateTable(BundleDropDownMenu.getValue());
-
-        /**
-        //----------------------TEST---------------------------------------------
-        printBundleDetails();
-         **/
     }
 
+    /**
+     * Opens up the dialog to update a bundle item from the current bundle
+     *
+     * @throws IOException If there is an error loading the file
+     * @throws NullPointerException If no row is selected in the table.
+     *
+     */
     @FXML
     void goToUpdateBundleItemDialog() throws IOException {
         String fxmlPath = "/pages/UpdateBundleItemDialog.fxml";
@@ -134,10 +169,36 @@ public class BundleItemsPageController {
             alert.showAndWait();
         }
 
-/**
-        //-------------------------Test------------------------------------
-        printBundleDetails();
- **/
+    }
+
+    /**
+     * Go to the Items Page
+     *
+     * @throws IOException If there is an error loading the file
+     */
+    @FXML
+    void goToItemsPage() throws IOException {
+        loadPage("/pages/ItemsShop.fxml");
+    }
+
+    /**
+     * Go to the New Order Page
+     *
+     * @throws IOException If there is an error loading the file
+     */
+    @FXML
+    void goToNewOrderPage() throws IOException {
+        loadPage("/pages/StartOrderWindow.fxml");
+    }
+
+    /**
+     * Go to the Profile Section (Account Page) by clicking on the Profile button
+     *
+     * @throws IOException If there is an error loading the file
+     */
+    @FXML
+    void goToProfilePage() throws IOException {
+        loadPage("/pages/ViewAccountsPage.fxml");
     }
 
     @FXML
@@ -154,33 +215,7 @@ public class BundleItemsPageController {
         assert itemName != null : "fx:id=\"itemName\" was not injected: check your FXML file 'BundleItemsPage.fxml'.";
         assert purchaseLvl != null : "fx:id=\"purchaseLvl\" was not injected: check your FXML file 'BundleItemsPage.fxml'.";
         assert qty != null : "fx:id=\"qty\" was not injected: check your FXML file 'BundleItemsPage.fxml'.";
-        /**
-        //----------------TEST-----------------------------------------------------------------------
-        printBundleDetails();
-         **/
-/**
-        //-------------------------------------TESTING PURPOSES ONLY--------------------------------
-        BundleItem.PurchaseLevel rec = BundleItem.PurchaseLevel.valueOf("Recommended");
-        BundleItem.PurchaseLevel mand = BundleItem.PurchaseLevel.valueOf("Mandatory");
 
-        Grade grade1 = new Grade("grade1", coolSupplies);
-        Grade grade2 = new Grade("grade2", coolSupplies);
-        Grade grade3 = new Grade("grade3", coolSupplies);
-
-        GradeBundle bundle1 = new GradeBundle("bundle1", 20, coolSupplies, grade1);
-        GradeBundle bundle2 = new GradeBundle("bundle2", 20, coolSupplies, grade2);
-        GradeBundle bundle3 = new GradeBundle("bundle3", 20, coolSupplies, grade3);
-
-        //bundle1 = 2 rec pencils + 4 rec erasers
-        //bundle2 = 4 mand erasers
-        //bundle 3 = empty
-        Item pencil = new Item("pencil", 1, coolSupplies);
-        BundleItem bundlePencil = new BundleItem(2, rec, coolSupplies, bundle1, pencil);
-        Item eraser = new Item("eraser", 2, coolSupplies);
-        BundleItem bundleEraser1 = new BundleItem(4, rec, coolSupplies, bundle1, eraser);
-        BundleItem bundleEraser2 = new BundleItem(4, mand, coolSupplies, bundle2, eraser);
-        //-------------------------------------------------------------------------------------------
-**/
         //Initialize Drop-down Menu for BundleItems
         List<GradeBundle> bundlesList = coolSupplies.getBundles();
         for (GradeBundle bundle : bundlesList) {
@@ -199,7 +234,12 @@ public class BundleItemsPageController {
         });
     }
 
-    //Update TableView
+    /**
+     * Updates the TableView to show all bundle items of a given bundle.
+     *
+     * @param bundleName The name of the bundle in question
+     *
+     */
     private void updateTable(String bundleName) {
         List<TOBundleItem> bundleItems = ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller.getBundleItems(bundleName);
 
@@ -217,7 +257,12 @@ public class BundleItemsPageController {
         }
     }
 
-    //Remove BundleItem from Table and Bundle in the System
+    /**
+     * Removes the selected bundle item from the current bundle and the tableview.
+     *
+     * @throws NullPointerException No row was selected to be removed from the tableview
+     *
+     */
     @FXML
     public void removeSelectedItem() {
         try {
@@ -230,58 +275,17 @@ public class BundleItemsPageController {
             if (selIndex >= 0 && selBundleItem != null) {
                 deleteBundleItem(bundleItemName, bundleName);
                 table.getItems().remove(selBundleItem);
-
-                if (table.getItems().size() <= 1) {
-                    bundlesController.setBundleDiscount(bundleName, 0); //set discount to 0 if
-                }
             }
 
         }
 
         //no row was selected --> show alert
-        catch(NullPointerException e){
+        catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No Selection");
             alert.setHeaderText(null);
             alert.setContentText("No row was selected to remove.");
             alert.showAndWait();
         }
-/**
-        //--------------------------------TEST---------------------------------
-        printBundleDetails();
- **/
     }
-
-//------------------------------TESTING PURPOSES----------------------------------------------------------------
-/**    private void printBundleDetails() {
-        // Get the list of all bundles from CoolSupplies or your model
-        List<GradeBundle> allBundles = coolSupplies.getBundles(); // or however bundles are accessed
-
-        for (GradeBundle bundle : allBundles) {
-            System.out.println("Bundle: " + bundle.getName()); // Print the bundle name
-            List<BundleItem> bundleItems = bundle.getBundleItems(); // Get items in the bundle
-
-            if (bundleItems.isEmpty()) {
-                System.out.println("  No items in this bundle.");
-            } else {
-                // Print details of each item in the bundle
-                for (BundleItem item : bundleItems) {
-                    String itemName = item.getItem().getName(); // Get item name
-                    int quantity = item.getQuantity(); // Get item quantity
-                    String purchaseLevel = item.getLevel().name(); // Get purchase level (Mandatory, Recommended, Optional)
-
-                    // Print out the item details
-                    System.out.println("  Item: " + itemName + ", Quantity: " + quantity + ", Purchase Level: " + purchaseLevel);
-                }
-            }
-        }
-    }
- **/
-
-// Go to Bundles page when clicking BundlesMenuButton
-@FXML
-private void goToBundles() throws IOException{
-    loadPage("/pages/Bundles.fxml");
-}
-
 }

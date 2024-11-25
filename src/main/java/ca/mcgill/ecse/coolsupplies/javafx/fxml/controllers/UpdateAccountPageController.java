@@ -110,6 +110,6 @@ public class UpdateAccountPageController {
 
     @FXML
     private void viewSchool() throws IOException {
-        loadPage("/pages/ViewSchool.fxml");
+        loadPage("/pages/GradePage.fxml");
     }
 }
