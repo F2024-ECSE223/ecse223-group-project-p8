@@ -64,6 +64,7 @@ public class AddAndUpdateStudentController {
         } else {
             title.setText(currentStudent.getName());
             studentName.setText(currentStudent.getName());
+            gradeBox.setValue(currentStudent.getGradeLevel());
         }
     }
 
