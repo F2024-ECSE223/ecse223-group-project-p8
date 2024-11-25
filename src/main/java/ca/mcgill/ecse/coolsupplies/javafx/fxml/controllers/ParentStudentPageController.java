@@ -82,8 +82,8 @@ public class ParentStudentPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         studentLabel.setText("Not Selected");
-        parentColumn.setCellValueFactory(new PropertyValueFactory<>("parentEmail")); // Match getter method
-        studentColumn.setCellValueFactory(new PropertyValueFactory<>("studentName")); // Match getter method
+        parentColumn.setCellValueFactory(new PropertyValueFactory<>("parentEmail"));
+        studentColumn.setCellValueFactory(new PropertyValueFactory<>("studentName"));
 
         List<TOStudent> students = CoolSuppliesFeatureSet2Controller.getStudents();
         List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
@@ -134,6 +134,7 @@ public class ParentStudentPageController implements Initializable {
         }
 
         public static void initializeList(List<TOStudent> students, List<TOParent> parents) {
+            parentStudentList.clear();
             for (TOStudent student : students) {
                 if (null == ParentStudent.getStudentWithName(student.getName())) {
                     ParentStudent newStudent = new ParentStudent(null, student.getName());
