@@ -1,9 +1,7 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet2Controller;
-import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet7Controller;
-import ca.mcgill.ecse.coolsupplies.controller.TOGrade;
-import ca.mcgill.ecse.coolsupplies.controller.TOStudent;
+import ca.mcgill.ecse.coolsupplies.controller.*;
+import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,8 +38,8 @@ public class ViewAllStudentsController {
 
     public void populateStudents() {
         ObservableList<TOStudent> studentList = FXCollections.observableArrayList();
-
         List<TOStudent> students = CoolSuppliesFeatureSet2Controller.getStudents();
+        List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
         studentList.addAll(students);
 
         studentTable.setItems(studentList);
@@ -112,6 +110,16 @@ public class ViewAllStudentsController {
         // get AddAndUpdateSdtuents controller and set the current student
         AddAndUpdateStudentController controller = loader.getController();
         controller.setCurrentStudent(student);
+
+        List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
+
+        for(TOParent parent: parents){
+            System.out.println(CoolSuppliesFeatureSet6Controller.getStudentOfParent(student.getName(),parent.getEmail()));
+            if(CoolSuppliesFeatureSet6Controller.getStudentOfParent(student.getName(),parent.getEmail()) != null){
+                controller.setCurrentParent(parent);
+                break;
+            }
+        }
 
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
