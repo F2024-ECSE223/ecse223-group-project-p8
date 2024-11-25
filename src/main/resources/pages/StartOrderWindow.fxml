@@ -13,36 +13,36 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.StartOrderWindowController">
    <children>
-      <Text layoutX="176.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Name" wrappingWidth="104.0">
+      <Text layoutX="158.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Name" wrappingWidth="131.28662109375">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="177.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Purchase level" wrappingWidth="146.4599609375">
+      <Text layoutX="158.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Purchase level" wrappingWidth="146.4599609375">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="177.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Order">
+      <Text layoutX="158.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Order">
          <font>
             <Font size="25.0" />
          </font>
       </Text>
-      <Text layoutX="177.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="94.7158203125">
+      <Text layoutX="158.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" wrappingWidth="94.7158203125">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
          </font>
       </Text>
       <Button layoutX="457.0" layoutY="350.0" mnemonicParsing="false" onAction="#placeOrder" text="Place Order" />
       <Separator layoutX="120.0" layoutY="84.0" prefHeight="40.0" prefWidth="481.0" />
-      <Text layoutX="176.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID" wrappingWidth="104.0">
+      <Text layoutX="158.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order ID" wrappingWidth="104.0">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
          </font>
       </Text>
-      <Text layoutX="176.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent Email" wrappingWidth="104.0">
+      <Text layoutX="158.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Parent Email" wrappingWidth="104.0">
          <font>
-            <Font size="16.0" />
+            <Font size="15.0" />
          </font>
       </Text>
       <DatePicker fx:id="datePicker" layoutX="333.0" layoutY="292.0" />

@@ -43,18 +43,18 @@
                <font>
                   <Font size="16.0" />
                </font>
+               <effect>
+                  <Glow />
+               </effect>
             </Button>
             <Button fx:id="bundlesButton" mnemonicParsing="false" onAction="#handleBundleButton" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
-               <effect>
-                  <Glow />
-               </effect>
             </Button>
             <Button fx:id="shopButton" mnemonicParsing="false" onAction="#handleShopButton" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font>
             </Button>
          </children>
