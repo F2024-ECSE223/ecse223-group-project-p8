@@ -2,10 +2,10 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,33 +14,29 @@
 
 <AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.BundleItemsPageController">
     <children>
-        <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
-            <items>
-            <AnchorPane>
-               <children>
-                      <Text layoutX="10.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
-                  <Button fx:id="ProfileButton" layoutX="537.0" mnemonicParsing="false" onMouseClicked="#goToProfilePage" text="Profile" />
-               </children>
-            </AnchorPane>
-            </items>
-        </ToolBar>
         <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
             <children>
                 <Button fx:id="ItemsMenuButton" mnemonicParsing="false" onMouseClicked="#goToItemsPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Items" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
-               </font></Button>
+                  <Font size="16.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect></Button>
                 <Button fx:id="BundlesMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font>
                <effect>
                   <Glow />
                </effect></Button>
                 <Button fx:id="ShopMenuButton" mnemonicParsing="false" onMouseClicked="#goToNewOrderPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="New Order" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
-               </font></Button>
+                  <Font size="16.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect></Button>
             </children>
         </VBox>
         <Text layoutX="144.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle Items">
@@ -61,5 +57,16 @@
         <Text layoutX="447.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bundle:" />
         <ChoiceBox fx:id="BundleDropDownMenu" layoutX="494.0" layoutY="65.0" prefHeight="26.0" prefWidth="95.0" />
       <Button fx:id="UpdateSelectedRowButton" layoutX="456.0" layoutY="115.0" mnemonicParsing="false" onAction="#goToUpdateBundleItemDialog" text="Update Selected Item" />
+      <Label alignment="CENTER" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="ProfileButton" layoutX="535.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#goToProfilePage" text="Profile" />
+      <Text layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

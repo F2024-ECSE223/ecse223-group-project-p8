@@ -16,46 +16,31 @@
 
 <AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.EditOrderItemsPageController">
     <children>
-        <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
-            <items>
-            <AnchorPane>
-               <children>
-                      <Text layoutX="10.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
-                  <Button fx:id="BackButton" layoutX="541.0" mnemonicParsing="false" onAction="#goToItemsPage" text="Back" />
-                  <Text layoutX="291.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-            </items>
-        </ToolBar>
         <VBox layoutY="40.0" prefHeight="363.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
             <children>
-                <Button fx:id="accountButtonMenu" mnemonicParsing="false" onAction="#goToAccountPage" onMouseClicked="#goToAccountPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Account" textFill="WHITE">
+                <Button fx:id="accountButtonMenu" mnemonicParsing="false" onAction="#goToAccountPage" onMouseClicked="#goToAccountPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Accounts" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font></Button>
                 <Button fx:id="ordersButtonMenu" mnemonicParsing="false" onMouseClicked="#goToOrdersPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Orders" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font>
                <effect>
                   <Glow />
                </effect></Button>
                 <Button fx:id="studentsButtonMenu" mnemonicParsing="false" onAction="#goToStudentsPage" onMouseClicked="#goToStudentsPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Students" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font></Button>
-            <Button fx:id="parentStudentButtonMenu" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#goToParentStudentPage" onMouseClicked="#goToParentStudentPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Parent-Student" textFill="WHITE">
+            <Button fx:id="parentStudentButtonMenu" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#goToParentStudentPage" onMouseClicked="#goToParentStudentPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Parent - Student" textFill="WHITE">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Button>
             <Button fx:id="schoolButtonMenu" layoutX="10.0" layoutY="172.0" mnemonicParsing="false" onAction="#goToSchoolPage" onMouseClicked="#goToSchoolPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="School" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font>
             </Button>
             </children>
@@ -97,5 +82,11 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
+         <items>
+            <Button fx:id="BackButton" mnemonicParsing="false" onAction="#goToItemsPage" text="Back" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
+         </items>
+      </ToolBar>
     </children>
 </AnchorPane>

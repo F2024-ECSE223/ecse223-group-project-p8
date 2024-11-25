@@ -6,25 +6,45 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ParentStudentPageController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="600.0">
+      <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
          <items>
             <Button mnemonicParsing="false" onAction="#goBack" text="Back" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
          </items>
       </ToolBar>
-      <VBox fx:id="parentStudentVBox" layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #fc9d01;">
+      <VBox fx:id="parentStudentVBox" layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
          <children>
-            <Button mnemonicParsing="false" onAction="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Accounts" />
-            <Button mnemonicParsing="false" onAction="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
-            <Button mnemonicParsing="false" onAction="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" />
-            <Button mnemonicParsing="false" onAction="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Parent - Student" />
-            <Button mnemonicParsing="false" onAction="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
+            <Button mnemonicParsing="false" onAction="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Accounts" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Parent - Student" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <effect>
+                  <Glow />
+               </effect></Button>
+            <Button mnemonicParsing="false" onAction="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
          </children>
       </VBox>
       <Button layoutX="417.0" layoutY="110.0" mnemonicParsing="false" onAction="#addStudentToParent" prefHeight="26.0" prefWidth="131.0" text="Add to this Parent" />
