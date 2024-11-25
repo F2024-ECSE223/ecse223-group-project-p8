@@ -8,94 +8,48 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.EditOrderItemsPageController">
+<AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.EditOrderItemsPageController">
     <children>
-        <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
-            <items>
-            <AnchorPane>
-               <children>
-                      <Text layoutX="10.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
-                  <Button fx:id="BackButton" layoutX="541.0" mnemonicParsing="false" onAction="#goToItemsPage" text="Back" />
-                  <Text layoutX="291.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-            </items>
-        </ToolBar>
-        <VBox layoutY="40.0" prefHeight="363.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
-            <children>
-                <Button fx:id="accountButtonMenu" mnemonicParsing="false" onAction="#goToAccountPage" onMouseClicked="#goToAccountPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Account" textFill="WHITE">
-               <font>
-                  <Font size="17.0" />
-               </font></Button>
-                <Button fx:id="ordersButtonMenu" mnemonicParsing="false" onMouseClicked="#goToOrdersPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Orders" textFill="WHITE">
-               <font>
-                  <Font size="17.0" />
-               </font>
-               <effect>
-                  <Glow />
-               </effect></Button>
-                <Button fx:id="studentsButtonMenu" mnemonicParsing="false" onAction="#goToStudentsPage" onMouseClicked="#goToStudentsPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Students" textFill="WHITE">
-               <font>
-                  <Font size="17.0" />
-               </font></Button>
-            <Button fx:id="parentStudentButtonMenu" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#goToParentStudentPage" onMouseClicked="#goToParentStudentPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Parent-Student" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="schoolButtonMenu" layoutX="10.0" layoutY="172.0" mnemonicParsing="false" onAction="#goToSchoolPage" onMouseClicked="#goToSchoolPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="School" textFill="WHITE">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Button>
-            </children>
-        </VBox>
-        <Text layoutX="144.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Order Items">
+        <Text layoutX="10.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Order Items">
             <font>
                 <Font size="25.0" />
             </font>
         </Text>
-        <Button fx:id="AddButton" layoutX="207.0" layoutY="222.0" mnemonicParsing="false" onAction="#add" prefHeight="26.0" prefWidth="63.0" text="Add " textFill="#00790e" />
-        <Text layoutX="168.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item:" />
-      <ChoiceBox fx:id="itemDropDownMenu" layoutX="204.0" layoutY="139.0" prefHeight="26.0" prefWidth="95.0" />
-      <Spinner fx:id="qtySpinner" layoutX="204.0" layoutY="179.0" prefHeight="25.0" prefWidth="95.0" />
-      <Text layoutX="147.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:" />
-      <Separator layoutX="344.0" layoutY="101.0" orientation="VERTICAL" prefHeight="301.0" prefWidth="11.0" />
-      <Label fx:id="chooseItemLabel" layoutX="176.0" layoutY="108.0" text="Choose Item to Add">
+        <Button fx:id="AddButton" layoutX="160.0" layoutY="258.0" mnemonicParsing="false" onAction="#add" prefHeight="26.0" prefWidth="63.0" text="Add " textFill="#00790e" />
+        <Text layoutX="60.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item:" />
+      <ChoiceBox fx:id="itemDropDownMenu" layoutX="100.0" layoutY="175.0" prefHeight="26.0" prefWidth="123.0" />
+      <Spinner fx:id="qtySpinner" layoutX="100.0" layoutY="215.0" prefHeight="25.0" prefWidth="78.0" />
+      <Text layoutX="40.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity:" />
+      <Separator layoutX="268.0" layoutY="100.0" orientation="VERTICAL" prefHeight="301.0" prefWidth="11.0" />
+      <Label fx:id="chooseItemLabel" layoutX="50.0" layoutY="125.0" text="Choose Item">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="439.0" layoutY="108.0" text="All Items in Order">
+      <Label layoutX="320.0" layoutY="80.0" text="All Items in Order">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="RemoveButton" layoutX="522.0" layoutY="338.0" mnemonicParsing="false" onAction="#remove" text="Remove " textFill="#cc0000" />
-      <TableView fx:id="table" layoutX="384.0" layoutY="137.0" prefHeight="200.0" prefWidth="200.0">
+      <Button fx:id="RemoveButton" layoutX="457.0" layoutY="75.0" mnemonicParsing="false" onAction="#remove" text="Remove " textFill="#cc0000" />
+      <TableView fx:id="table" layoutX="320.0" layoutY="110.0" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="itemNameColumn" prefWidth="126.00006103515625" text="Item Name" />
           <TableColumn fx:id="QuantityColumn" prefWidth="72.0" text="Quantity" />
         </columns>
       </TableView>
-      <Button fx:id="updateQtyButton" layoutX="198.0" layoutY="360.0" mnemonicParsing="false" onAction="#update" text="Update Quantity" />
-      <Separator layoutX="120.0" layoutY="263.0" prefHeight="16.0" prefWidth="229.0" />
-      <Spinner fx:id="updateQtySpinner" layoutX="231.0" layoutY="320.0" prefHeight="25.0" prefWidth="69.0" />
-      <Text layoutX="148.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Quantity:" />
-      <Label fx:id="chooseItemLabel1" layoutX="165.0" layoutY="285.0" text="Update Selected Item">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+      <Button fx:id="updateQtyButton" layoutX="318.0" layoutY="362.0" mnemonicParsing="false" onAction="#updateQty" text="Update Quantity" />
+      <ToolBar prefHeight="40.0" prefWidth="600.0">
+         <items>
+            <Button fx:id="BackButton" mnemonicParsing="false" onAction="#goBack" text="Back" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
+         </items>
+      </ToolBar>
+      <Text layoutX="320.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Quantity:" />
+      <Spinner fx:id="newQtySpinner" layoutX="403.0" layoutY="330.0" prefHeight="25.0" prefWidth="78.0" />
     </children>
 </AnchorPane>
