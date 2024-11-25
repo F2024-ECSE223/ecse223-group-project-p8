@@ -97,9 +97,11 @@ public class EditOrderItemsPageController {
             return;
         }
 
-        if (CoolSuppliesFeatureSet5Controller.getBundleItems(itemName).isEmpty()) {
-            showAlert("Error", "Cannot add empty bundle.");
-            return;
+        if (CoolSuppliesFeatureSet4Controller.getBundle(itemName) != null) {
+            if (CoolSuppliesFeatureSet5Controller.getBundleItems(itemName).isEmpty()) {
+                showAlert("Error", "Cannot add empty bundle.");
+                return;
+            }  
         }
 
         String msg = CoolSuppliesFeatureSet8Controller.addItemToOrder(itemName, String.valueOf(selOrderID), qty);
