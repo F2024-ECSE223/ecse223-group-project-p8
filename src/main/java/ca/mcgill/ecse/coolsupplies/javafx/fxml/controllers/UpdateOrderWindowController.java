@@ -35,12 +35,22 @@ public class UpdateOrderWindowController implements Initializable {
     String level;
 
     @FXML
-    private void updateOrder(ActionEvent event) {
+    private void updateOrder(ActionEvent event) throws IOException {
+        if (idChoiceBox.getValue() == null) {
+            showAlert("Error", "Please select an order to update.");
+            return;
+        }
+        
+        int id = Integer.parseInt(idChoiceBox.getValue());
         studentName = studentChoiceBox.getValue();
         level = levelChoiceBox.getValue();
-        int id = Integer.parseInt(idChoiceBox.getValue());
+        
+        String msg = CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
 
-        CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
+        showAlert("", msg);
+        if (msg.equals("The order has successfully been updated.")) {
+            goBack();        
+        }
     }
 
     @FXML

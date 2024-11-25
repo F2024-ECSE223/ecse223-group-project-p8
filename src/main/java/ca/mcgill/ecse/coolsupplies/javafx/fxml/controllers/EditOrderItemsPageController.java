@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet3Controller;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller;
+import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet8Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOGradeBundle;
 import ca.mcgill.ecse.coolsupplies.controller.TOItem;
@@ -93,6 +94,11 @@ public class EditOrderItemsPageController {
 
         if (itemName == null) {
             showAlert("Error", "Please select an item to add.");
+            return;
+        }
+
+        if (CoolSuppliesFeatureSet5Controller.getBundleItems(itemName).isEmpty()) {
+            showAlert("Error", "Cannot add empty bundle.");
             return;
         }
 

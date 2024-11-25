@@ -162,7 +162,7 @@ public class ViewOrderWindowController {
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/ItemsShop.fxml");
+        loadPage("/pages/ViewAllOrders.fxml");
     }
 
     @FXML
