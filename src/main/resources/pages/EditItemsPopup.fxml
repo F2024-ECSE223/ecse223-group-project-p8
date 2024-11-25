@@ -15,7 +15,7 @@
         </Text>
         <Text fill="#5e5b5b" layoutX="13.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit the following fields and click on &quot;Edit&quot; to edit the" />
         <Text fill="#5e5b5b" layoutX="14.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="item" />
-        <Text layoutX="26.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="184.1390380859375">
+        <Text layoutX="26.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="51.19999999999982">
             <font>
                 <Font size="14.0" />
             </font>
@@ -23,12 +23,15 @@
         <TextField fx:id="nameField" layoutX="88.0" layoutY="117.0" prefHeight="26.0" prefWidth="184.0" />
         <Button fx:id="editButton" layoutX="217.0" layoutY="342.0" mnemonicParsing="false" text="Edit" />
         <Button fx:id="cancelButton" layoutX="124.0" layoutY="342.0" mnemonicParsing="false" text="Cancel" />
-        <Text layoutX="26.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" wrappingWidth="184.1390380859375">
+
+        <Text layoutX="26.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" wrappingWidth="51.19999999999982">
+
             <font>
                 <Font size="14.0" />
             </font>
         </Text>
         <AnchorPane layoutX="88.0" layoutY="162.0" prefHeight="26.0" prefWidth="200.0" />
-        <TextField fx:id="priceField" layoutX="88.0" layoutY="200.0" prefHeight="26.0" prefWidth="184.0" />
+          <TextField fx:id="priceField" layoutX="88.0" layoutY="200.0" prefHeight="26.0" prefWidth="184.0" />
+
     </children>
 </AnchorPane>
