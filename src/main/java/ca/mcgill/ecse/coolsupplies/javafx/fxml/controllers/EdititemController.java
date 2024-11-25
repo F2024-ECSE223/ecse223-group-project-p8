@@ -4,6 +4,7 @@ import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet3Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOItem;
 import ca.mcgill.ecse.coolsupplies.model.Item;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -58,8 +59,18 @@ public class EdititemController {
     private void handleEditButton() {
         String nameItem = nameField.getText();
         String priceItem = priceField.getText();
-        if (!nameItem.isEmpty() && !priceItem.isEmpty()) {
-            CoolSuppliesFeatureSet3Controller.updateItem(currItem.getName(), nameItem, Integer.parseInt(priceItem));}
+        if (!priceItem.isEmpty()) {
+            String message = CoolSuppliesFeatureSet3Controller.updateItem(currItem.getName(), nameItem, Integer.parseInt(priceItem));
+
+            if(!message.equals("The item has successfully been updated")){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(message);
+                    alert.show();
+
+                }}
+
     }
 
     private void handleCancelButton() throws IOException {
