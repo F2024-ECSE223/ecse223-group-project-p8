@@ -21,7 +21,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Text>
-            <Text layoutX="16.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit these fields and click &quot;finish&quot; to update the item in cart.">
+            <Text layoutX="16.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit these fields and click &quot;finish&quot; to update the item.">
                <font>
                   <Font size="13.0" />
                </font>

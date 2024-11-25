@@ -19,25 +19,25 @@
             <AnchorPane>
                <children>
                       <Text layoutX="10.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
-                  <Button fx:id="ProfileButton" layoutX="537.0" mnemonicParsing="false" text="Profile" />
+                  <Button fx:id="ProfileButton" layoutX="537.0" mnemonicParsing="false" onMouseClicked="#goToProfilePage" text="Profile" />
                </children>
             </AnchorPane>
             </items>
         </ToolBar>
         <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
             <children>
-                <Button fx:id="ItemsMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Items" textFill="WHITE">
+                <Button fx:id="ItemsMenuButton" mnemonicParsing="false" onMouseClicked="#goToItemsPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Items" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font></Button>
-                <Button fx:id="BundlesMenuButton" mnemonicParsing="false" onMouseClicked="#goToBundles" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
+                <Button fx:id="BundlesMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
                <effect>
                   <Glow />
                </effect></Button>
-                <Button fx:id="ShopMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="New Order" textFill="WHITE">
+                <Button fx:id="ShopMenuButton" mnemonicParsing="false" onMouseClicked="#goToNewOrderPage" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="New Order" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font></Button>
