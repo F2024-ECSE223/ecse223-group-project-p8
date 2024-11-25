@@ -23,11 +23,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
-* Controller for adding, updating quantity, and deleting items in an order.
-*
-*@author Jiatian Liu
-*@author Snigdha Sen
-*/
+ * Controller for adding, updating quantity, and deleting items in an order.
+ *
+ *@author Jiatian Liu
+ *@author Snigdha Sen
+ */
 public class EditOrderItemsPageController {
     @FXML
     private Button AddButton;
@@ -82,11 +82,11 @@ public class EditOrderItemsPageController {
     }
 
     /**
-    * Adds an item to the order.
-    *
-    *@author Jiatian Liu
-    *@author Snigdha Sen
-    */
+     * Adds an item to the order.
+     *
+     *@author Jiatian Liu
+     *@author Snigdha Sen
+     */
     @FXML
     void add(ActionEvent event) {
         Integer qty = qtySpinner.getValue();
@@ -101,7 +101,7 @@ public class EditOrderItemsPageController {
             if (CoolSuppliesFeatureSet5Controller.getBundleItems(itemName).isEmpty()) {
                 showAlert("Error", "Cannot add empty bundle.");
                 return;
-            }  
+            }
         }
 
         String msg = CoolSuppliesFeatureSet8Controller.addItemToOrder(itemName, String.valueOf(selOrderID), qty);
@@ -110,7 +110,7 @@ public class EditOrderItemsPageController {
         itemDropDownMenu.setValue(null);
         qtySpinner.getValueFactory().setValue(1);
         newQtySpinner.getValueFactory().setValue(1);
-        updateTable(selOrderID); 
+        updateTable(selOrderID);
     }
 
     private void showAlert(String title, String message) {
@@ -122,11 +122,11 @@ public class EditOrderItemsPageController {
     }
 
     /**
-    * Removes the selected item from the order.
-    *
-    *@author Jiatian Liu
-    *@author Snigdha Sen
-    */
+     * Removes the selected item from the order.
+     *
+     *@author Jiatian Liu
+     *@author Snigdha Sen
+     */
     @FXML
     void remove(ActionEvent event) {
         TOOrderItem selOrderItem = table.getSelectionModel().getSelectedItem();
@@ -135,22 +135,22 @@ public class EditOrderItemsPageController {
             showAlert("Error", "Please select an item to delete.");
             return;
         }
-        
+
         String msg = CoolSuppliesFeatureSet8Controller.deleteOrderItem(selOrderItem.getItemName(), String.valueOf(selOrderID));
-        
+
         showAlert("", msg);
         itemDropDownMenu.setValue(null);
         qtySpinner.getValueFactory().setValue(1);
         newQtySpinner.getValueFactory().setValue(1);
-        updateTable(selOrderID); 
+        updateTable(selOrderID);
     }
 
     /**
-    * Updates the quantity of the selected item in the order.
-    *
-    *@author Jiatian Liu
-    *@author Snigdha Sen
-    */
+     * Updates the quantity of the selected item in the order.
+     *
+     *@author Jiatian Liu
+     *@author Snigdha Sen
+     */
     @FXML
     void updateQty(ActionEvent event) {
         TOOrderItem selOrderItem = table.getSelectionModel().getSelectedItem();
@@ -160,22 +160,22 @@ public class EditOrderItemsPageController {
             showAlert("Error", "Please select an item to update quantity.");
             return;
         }
-        
+
         String msg = CoolSuppliesFeatureSet8Controller.updateQuantity(selOrderItem.getItemName(), newQty, selOrderID);
-        
+
         showAlert("", msg);
         itemDropDownMenu.setValue(null);
         qtySpinner.getValueFactory().setValue(1);
         newQtySpinner.getValueFactory().setValue(1);
-        updateTable(selOrderID); 
+        updateTable(selOrderID);
     }
 
     /**
-    * Updates the TableView with the items from the specified order.
-    *
-    *@author Jiatian Liu
-    *@author Snigdha Sen
-    */
+     * Updates the TableView with the items from the specified order.
+     *
+     *@author Jiatian Liu
+     *@author Snigdha Sen
+     */
     private void updateTable(Integer orderID) {
         ObservableList<TOOrderItem> itemList = FXCollections.observableArrayList();
         List<TOOrderItem> orderItems = CoolSuppliesFeatureSet8Controller.getTemporaryItemList(String.valueOf(orderID));
