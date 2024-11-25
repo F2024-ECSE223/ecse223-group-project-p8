@@ -71,17 +71,10 @@ public class BundlesController {
     private TableView<TOGradeBundle> table;
 
     // method that sets the discount of a bundle
-    public void setBundleDiscount() {
-        //set discount 0 if single-item or empty bundle
-        List<GradeBundle> bList = coolSupplies.getBundles();
-        for(GradeBundle b : bList){
-            if(b.getBundleItems().size() <= 1){
-                b.setDiscount(0);
-            }
-        }
+    public void setBundleDiscount(String bundleName, int newDiscount) {
+        CoolSuppliesApplication.getCoolSupplies().getBundles().stream().filter(b -> b.getName().equals(bundleName)).findFirst().ifPresent(bundle -> bundle.setDiscount(newDiscount));
+        updateTable();
     }
-
-
 
     // helper method for loading pages
     private void loadPage(String fxmlPath) throws IOException {
@@ -153,13 +146,10 @@ public class BundlesController {
         assert ProfileButton != null : "fx:id=\"ProfileButton\" was not injected: check your FXML file 'Bundles.fxml'.";
         assert table != null : "fx:id=\"table\" was not injected: check your FXML file 'Bundles.fxml'.";
 
-        setBundleDiscount();
         updateTable();
     }
 
     private void updateTable() {
-        setBundleDiscount();
-
         List<TOGradeBundle> bundles = ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet4Controller.getBundles();
 
         if (!bundles.isEmpty()) {
@@ -174,6 +164,7 @@ public class BundlesController {
         else {
             table.setItems(FXCollections.observableArrayList());
         }
+
     }
 
     @FXML
