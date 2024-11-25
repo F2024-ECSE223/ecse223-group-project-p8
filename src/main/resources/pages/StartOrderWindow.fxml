@@ -5,6 +5,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -82,6 +83,6 @@
          </font>
       </Text>
       <ChoiceBox fx:id="parentChoiceBox" layoutX="333.0" layoutY="181.0" prefHeight="26.0" prefWidth="95.0" />
-      <Label fx:id="idLabel" layoutX="333.0" layoutY="146.0" text="Label" />
+      <TextField fx:id="idTextField" layoutX="333.0" layoutY="142.0" prefHeight="26.0" prefWidth="95.0" />
    </children>
 </AnchorPane>
