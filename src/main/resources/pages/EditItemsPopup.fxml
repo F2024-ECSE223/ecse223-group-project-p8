@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.EdititemController">
+<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.EdititemController">
     <children>
         <Text layoutX="11.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Item">
             <font>
@@ -13,22 +15,20 @@
         </Text>
         <Text fill="#5e5b5b" layoutX="13.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edit the following fields and click on &quot;Edit&quot; to edit the" />
         <Text fill="#5e5b5b" layoutX="14.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="item" />
-        <Text layoutX="26.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="184.1390380859375">
+        <Text layoutX="26.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="51.19999999999982">
             <font>
                 <Font size="14.0" />
             </font>
         </Text>
         <TextField fx:id="nameField" layoutX="88.0" layoutY="117.0" prefHeight="26.0" prefWidth="184.0" />
         <Button fx:id="editButton" layoutX="217.0" layoutY="342.0" mnemonicParsing="false" text="Edit" />
-        <Button fx:id="cancelButton" layoutX="154.0" layoutY="342.0" mnemonicParsing="false" text="Cancel" />
-        <Text layoutX="26.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" wrappingWidth="184.1390380859375">
+        <Button fx:id="cancelButton" layoutX="124.0" layoutY="342.0" mnemonicParsing="false" text="Cancel" />
+        <Text layoutX="26.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" wrappingWidth="51.19999999999982">
             <font>
                 <Font size="14.0" />
             </font>
         </Text>
-        <AnchorPane layoutX="88.0" layoutY="162.0" prefHeight="26.0" prefWidth="200.0">
-         <children>
-                <TextField fx:id="priceField" layoutY="1.0" prefHeight="26.0" prefWidth="184.0" />
-         </children></AnchorPane>
+        <AnchorPane layoutX="88.0" layoutY="162.0" prefHeight="26.0" prefWidth="200.0" />
+          <TextField fx:id="priceField" layoutX="88.0" layoutY="200.0" prefHeight="26.0" prefWidth="184.0" />
     </children>
 </AnchorPane>
