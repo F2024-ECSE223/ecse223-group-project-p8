@@ -50,6 +50,10 @@ public class ParentStudentPageController implements Initializable {
     ParentStudent selecteParentStudent;
     static ObservableList<ParentStudent> data = FXCollections.observableArrayList();
 
+    /**
+     * Handles the action of adding a student to a selected parent.
+     * @param event The ActionEvent triggered by the user interaction.
+     */
     @FXML
     private void addStudentToParent(ActionEvent event) {
         selectedParent = parentChoiceBox.getValue();
@@ -66,6 +70,10 @@ public class ParentStudentPageController implements Initializable {
         }
     }
 
+    /**
+     * Handles the action of removing a student from their associated parent.
+     * @param event The ActionEvent triggered by the user interaction.
+     */
     @FXML
     private void deleteStudentFromParent(ActionEvent event) {
         msg = CoolSuppliesFeatureSet6Controller.deleteStudentFromParent(selecteParentStudent.studentName, selecteParentStudent.parentEmail);
@@ -79,6 +87,13 @@ public class ParentStudentPageController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Initializes the Parent-Student page components and data bindings.
+     * This method is automatically invoked by the JavaFX framework.
+     *
+     * @param location  The location used to resolve relative paths for the root object.
+     * @param resources The resources used to localize the root object.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         studentLabel.setText("Not Selected");
@@ -111,6 +126,9 @@ public class ParentStudentPageController implements Initializable {
     }
 
 
+    /**
+     * A nested static class representing a Parent-Student association.
+     */
     public static class ParentStudent {
         private String parentEmail;
         private String studentName;
@@ -163,6 +181,12 @@ public class ParentStudentPageController implements Initializable {
         }
     }
 
+    /**
+     * Loads a new FXML page and sets it as the current scene.
+     *
+     * @param fxmlPath The path to the FXML file.
+     * @throws IOException If an error occurs during loading.
+     */
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         AnchorPane newPage = loader.load();
