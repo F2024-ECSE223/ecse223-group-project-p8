@@ -78,6 +78,11 @@ public class SetPenaltyCodesController {
         String payment = paymentCode.getText();
         int orderNb = currOrder.getNumber();
 
+        if (payment.length() != 4) {
+            showAlert("Error", "Authorization code invalid.");
+            return;
+        }
+
         String msg = CoolSuppliesFeatureSet8Controller.payOrder(String.valueOf(orderNb), payment);
 
         showAlert("", msg);
@@ -93,6 +98,16 @@ public class SetPenaltyCodesController {
         String payment = paymentCode.getText();
         String penalty = penaltyCode.getText();
         int orderNb = currOrder.getNumber();
+
+        if (payment.length() != 4) {
+            showAlert("Error", "Authorization code invalid.");
+            return;
+        }
+
+        if (penalty.length() != 4) {
+            showAlert("Error", "Penalty authorization code invalid.");
+            return;
+        }
         
         String msg = CoolSuppliesFeatureSet8Controller.payPenaltyForOrder(String.valueOf(orderNb), penalty, payment);
 
