@@ -96,6 +96,6 @@ public class AddAccountPageController {
 
     @FXML
     private void viewSchool() throws IOException {
-        loadPage("/pages/ViewSchool.fxml");
+        loadPage("/pages/GradePage.fxml");
     }
 }

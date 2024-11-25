@@ -1,14 +1,20 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOBundleItem;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+/**
+ * This class provides the controller methods for the Update Bundle Item Dialog on the BundleItems Page
+ *
+ * @author Snigdha Sen
+ */
 
 public class UpdateBundleItemDialogController {
     CoolSupplies coolSupplies = CoolSuppliesApplication.getCoolSupplies();
@@ -30,19 +36,37 @@ public class UpdateBundleItemDialogController {
 
     private TOBundleItem selBundleItem;
 
+    //TO CONNECT WITH OLD PAGE/ SCENE, BUNDLE ITEMS PAGE ----------------------------------------------------
+    /**
+     * Sets the selected bundle item global variable from the previous "Bundle Items" controller
+     *
+     * @param selBundleItem the transfer object of the bundle item the user wants to update
+     */
     @FXML
     public void setBundleItem(TOBundleItem selBundleItem){
         this.selBundleItem = selBundleItem;
         purchaseLvlDropDown.setValue(selBundleItem.getLevel());
         qtySpinner.getValueFactory().setValue(selBundleItem.getQuantity());
     }
+    //--------------------------------------------------------------------------------------------------------
 
+
+    //FINISH AND CANCEL BUTTON ACTIONS
+
+    /**
+     * Updates the purchase level and the quantity of the bundle item when the finish button is clicked and closes the dialog box
+     *
+     */
     private void finish(){
         String updatedLvl = purchaseLvlDropDown.getValue();
         Integer updatedQty = qtySpinner.getValue();
         CoolSuppliesFeatureSet5Controller.updateBundleItem(selBundleItem.getItemName(), selBundleItem.getGradeBundleName(), updatedQty, updatedLvl);
     }
 
+    /**
+     * Closes the dialog box without modifying the bundle item in question
+     *
+     */
     private void cancel(){
         dialogPane.getScene().getWindow().hide();
     }

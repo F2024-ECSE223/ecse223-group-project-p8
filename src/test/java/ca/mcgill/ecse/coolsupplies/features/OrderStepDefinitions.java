@@ -226,8 +226,7 @@ public class OrderStepDefinitions {
                                                                               String string2, String string3) {
 
         int qty = Integer.parseInt(string2);
-        InventoryItem invItem = (InventoryItem) InventoryItem.getWithName(string);
-        error = CoolSuppliesFeatureSet8Controller.addItemToOrder(string, invItem, string3, qty);
+        error = CoolSuppliesFeatureSet8Controller.addItemToOrder(string, string3, qty);
     }
     /**
      * @author Zhengxuan Zhao

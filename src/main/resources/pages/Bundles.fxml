@@ -18,7 +18,7 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-        <Button fx:id="ProfileButton" layoutX="535.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#goToAccount" text="Profile" />
+        <Button fx:id="ProfileButton" layoutX="535.0" layoutY="7.0" mnemonicParsing="false" onAction="#goToAccount" onMouseClicked="#goToAccount" text="Profile" />
         <Text layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies">
             <font>
                 <Font size="14.0" />
@@ -26,22 +26,22 @@
         </Text>
         <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
             <children>
-                <Button fx:id="ItemsMenuButton" mnemonicParsing="false" onMouseClicked="#goToItems" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Items" textFill="WHITE">
+                <Button fx:id="ItemsMenuButton" mnemonicParsing="false" onAction="#goToItems" onMouseClicked="#goToItems" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Items" textFill="WHITE">
                     <font>
-                        <Font size="17.0" />
+                        <Font size="16.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
+                <Button fx:id="BundlesMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="Bundles" textFill="WHITE">
                     <font>
-                        <Font size="17.0" />
+                        <Font size="16.0" />
                     </font>
                     <effect>
                         <Glow />
                     </effect>
                 </Button>
-                <Button fx:id="NewOrderMenuButton" mnemonicParsing="false" onMouseClicked="#goToNewOrder" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
+                <Button fx:id="NewOrderMenuButton" mnemonicParsing="false" onAction="#goToNewOrder" onMouseClicked="#goToNewOrder" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
                     <font>
-                        <Font size="17.0" />
+                        <Font size="16.0" />
                     </font>
                 </Button>
             </children>

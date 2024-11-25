@@ -3,9 +3,17 @@ package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 import ca.mcgill.ecse.coolsupplies.controller.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -19,17 +27,30 @@ public class UpdateOrderWindowController implements Initializable {
     @FXML
     private ChoiceBox<String> levelChoiceBox;
 
+    @FXML
+    private Button BackButton;
+
     private TOOrder order;
     String studentName;
     String level;
 
     @FXML
-    private void updateOrder(ActionEvent event) {
+    private void updateOrder(ActionEvent event) throws IOException {
+        if (idChoiceBox.getValue() == null) {
+            showAlert("Error", "Please select an order to update.");
+            return;
+        }
+        
+        int id = Integer.parseInt(idChoiceBox.getValue());
         studentName = studentChoiceBox.getValue();
         level = levelChoiceBox.getValue();
-        int id = Integer.parseInt(idChoiceBox.getValue());
+        
+        String msg = CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
 
-        CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
+        showAlert("", msg);
+        if (msg.equals("The order has successfully been updated.")) {
+            goBack();        
+        }
     }
 
     @FXML
@@ -81,4 +102,35 @@ public class UpdateOrderWindowController implements Initializable {
             getLevel(event);
         });
     }
+
+    private void loadPage(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        AnchorPane newPage = loader.load();
+        Stage currentStage = (Stage) BackButton.getScene().getWindow();
+        currentStage.setScene(new Scene(newPage));
+    }
+
+    @FXML
+    private void goBack() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrderWindow.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        if (order == null){
+            showAlert("Error","Please select an order.");
+        }else {
+            ViewOrderWindowController viewOrderController= loader.getController();
+            Stage stage = (Stage) BackButton.getScene().getWindow();
+            viewOrderController.setCurrentOrder(CoolSuppliesFeatureSet8Controller.viewOrder(String.valueOf(order.getNumber())));
+            stage.setScene(scene);
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
 }
