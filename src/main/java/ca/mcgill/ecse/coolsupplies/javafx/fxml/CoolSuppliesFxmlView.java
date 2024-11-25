@@ -42,7 +42,7 @@ public class CoolSuppliesFxmlView extends Application {
 
         try {
             System.out.println(getClass().getResource(""));
-            var root = (Pane) FXMLLoader.load(getClass().getResource("/pages/ViewAccountsPage.fxml"));
+            var root = (Pane) FXMLLoader.load(getClass().getResource("/pages/ItemsShop.fxml"));
             var scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setMinWidth(600);

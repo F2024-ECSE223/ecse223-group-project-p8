@@ -275,10 +275,6 @@ public class BundleItemsPageController {
             if (selIndex >= 0 && selBundleItem != null) {
                 deleteBundleItem(bundleItemName, bundleName);
                 table.getItems().remove(selBundleItem);
-
-                if (table.getItems().size() <= 1) {
-                    bundlesController.setBundleDiscount(bundleName, 0); //set discount to 0 if
-                }
             }
 
         }
