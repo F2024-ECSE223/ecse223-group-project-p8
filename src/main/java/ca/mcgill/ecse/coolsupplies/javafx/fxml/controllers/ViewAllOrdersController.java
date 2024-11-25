@@ -2,203 +2,86 @@ package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet8Controller;
 import ca.mcgill.ecse.coolsupplies.controller.TOOrder;
-import ca.mcgill.ecse.coolsupplies.model.Order;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
 
 public class ViewAllOrdersController {
+
     @FXML
-    private VBox orderListVBox;
-
-//  private static int ID = 1;
-
-    private static final int ID_GAP = 20;
-    private static final int NUMBER_GAP = 80;
-    private static final int DATE_GAP = 120;
-    private static final int LEVEL_GAP = 100;
-    private static final int PARENT_GAP = 100;
-    private static final int STUDENT_GAP = 100;
-    private static final int STATUS_GAP = 80;
-    private static final int AUTHCODE_GAP = 150;
-    private static final int PENCODE_GAP = 200;
-    private static final int VIEW_GAP = 100;
-    private static final int DELETE_GAP = 100;
+    public TableView<TOOrder> orderTable;
+    @FXML
+    public TextField orderIndex;
+    @FXML
+    private TableColumn<TOOrder,String> c_status;
+    @FXML
+    private TableColumn<TOOrder,String> c_number;
+    @FXML
+    private TableColumn<TOOrder,String> c_date;
+    @FXML
+    private TableColumn<TOOrder,String> c_level;
+    @FXML
+    private TableColumn<TOOrder,String> c_parent;
+    @FXML
+    private TableColumn<TOOrder,String> c_student;
 
     public void initialize() {
-        //ID = 0;
-        populateOrders();
+        c_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        c_number.setCellValueFactory(new PropertyValueFactory<>("number"));
+        c_date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        c_level.setCellValueFactory(new PropertyValueFactory<>("level"));
+        c_parent.setCellValueFactory(new PropertyValueFactory<>("parentEmail"));
+        c_student.setCellValueFactory(new PropertyValueFactory<>("studentName"));
 
+        populateOrders();
     }
 
     public void populateOrders() {
-        adjustContentWidth();
-        // Fetch the list of orders from the OrderController
+        ObservableList<TOOrder> orderList = FXCollections.observableArrayList();
+
         List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
+        orderList.addAll(orders);
 
-        // Clear the VBox to avoid duplication if called multiple times
-        orderListVBox.getChildren().clear();
-
-        orderListVBox.getChildren().add(createHeaderRow());
-        // Iterate through the orders and add them to the VBox
-        for (TOOrder toOrder : orders) {
-            Order order = Order.getWithNumber(toOrder.getNumber());
-            HBox orderRow = createOrderRow(order);
-            orderListVBox.getChildren().add(orderRow);
-        }
-    }
-
-    private HBox createOrderRow(Order order) {
-        // Create an HBox for each order
-        HBox orderRow = new HBox();
-        orderRow.setSpacing(10); // Adjust spacing between columns
-
-        // Create labels for each column
-//        Label id = new Label(String.valueOf(ID));
-//        id.setPrefWidth(ID_GAP);
-        Label numberLabel = new Label(String.valueOf(order.getNumber()));
-        numberLabel.setPrefWidth(NUMBER_GAP);
-        Label dateLabel = new Label(order.getDate().toString());
-        dateLabel.setPrefWidth(DATE_GAP);
-        Label levelLabel = new Label(order.getLevel().toString());
-        levelLabel.setPrefWidth(LEVEL_GAP);
-        Label parentEmailLabel = new Label(order.getParent().getEmail());
-        parentEmailLabel.setPrefWidth(PARENT_GAP);
-        Label studentNameLabel = new Label(order.getStudent().getName());
-        studentNameLabel.setPrefWidth(STUDENT_GAP);
-        Label statusLabel = new Label(order.getStatus().toString());
-        statusLabel.setPrefWidth(STATUS_GAP);
-        Label authCodeLabel = new Label(order.getAuthorizationCode());
-        authCodeLabel.setPrefWidth(AUTHCODE_GAP);
-        Label penaltyAuthCodeLabel = new Label(order.getPenaltyAuthorizationCode());
-        penaltyAuthCodeLabel.setPrefWidth(PENCODE_GAP);
-        Button viewButton = new Button("view");
-        viewButton.setPrefWidth(VIEW_GAP);
-//        Button cancelButton = new Button("cancel");
-//        cancelButton.setPrefWidth(DELETE_GAP);
-
-        // Set view button action
-        viewButton.setOnAction(event -> {
-            try {
-                viewOrder(event, order);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-//        // Set view button action
-//        cancelButton.setOnAction(event -> {
-//            try {
-//                deleteOrder(event,order);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-
-       // ID = ID + 1;
-
-        // Add all labels to the HBox
-        orderRow.getChildren().addAll(
-                statusLabel,
-                //id,
-                numberLabel,
-                dateLabel,
-                levelLabel,
-                parentEmailLabel,
-                studentNameLabel,
-                viewButton
-                //cancelButton
-        );
-
-        return orderRow;
-    }
-
-    private HBox createHeaderRow() {
-        // Create an HBox for the header
-        HBox headerRow = new HBox();
-        headerRow.setSpacing(10); // Adjust spacing between columns
-        headerRow.setStyle("-fx-font-weight: bold; -fx-background-color: #f0f0f0;"); // Optional styling
-
-        // Create labels for each column header
-//        Label id = new Label("ID");
-//        id.setPrefWidth(ID_GAP);
-        Label numberLabel = new Label("Number");
-        numberLabel.setPrefWidth(NUMBER_GAP);
-        Label dateLabel = new Label("Date");
-        dateLabel.setPrefWidth(DATE_GAP);
-        Label levelLabel = new Label("Level");
-        levelLabel.setPrefWidth(LEVEL_GAP);
-        Label parentEmailLabel = new Label("Parent Email");
-        parentEmailLabel.setPrefWidth(PARENT_GAP);
-        Label studentNameLabel = new Label("Student Name");
-        studentNameLabel.setPrefWidth(STUDENT_GAP);
-        Label statusLabel = new Label("Status");
-        statusLabel.setPrefWidth(STATUS_GAP);
-        Label viewLabel = new Label("+");
-        viewLabel.setPrefWidth(VIEW_GAP);
-//        Label cancelLabel = new Label("+");
-//        cancelLabel.setPrefWidth(DELETE_GAP);
-
-
-        // Add all labels to the HBox
-        headerRow.getChildren().addAll(
-                statusLabel,
-                //id,
-                numberLabel,
-                dateLabel,
-                levelLabel,
-                parentEmailLabel,
-                studentNameLabel,
-                viewLabel
-                //cancelLabel
-        );
-
-        return headerRow;
-    }
-
-    private void adjustContentWidth() {
-        double totalWidth = ID_GAP+NUMBER_GAP+DATE_GAP+LEVEL_GAP+PARENT_GAP+STATUS_GAP+STATUS_GAP+VIEW_GAP; // Sum of all column widths
-        orderListVBox.setPrefWidth(totalWidth); // Set the total width of the VBox
+        orderTable.setItems(orderList);
     }
 
     @FXML
-    private void viewOrder(ActionEvent event, Order order) throws Exception {
+    private void viewOrder(ActionEvent event) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrderWindow.fxml"));
         Scene scene = new Scene(loader.load());
 
-//        ViewOrderWindowController viewOrderController= loader.getController();
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-//        viewOrderController.setCurrentOrder(order);
-        stage.setScene(scene);
-    }
-
-    @FXML
-    private void deleteOrder(ActionEvent event, Order order) throws IOException {
-        CoolSuppliesFeatureSet8Controller.cancelOrder(String.valueOf(order.getNumber()));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewAllOrders.fxml"));
-        Scene scene = new Scene(loader.load());
-
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
+        String index = orderIndex.getText();
+        TOOrder order = CoolSuppliesFeatureSet8Controller.viewOrder(index);
+        if (order == null){
+            showAlert("","error: order does not exist.");
+        }else {
+            ViewOrderWindowController viewOrderController= loader.getController();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            viewOrderController.setCurrentOrder(order);
+            stage.setScene(scene);
+        }
     }
 
     @FXML
     private void viewAccounts() throws IOException {
-        loadPage("/pages/AccountPage.fxml");
+        loadPage("/pages/ViewAccountsPage.fxml");
     }
 
     @FXML
     private void goBack() throws IOException {
-        loadPage("/pages/UpdateItemPage.fxml");
+        loadPage("/pages/ItemsShop.fxml");
     }
 
     @FXML
@@ -208,7 +91,7 @@ public class ViewAllOrdersController {
 
     @FXML
     private void viewAssociations() throws IOException {
-        loadPage("/pages/ViewParentsPage.fxml");
+        loadPage("/pages/ParentStudentPage.fxml");
     }
 
     @FXML
@@ -218,24 +101,27 @@ public class ViewAllOrdersController {
 
     @FXML
     private void viewSchool() throws IOException {
-        loadPage("/pages/ViewSchool.fxml");
+        loadPage("/pages/GradePage.fxml");
     }
 
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     // load start a new Order page
     @FXML
     private void startOrder() throws IOException {
-        loadPage("/pages/ViewSchool.fxml");
+        loadPage("/pages/StartOrderWindow.fxml");
     }
 
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Scene scene = new Scene(loader.load());
-        Stage currentStage = (Stage) orderListVBox.getScene().getWindow();
+        Stage currentStage = (Stage) orderTable.getScene().getWindow();
         currentStage.setScene(scene);
     }
-
-
-
-
 }

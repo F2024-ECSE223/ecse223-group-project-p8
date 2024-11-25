@@ -50,19 +50,19 @@
       <ChoiceBox fx:id="levelChoiceBox" layoutX="333.0" layoutY="257.0" prefHeight="26.0" prefWidth="95.0" />
       <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
          <children>
-            <Button fx:id="ItemsMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Items" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#goToItems" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Items" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="BundlesMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#goToBundles" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46; -fx-cursor: #d94f00;" text="Bundles" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="ShopMenuButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
+            <Button fx:id="NewOrderButton" mnemonicParsing="false" onAction="#goToNewOrder" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: #0e2c46;" text="New Order" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font size="16.0" />
                </font>
                <effect>
                   <Glow />

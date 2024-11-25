@@ -11,23 +11,39 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ViewOrderWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ViewOrderWindowController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="600.0">
+      <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
          <items>
             <Button mnemonicParsing="false" onMouseClicked="#goBack" text="Back" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
          </items>
       </ToolBar>
-      <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #fc9d01;">
+      <VBox layoutY="40.0" prefHeight="361.0" prefWidth="120.0" style="-fx-background-color: #0e2c46;">
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Accounts" />
-            <Button mnemonicParsing="false" onMouseClicked="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" />
-            <Button mnemonicParsing="false" onMouseClicked="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" />
-            <Button mnemonicParsing="false" onMouseClicked="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Parent - Student" />
-            <Button mnemonicParsing="false" onMouseClicked="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" />
+            <Button mnemonicParsing="false" onMouseClicked="#viewAccounts" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Accounts" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewOrders" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Orders" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewStudents" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Students" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewAssociations" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="Parent - Student" textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewSchool" prefHeight="54.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-cursor: #d94f00;" text="School" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
          </children>
       </VBox>
       <Label layoutX="120.0" layoutY="40.0" text="Order Details:" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="40.0">
@@ -35,7 +51,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </Label>
-      <ScrollPane layoutX="120.0" layoutY="67.0" prefHeight="284.0" prefWidth="481.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0">
+      <ScrollPane layoutX="120.0" layoutY="67.0" prefHeight="284.0" prefWidth="480.0">
          <content>
             <GridPane hgap="10.0" vgap="5.0">
                <columnConstraints>
@@ -82,7 +98,7 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <ButtonBar prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="0.0">
+      <ButtonBar layoutX="120.0" layoutY="360.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
             <Button fx:id="updateOrderButton" mnemonicParsing="false" onAction="#updateOrderClicked" text="Update" />
             <Button fx:id="cancelOrderButton" mnemonicParsing="false" onAction="#cancelOrderClicked" text="Cancel" />

@@ -1,15 +1,21 @@
 package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import ca.mcgill.ecse.coolsupplies.application.CoolSuppliesApplication;
 import ca.mcgill.ecse.coolsupplies.controller.CoolSuppliesFeatureSet5Controller;
 import ca.mcgill.ecse.coolsupplies.model.CoolSupplies;
 import ca.mcgill.ecse.coolsupplies.model.Item;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
+/**
+ * This class provides the controller methods for the Add Bundle Item Dialog on the BundleItems Page
+ *
+ * @author Snigdha Sen
+ */
 
 public class AddBundleItemDialogController {
 
@@ -35,14 +41,32 @@ public class AddBundleItemDialogController {
 
     private String selBundleName;
 
+    //TO CONNECT WITH OLD PAGE/ SCENE, BUNDLE ITEMS PAGE ----------------------------------------------------
+    /**
+     * Sets the selected bundle item's name global variable from the previous "Bundle Items" controller
+     *
+     * @param name the name of the bundle item the user wants to add to the bundle
+     */
     public void setBundleName(String name){
         this.selBundleName = name;
     }
+    //-------------------------------------------------------------------------------------------------------
 
+
+    //FINISH AND CANCEL BUTTON ACTIONS
+
+    /**
+     * Closes the dialog box without modifying the bundle item in question
+     *
+     */
     private void cancel(){
         dialogPane.getScene().getWindow().hide();
     }
 
+    /**
+     * Adds the bundle item to the bundle and to the table view from the previous page when the finish button is clicked and closes the dialog box
+     *
+     */
     private void finish(){
         String lvl = purchaseLvlDropDown.getValue();
         Integer qty = qtySpinner.getValue();

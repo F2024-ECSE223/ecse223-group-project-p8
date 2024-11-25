@@ -3,12 +3,13 @@ package ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers;
 import ca.mcgill.ecse.coolsupplies.controller.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
@@ -31,6 +32,9 @@ public class StartOrderWindowController implements Initializable {
     @FXML
     private DatePicker datePicker;
 
+    @FXML
+    private Button NewOrderButton;
+
     private int id;
     private String parentEmail;
     private static final List<String> levels = Arrays.asList("Mandatory", "Recommended", "Optional");
@@ -41,11 +45,13 @@ public class StartOrderWindowController implements Initializable {
         String studentName = studentChoiceBox.getValue();
         Date date = Date.valueOf(datePicker.getValue());
         String level = levelChoiceBox.getValue();
+
         if (studentName != null && parentEmail != null && level != null) {
             CoolSuppliesFeatureSet6Controller.startOrder(id, date, level, parentEmail, studentName);
 
             ids.add(id);
             id += 1;
+
             idLabel.setText(String.valueOf(id));
             parentChoiceBox.setValue(null);
             studentChoiceBox.setValue(null);
@@ -57,6 +63,8 @@ public class StartOrderWindowController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("A new order has been successfully created and added to the system.");
             alert.showAndWait();
+
+            reloadOrders();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Selection Incomplete");
@@ -66,10 +74,6 @@ public class StartOrderWindowController implements Initializable {
         }
     }
 
-    @FXML
-    private void goToAccount() {
-
-    }
 
     private void getParent(ActionEvent event) {
         parentEmail = parentChoiceBox.getValue();
@@ -92,18 +96,57 @@ public class StartOrderWindowController implements Initializable {
             parentNames.add(parent.getEmail());
         }
 
-        List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
-        for (TOOrder order : orders) {
-            ids.add(order.getNumber());
-        }
-        Collections.sort(ids);
-        id = ids.get(ids.size() - 1) + 1;
+        reloadOrders();
 
-        idLabel.setText(String.valueOf(id));
         parentChoiceBox.getItems().addAll(parentNames);
         levelChoiceBox.getItems().addAll(levels);
         datePicker.setValue(LocalDate.now());
 
         parentChoiceBox.setOnAction(this::getParent);
+    }
+
+    private void reloadOrders() {
+        List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
+        ids.clear();
+        for (TOOrder order : orders) {
+            ids.add(order.getNumber());
+        }
+        Collections.sort(ids);
+
+        if (!ids.isEmpty()) {
+            id = ids.get(ids.size() - 1) + 1;
+        } else {
+            id = 1;
+        }
+
+        idLabel.setText(String.valueOf(id));
+    }
+
+
+    private void loadPage(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) NewOrderButton.getScene().getWindow();
+        stage.setScene(scene);
+    }
+
+    @FXML
+    void goToAccount() throws IOException {
+        loadPage("/pages/ViewAccountsPage.fxml");
+    }
+
+    @FXML
+    void goToItems() throws IOException {
+        loadPage("/pages/ItemsShop.fxml");
+    }
+
+    @FXML
+    void goToBundles() throws IOException {
+        loadPage("/pages/Bundles.fxml");
+    }
+
+    @FXML
+    private void goToNewOrder() throws IOException{
+        loadPage("/pages/StartOrderWindow.fxml");
     }
 }
