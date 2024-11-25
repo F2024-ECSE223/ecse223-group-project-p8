@@ -54,15 +54,23 @@ public class ParentStudentPageController implements Initializable {
     private void addStudentToParent(ActionEvent event) {
         selectedParent = parentChoiceBox.getValue();
         if (selecteParentStudent != null && selectedParent != null) {
-            msg = CoolSuppliesFeatureSet6Controller.addStudentToParent(selecteParentStudent.studentName, selectedParent);
-            selecteParentStudent.setParentEmail(selectedParent);
-            parentStudentTable.refresh();
+            if (selecteParentStudent.parentEmail == null) {
+                msg = CoolSuppliesFeatureSet6Controller.addStudentToParent(selecteParentStudent.studentName, selectedParent);
+                selecteParentStudent.setParentEmail(selectedParent);
+                parentStudentTable.refresh();
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Add Student");
-            alert.setHeaderText(null);
-            alert.setContentText(msg);
-            alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Add Student");
+                alert.setHeaderText(null);
+                alert.setContentText(msg);
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Add Student Failed");
+                alert.setHeaderText(null);
+                alert.setContentText("student already assigned to parent");
+                alert.showAndWait();
+            }
         }
     }
 
