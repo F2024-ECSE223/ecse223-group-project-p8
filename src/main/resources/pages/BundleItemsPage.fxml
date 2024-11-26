@@ -63,10 +63,7 @@
          </font>
       </Label>
       <Button fx:id="ProfileButton" layoutX="535.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#goToProfilePage" text="Profile" />
-      <Text layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Text>
+      <Text layoutX="55.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CoolSupplies" />
+      <Button fx:id="BackButton" layoutX="8.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#goBack" text="Back" />
     </children>
 </AnchorPane>

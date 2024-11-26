@@ -45,6 +45,9 @@ public class BundleItemsPageController {
     private Button ProfileButton;
 
     @FXML
+    private Button BackButton;
+
+    @FXML
     private Button RemoveButton;
 
     @FXML
@@ -191,6 +194,8 @@ public class BundleItemsPageController {
         loadPage("/pages/StartOrderWindow.fxml");
     }
 
+
+
     /**
      * Go to the Profile Section (Account Page) by clicking on the Profile button
      *
@@ -199,6 +204,16 @@ public class BundleItemsPageController {
     @FXML
     void goToProfilePage() throws IOException {
         loadPage("/pages/ViewAccountsPage.fxml");
+    }
+
+    /**
+     * Go to the back to the Bundles page
+     *
+     * @throws IOException If there is an error loading the file
+     */
+    @FXML
+    void goBack() throws IOException {
+        loadPage("/pages/Bundles.fxml");
     }
 
     @FXML
