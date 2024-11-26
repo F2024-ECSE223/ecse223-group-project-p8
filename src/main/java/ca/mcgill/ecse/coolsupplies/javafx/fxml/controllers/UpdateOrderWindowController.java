@@ -34,22 +34,22 @@ public class UpdateOrderWindowController implements Initializable {
     String studentName;
     String level;
 
+    public void setCurrentOrder(TOOrder order) {
+        Integer selOrderID = order.getNumber();
+        idChoiceBox.setValue(String.valueOf(selOrderID));
+    }
+
     @FXML
     private void updateOrder(ActionEvent event) throws IOException {
-        if (idChoiceBox.getValue() == null) {
-            showAlert("Error", "Please select an order to update.");
-            return;
-        }
-        
         int id = Integer.parseInt(idChoiceBox.getValue());
         studentName = studentChoiceBox.getValue();
         level = levelChoiceBox.getValue();
-        
+
         String msg = CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
 
         showAlert("", msg);
         if (msg.equals("The order has successfully been updated.")) {
-            goBack();        
+            goBack();
         }
     }
 
@@ -115,14 +115,12 @@ public class UpdateOrderWindowController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrderWindow.fxml"));
         Scene scene = new Scene(loader.load());
 
-        if (order == null){
-            showAlert("Error","Please select an order.");
-        }else {
-            ViewOrderWindowController viewOrderController= loader.getController();
-            Stage stage = (Stage) BackButton.getScene().getWindow();
-            viewOrderController.setCurrentOrder(CoolSuppliesFeatureSet8Controller.viewOrder(String.valueOf(order.getNumber())));
-            stage.setScene(scene);
-        }
+
+        ViewOrderWindowController viewOrderController= loader.getController();
+        Stage stage = (Stage) BackButton.getScene().getWindow();
+        viewOrderController.setCurrentOrder(CoolSuppliesFeatureSet8Controller.viewOrder(String.valueOf(order.getNumber())));
+        stage.setScene(scene);
+
     }
 
     private void showAlert(String title, String message) {
@@ -132,5 +130,5 @@ public class UpdateOrderWindowController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
+
 }
