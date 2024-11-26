@@ -18,14 +18,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
-* Controller class for viewing and managing an individual order.
-*
-* @author Jiatian Liu
-*/
+ * Controller class for viewing and managing an individual order.
+ *
+ * @author Jiatian Liu
+ */
 public class ViewOrderWindowController {
 
     @FXML private Label authorizationCodeLabel;
-    
+
     @FXML private Label dateLabel;
 
     @FXML private Label itemsLabel;
@@ -55,26 +55,26 @@ public class ViewOrderWindowController {
     @FXML private Button updateOrderButton;
 
     @FXML private TOOrder currentOrder;
-    
+
     @FXML
     public void initialize() {
     }
 
     /**
-    * Sets the current order to be displayed and updates the UI.
-    *
-    * @author Jiatian Liu
-    */
+     * Sets the current order to be displayed and updates the UI.
+     *
+     * @author Jiatian Liu
+     */
     public void setCurrentOrder(TOOrder order) {
         this.currentOrder = order;
         showOrderDetails();
     }
 
     /**
-    * Displays the details of the current order on the UI.
-    *
-    * @author Jiatian Liu
-    */
+     * Displays the details of the current order on the UI.
+     *
+     * @author Jiatian Liu
+     */
     @FXML
     private void showOrderDetails() {
         if (currentOrder != null) {
@@ -131,10 +131,10 @@ public class ViewOrderWindowController {
     }
 
     /**
-    * Formats the list of order items for display.
-    *
-    * @author Jiatian Liu
-    */
+     * Formats the list of order items for display.
+     *
+     * @author Jiatian Liu
+     */
     @FXML
     private String getFormattedItems() {
         StringBuilder formattedItems = new StringBuilder();
@@ -206,10 +206,10 @@ public class ViewOrderWindowController {
     }
 
     /**
-    * Cancels the current order and navigates to the orders page if successful.
-    *
-    * @author Jiatian Liu
-    */
+     * Cancels the current order and navigates to the orders page if successful.
+     *
+     * @author Jiatian Liu
+     */
     @FXML
     void cancelOrderClicked(ActionEvent event) throws IOException {
         String msg = CoolSuppliesFeatureSet8Controller.cancelOrder(String.valueOf(currentOrder.getNumber()));
@@ -220,10 +220,10 @@ public class ViewOrderWindowController {
     }
 
     /**
-    * Navigates to the Edit Order Items page.
-    *
-    * @author Jiatian Liu
-    */
+     * Navigates to the Edit Order Items page.
+     *
+     * @author Jiatian Liu
+     */
     @FXML
     void editItemsClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/EditOrderItemsPage.fxml"));
@@ -237,10 +237,10 @@ public class ViewOrderWindowController {
     }
 
     /**
-    * Opens the payment window.
-    *
-    * @author Jiatian Liu
-    */
+     * Opens the payment window.
+     *
+     * @author Jiatian Liu
+     */
     @FXML
     void payOrderClicked(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/SetPenaltyCodes.fxml"));
@@ -248,7 +248,7 @@ public class ViewOrderWindowController {
 
         Stage dialogStage = new Stage();
         dialogStage.setTitle("Pay for Order");
-        dialogStage.initModality(Modality.APPLICATION_MODAL); 
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
         dialogStage.setScene(scene);
 
         SetPenaltyCodesController controller = loader.getController();
@@ -259,10 +259,10 @@ public class ViewOrderWindowController {
     }
 
     /**
-    * Marks the order as picked up.
-    *
-    * @author Jiatian Liu
-    */
+     * Marks the order as picked up.
+     *
+     * @author Jiatian Liu
+     */
     @FXML
     void pickUpOrderClicked(ActionEvent event) {
         String msg = CoolSuppliesFeatureSet8Controller.pickUpOrder(String.valueOf(currentOrder.getNumber()));
@@ -272,13 +272,20 @@ public class ViewOrderWindowController {
     }
 
     /**
-    * Navigates to the Update Order page.
-    *
-    * @author Jiatian Liu
-    */
+     * Navigates to the Update Order page.
+     *
+     * @author Jiatian Liu
+     */
     @FXML
     void updateOrderClicked(ActionEvent event) throws IOException {
-        loadPage("/pages/UpdateOrderWindow.fxml");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/UpdateOrderWindow.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        UpdateOrderWindowController controller = loader.getController();
+        controller.setCurrentOrder(currentOrder);
+
+        Stage stage = (Stage) updateOrderButton.getScene().getWindow();
+        stage.setScene(scene);
     }
-    
+
 }
