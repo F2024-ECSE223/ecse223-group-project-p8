@@ -47,19 +47,15 @@ public class UpdateOrderWindowController implements Initializable {
 
     @FXML
     private void updateOrder(ActionEvent event) throws IOException {
-        try {
-            int id = Integer.parseInt(idLabel.getText());
-            studentName = studentChoiceBox.getValue();
-            level = levelChoiceBox.getValue();
+        int id = Integer.parseInt(idLabel.getText());
+        studentName = studentChoiceBox.getValue();
+        level = levelChoiceBox.getValue();
 
-            String msg = CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
+        String msg = CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
 
-            showAlert("", msg);
-            if (msg.equals("The order has successfully been updated.")) {
-                goBack();
-            }
-        } catch (Exception e) {
-            showAlert("Error", "Failed to update the order. Please try again.");
+        showAlert("", msg);
+        if (msg.equals("The order has successfully been updated.")) {
+            goBack();
         }
     }
 
