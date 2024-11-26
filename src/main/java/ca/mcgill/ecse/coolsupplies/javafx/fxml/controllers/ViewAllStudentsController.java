@@ -30,8 +30,8 @@ public class ViewAllStudentsController {
     private TableView<TOStudent> studentTable;
     @FXML
     private TableColumn<TOStudent, String> c_name;
-    @FXML
-    private TableColumn<TOStudent, String> c_grade;
+//    @FXML
+//    private TableColumn<TOStudent, String> c_grade;
     @FXML
     private TableColumn<TOStudent, Void> c_edit;
     @FXML
@@ -42,7 +42,7 @@ public class ViewAllStudentsController {
      */
     public void initialize() {
         c_name.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        c_grade.setCellValueFactory(new PropertyValueFactory<>("GradeLevel"));
+        //c_grade.setCellValueFactory(new PropertyValueFactory<>("GradeLevel"));
         populateStudents();
     }
 

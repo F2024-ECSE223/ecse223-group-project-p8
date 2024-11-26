@@ -56,7 +56,7 @@
                 </columnResizePolicy>
                 <columns>
                     <TableColumn fx:id="c_name" prefWidth="75.0" text="Name" />
-                    <TableColumn fx:id="c_grade" prefWidth="75.0" text="Grade" />
+<!--                    <TableColumn fx:id="c_grade" prefWidth="75.0" text="Grade" />-->
                     <TableColumn fx:id="c_edit" prefWidth="75.0" text="Edit" />
                 </columns>
             </TableView>
