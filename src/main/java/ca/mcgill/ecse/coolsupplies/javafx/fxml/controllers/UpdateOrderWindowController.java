@@ -10,7 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.util.*;
 
 public class UpdateOrderWindowController implements Initializable {
     @FXML
-    private ChoiceBox<String> idChoiceBox;
+    private Label idLabel;
 
     @FXML
     private ChoiceBox<String> studentChoiceBox;
@@ -31,31 +31,40 @@ public class UpdateOrderWindowController implements Initializable {
     private Button BackButton;
 
     private TOOrder order;
-    String studentName;
-    String level;
+    private String studentName;
+    private String level;
 
-    public void setCurrentOrder(TOOrder order) {
-        Integer selOrderID = order.getNumber();
-        idChoiceBox.setValue(String.valueOf(selOrderID));
+    public void setCurrentOrder(TOOrder selOrder) {
+        if (selOrder == null) {
+            showAlert("Error", "Order not found");
+            return;
+        }
+        order = selOrder;
+        idLabel.setText(String.valueOf(order.getNumber()));
+        getStudent(order);
+        getLevel(order);
     }
 
     @FXML
     private void updateOrder(ActionEvent event) throws IOException {
-        int id = Integer.parseInt(idChoiceBox.getValue());
-        studentName = studentChoiceBox.getValue();
-        level = levelChoiceBox.getValue();
+        try {
+            int id = Integer.parseInt(idLabel.getText());
+            studentName = studentChoiceBox.getValue();
+            level = levelChoiceBox.getValue();
 
-        String msg = CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
+            String msg = CoolSuppliesFeatureSet8Controller.updateOrder(level, id, studentName);
 
-        showAlert("", msg);
-        if (msg.equals("The order has successfully been updated.")) {
-            goBack();
+            showAlert("", msg);
+            if (msg.equals("The order has successfully been updated.")) {
+                goBack();
+            }
+        } catch (Exception e) {
+            showAlert("Error", "Failed to update the order. Please try again.");
         }
     }
 
     @FXML
-    private void getStudent(ActionEvent event) {
-
+    private void getStudent(TOOrder order) {
         if (order != null) {
             List<TOStudent> students = CoolSuppliesFeatureSet6Controller.getStudentsOfParent(order.getParentEmail());
             List<String> studentNames = new ArrayList<>();
@@ -73,8 +82,7 @@ public class UpdateOrderWindowController implements Initializable {
     }
 
 
-    private void getLevel(ActionEvent event) {
-
+    private void getLevel(TOOrder order) {
         if (order != null) {
             level = order.getLevel();
             levelChoiceBox.setValue(level);
@@ -83,31 +91,8 @@ public class UpdateOrderWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
-        List<String> ids = new ArrayList<>();
         List<String> levels = Arrays.asList("Mandatory", "Recommended", "Optional");
-
-        for (TOOrder order : orders) {
-            ids.add(String.valueOf(order.getNumber()));
-        }
-
-        Collections.sort(ids);
-        idChoiceBox.getItems().addAll(ids);
-
         levelChoiceBox.getItems().addAll(levels);
-
-        idChoiceBox.setOnAction(event -> {
-            order = CoolSuppliesFeatureSet8Controller.viewOrder(idChoiceBox.getValue());
-            getStudent(event);
-            getLevel(event);
-        });
-    }
-
-    private void loadPage(String fxmlPath) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        AnchorPane newPage = loader.load();
-        Stage currentStage = (Stage) BackButton.getScene().getWindow();
-        currentStage.setScene(new Scene(newPage));
     }
 
     @FXML
@@ -115,12 +100,10 @@ public class UpdateOrderWindowController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/ViewOrderWindow.fxml"));
         Scene scene = new Scene(loader.load());
 
-
         ViewOrderWindowController viewOrderController= loader.getController();
         Stage stage = (Stage) BackButton.getScene().getWindow();
         viewOrderController.setCurrentOrder(CoolSuppliesFeatureSet8Controller.viewOrder(String.valueOf(order.getNumber())));
         stage.setScene(scene);
-
     }
 
     private void showAlert(String title, String message) {
