@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ViewOrderWindowController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.coolsupplies.javafx.fxml.controllers.ViewOrderWindowController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #fea71b;">
          <items>
@@ -56,7 +56,7 @@
             <GridPane hgap="10.0" vgap="5.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="255.0" minWidth="10.0" prefWidth="171.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="5.0" prefWidth="365.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="5.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -81,16 +81,16 @@
                   <Label text="Penalty Authorization Code:" GridPane.rowIndex="7" />
                   <Label text="Items (quantity, item name, &#10;bundle name, price, discount):&#10;&#10;" GridPane.rowIndex="8" />
                   <Label text="Total Price:" GridPane.rowIndex="9" />
-                  <Label fx:id="parentEmailLabel" prefHeight="17.0" prefWidth="387.0" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-                  <Label fx:id="studentNameLabel" prefHeight="17.0" prefWidth="401.0" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-                  <Label fx:id="statusLabel" prefHeight="17.0" prefWidth="405.0" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-                  <Label fx:id="numberLabel" prefHeight="17.0" prefWidth="434.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label fx:id="dateLabel" prefHeight="17.0" prefWidth="428.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label fx:id="levelLabel" prefHeight="17.0" prefWidth="447.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <Label fx:id="authorizationCodeLabel" prefHeight="17.0" prefWidth="476.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <Label fx:id="penaltyAuthorizationCodeLabel" prefHeight="17.0" prefWidth="490.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <Label fx:id="parentEmailLabel" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+                  <Label fx:id="studentNameLabel" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+                  <Label fx:id="statusLabel" text="Label" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                  <Label fx:id="numberLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="dateLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label fx:id="levelLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="authorizationCodeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label fx:id="penaltyAuthorizationCodeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <Label fx:id="itemsLabel" text="Label&#10;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS" />
-                  <Label fx:id="totalPriceLabel" prefHeight="17.0" prefWidth="536.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <Label fx:id="totalPriceLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -98,7 +98,7 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <ButtonBar layoutX="120.0" layoutY="360.0" prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar buttonMinWidth="75.0" layoutX="120.0" layoutY="360.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
             <Button fx:id="updateOrderButton" mnemonicParsing="false" onAction="#updateOrderClicked" text="Update" />
             <Button fx:id="cancelOrderButton" mnemonicParsing="false" onAction="#cancelOrderClicked" text="Cancel" />

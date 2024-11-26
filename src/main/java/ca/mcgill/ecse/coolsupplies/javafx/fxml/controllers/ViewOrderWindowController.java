@@ -145,15 +145,16 @@ public class ViewOrderWindowController {
         }
 
         for (TOOrderItem item : items) {
-            formattedItems.append(item.getQuantity())
-                    .append(", ")
-                    .append(item.getItemName() != null ? item.getItemName() : " ")
-                    .append(", ")
-                    .append(item.getGradeBundleName() != null ? item.getGradeBundleName() : " ")
-                    .append(", $")
+            formattedItems.append("qty: ")
+                    .append(item.getQuantity())
+                    .append(", item name: ")
+                    .append(item.getItemName() != null ? item.getItemName() : "")
+                    .append(", bundle: ")
+                    .append(item.getGradeBundleName() != null ? item.getGradeBundleName() : "")
+                    .append(", price: $")
                     .append(item.getPrice())
-                    .append(", ")
-                    .append(item.getDiscount() != null ? item.getDiscount() : " ")
+                    .append(", discount: ")
+                    .append(item.getDiscount() != null ? item.getDiscount() : "")
                     .append("\n");
         }
 
