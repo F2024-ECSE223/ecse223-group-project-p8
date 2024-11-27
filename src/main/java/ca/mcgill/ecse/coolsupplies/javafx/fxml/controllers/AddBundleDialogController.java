@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 /**
- * This class provides the controller methods for the Add Bundle Dialog Box on the Bundles Page
+ * This class provides the controller methods for the Add Bundle Dialog on the Bundles Page.
  *
  * @author Jyothsna Seema
  */
@@ -38,8 +38,14 @@ public class AddBundleDialogController {
     @FXML
     private Spinner<Integer> discountSpinner;
 
+    /**
+     * (Cancel Button) Discards the current population of the fields and closes the dialog window.
+     */
     private void cancel(){dialogPane.getScene().getWindow().hide();}
 
+    /**
+     * (Finish Button) Finalizes the fields entered for adding a new bundle and adds that bundle to the system in the backend.
+     */
     private void finish(){
         String grade = gradeDropDown.getValue();
         Integer discount = discountSpinner.getValue();
@@ -55,6 +61,9 @@ public class AddBundleDialogController {
         }
     }
 
+    /**
+     * Initializes the controller by setting up the dropdown, spinner, text field and the finish and cancel buttons.
+     */
     @FXML
     void initialize() {
         assert bundleNameTextField != null : "fx:id=\"bundleNameTextField\" was not injected: check your FXML file 'AddBundleDialog.fxml'.";

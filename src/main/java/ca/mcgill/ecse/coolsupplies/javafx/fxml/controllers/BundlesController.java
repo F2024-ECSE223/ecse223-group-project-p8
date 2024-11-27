@@ -70,7 +70,9 @@ public class BundlesController {
     @FXML
     private TableView<TOGradeBundle> table;
 
-    // method that sets the discount of a bundle
+    /**
+     * Method that sets the discount of a bundle.
+     */
     public void setBundleDiscount() {
         //set discount 0 if single-item or empty bundle
         List<GradeBundle> bList = coolSupplies.getBundles();
@@ -81,9 +83,12 @@ public class BundlesController {
         }
     }
 
-
-
-    // helper method for loading pages
+    /**
+     * Loads a new page into the current stage.
+     *
+     * @param fxmlPath the path to the fxml page to load.
+     * @throws IOException if the FXML file cannot be loaded.
+     */
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Scene scene = new Scene(loader.load());
@@ -91,6 +96,11 @@ public class BundlesController {
         stage.setScene(scene);
     }
 
+    /**
+     * Handles the loading of the AddBundle Dialog Pane for the selected Bundle from the table.
+     *
+     * @throws IOException if the FXML file cannot be loaded.
+     */
     @FXML
     void goToAddBundleDialog() throws IOException {
         String fxmlPath = "/pages/AddBundleDialog.fxml";
@@ -104,6 +114,11 @@ public class BundlesController {
         updateTable();
     }
 
+    /**
+     * Handles the loading of the EditBundle Dialog Pane for the selected Bundle from the table.
+     *
+     * @throws IOException if the FXML file cannot be loaded.
+     */
     @FXML
     void goToEditBundleDialog() throws IOException {
         String fxmlPath = "/pages/EditBundleDialog.fxml";
@@ -137,6 +152,9 @@ public class BundlesController {
 
     }
 
+    /**
+     * Initializes the controller by setting up the table columns and populating the table with Bundle data.
+     */
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
 
@@ -157,6 +175,9 @@ public class BundlesController {
         updateTable();
     }
 
+    /**
+     * Populates and Updates the Bundles table with data fetched from the backend.
+     */
     private void updateTable() {
         setBundleDiscount();
 
@@ -176,6 +197,9 @@ public class BundlesController {
         }
     }
 
+    /**
+     * Removes the bundle selected from the Bundles Table. (Remove Bundle button)
+     */
     @FXML
     public void removeSelectedBundle() {
         try {
@@ -200,7 +224,11 @@ public class BundlesController {
         }
     }
 
-    // handle "Manage Items" button
+    /**
+     * Navigates to the BundleItems page (Manage Items button).
+     *
+     * @throws IOException if the FXML file cannot be loaded.
+     */
     @FXML
     private void goToBundleItems() throws IOException {
         TOGradeBundle selBundle = table.getSelectionModel().getSelectedItem();
@@ -227,17 +255,31 @@ public class BundlesController {
         }
     }
 
-    // handle menu buttons
+    /**
+     * Navigates to the View Accounts page (Profile button).
+     *
+     * @throws IOException if the FXML file cannot be loaded.
+     */
     @FXML
     void goToAccount() throws IOException {
         loadPage("/pages/ViewAccountsPage.fxml");
     }
 
+    /**
+     * Navigates to the Items page. (Items button on menu)
+     *
+     * @throws IOException if the FXML file cannot be loaded.
+     */
     @FXML
     void goToItems() throws IOException {
         loadPage("/pages/ItemsShop.fxml");
     }
 
+    /**
+     * Navigates to the New Order page. (New Order button on menu)
+     *
+     * @throws IOException if the FXML file cannot be loaded.
+     */
     @FXML
     private void goToNewOrder() throws IOException{
         loadPage("/pages/StartOrderWindow.fxml");

@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 /**
- * This class provides the controller methods for the Edit Bundle Dialog Box on the Bundles Page
+ * This class provides the controller methods for the Edit Bundle Dialog on the Bundles Page.
  *
  * @author Jyothsna Seema
  */
@@ -42,18 +42,16 @@ public class EditBundleDialogController {
 
     private TOGradeBundle selBundle;
 
-    @FXML
-    public void setBundle(TOGradeBundle selBundle){
-        this.selBundle = selBundle;
-        bundleNameTextField.setText(selBundle.getName());
-        gradeDropDown.setValue(selBundle.getGradeLevel());
-        discountSpinner.getValueFactory().setValue(selBundle.getDiscount());
-    }
-
+    /**
+     * (Cancel Button) Discards the current population of the fields and closes the dialog window.
+     */
     private void cancel(){
         dialogPane.getScene().getWindow().hide();
     }
 
+    /**
+     * (Finish Button) Finalizes the fields entered for updating a new bundle and updates that bundle to the system in the backend.
+     */
     private void finish(){
         String updatedGrade = gradeDropDown.getValue();
         Integer updatedDiscount = discountSpinner.getValue();
@@ -70,6 +68,9 @@ public class EditBundleDialogController {
 
     }
 
+    /**
+     * Initializes the controller by setting up the dropdown, spinner, text field and the finish and cancel buttons.
+     */
     @FXML
     void initialize() {
         assert bundleNameTextField != null : "fx:id=\"bundleNameTextField\" was not injected: check your FXML file 'EditBundleDialog.fxml'.";
@@ -102,4 +103,15 @@ public class EditBundleDialogController {
         }
     }
 
+    /**
+     * Helper method to select the Bundle used in the Bundles Controller to update the correct bundle.
+     */
+    @FXML
+    public void setBundle(TOGradeBundle selBundle){
+        this.selBundle = selBundle;
+        bundleNameTextField.setText(selBundle.getName());
+        gradeDropDown.setValue(selBundle.getGradeLevel());
+        discountSpinner.getValueFactory().setValue(selBundle.getDiscount());
+    }
 }
+
