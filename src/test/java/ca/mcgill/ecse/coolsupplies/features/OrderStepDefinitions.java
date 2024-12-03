@@ -24,6 +24,7 @@ import ca.mcgill.ecse.coolsupplies.model.User;
 import ca.mcgill.ecse.coolsupplies.model.BundleItem.PurchaseLevel;
 import ca.mcgill.ecse.coolsupplies.model.Order;
 import ca.mcgill.ecse.coolsupplies.model.OrderItem;
+import ca.mcgill.ecse.coolsupplies.persistence.CoolSuppliesPersistence;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -89,7 +90,32 @@ public class OrderStepDefinitions {
         for (var row : rows) {
             String name = row.get("name");
             String parentEmail = row.get("parentEmail");
-            error = CoolSuppliesFeatureSet6Controller.addStudentToParent(name, parentEmail);
+
+            Student student = Student.getWithName(name);
+            Parent parent = (Parent) User.getWithEmail(parentEmail);
+
+            // Return an error message if the student does not exist
+            if (student == null) {
+                error =  "The student does not exist.";
+            }
+
+            // Return an error message if the parent does not exist
+            if (parent == null) {
+                error =  "The parent does not exist.";
+            }
+
+            // Successfully add a student to a parent in the system
+            boolean isAdded = parent.addStudent(student);
+            if (isAdded) {
+                try {
+                    CoolSuppliesPersistence.save();
+                } catch (RuntimeException e) {
+                    error = e.getMessage();
+                }
+                error = "Student " + student + " added to parent " + parentEmail;
+            } else {
+                error = "Student " + student + " is already associated with parent " + parentEmail;
+            }
         }
     }
 

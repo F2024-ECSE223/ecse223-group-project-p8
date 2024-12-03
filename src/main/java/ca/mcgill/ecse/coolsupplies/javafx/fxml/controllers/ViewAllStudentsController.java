@@ -22,7 +22,6 @@ import java.util.List;
  * integrates with the backend system to fetch, modify, and manage student data.
  *
  * @author Zhengxuan Zhao
- * @version 1.0
  */
 public class ViewAllStudentsController {
 
