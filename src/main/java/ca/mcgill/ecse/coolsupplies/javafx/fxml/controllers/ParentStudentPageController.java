@@ -16,11 +16,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
+/**
+ * Controller class for managing parent-student associations.
+ * Allows adding and removing students from parents and displaying existing associations.
+ *
+ * @author Shengyi Zhong
+ */
 public class ParentStudentPageController implements Initializable {
 
     @FXML
@@ -44,12 +47,17 @@ public class ParentStudentPageController implements Initializable {
     @FXML
     private Label studentLabel;
 
-
-    String msg;
-    String selectedParent;
-    ParentStudent selecteParentStudent;
+    private String msg;
+    private String selectedParent;
+    private ParentStudent selecteParentStudent;
     static ObservableList<ParentStudent> data = FXCollections.observableArrayList();
 
+    /**
+     * Handles the action of adding a student to a parent.
+     * Displays a warning if the student is already assigned to a parent.
+     *
+     * @param event the event triggered by clicking the "Add Student" button
+     */
     @FXML
     private void addStudentToParent(ActionEvent event) {
         selectedParent = parentChoiceBox.getValue();
@@ -68,12 +76,18 @@ public class ParentStudentPageController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Add Student Failed");
                 alert.setHeaderText(null);
-                alert.setContentText("student already assigned to parent");
+                alert.setContentText("Student is already assigned to a parent.");
                 alert.showAndWait();
             }
         }
     }
 
+    /**
+     * Handles the action of removing a student from a parent.
+     * Displays a confirmation message after successful removal.
+     *
+     * @param event the event triggered by clicking the "Remove Student" button
+     */
     @FXML
     private void deleteStudentFromParent(ActionEvent event) {
         msg = CoolSuppliesFeatureSet6Controller.deleteStudentFromParent(selecteParentStudent.studentName, selecteParentStudent.parentEmail);
@@ -87,6 +101,13 @@ public class ParentStudentPageController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Initializes the controller by populating the table and choice box with data.
+     * Called automatically when the FXML file is loaded.
+     *
+     * @param location the location used to resolve relative paths for the root object
+     * @param resources the resources used to localize the root object
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         studentLabel.setText("Not Selected");
@@ -118,7 +139,10 @@ public class ParentStudentPageController implements Initializable {
         });
     }
 
-
+    /**
+     * Inner class representing a parent-student relationship.
+     * Contains fields for the parent's email and the student's name.
+     */
     public static class ParentStudent {
         private String parentEmail;
         private String studentName;
@@ -141,6 +165,12 @@ public class ParentStudentPageController implements Initializable {
             parentEmail = newEmail;
         }
 
+        /**
+         * Initializes the list of parent-student relationships based on the given data.
+         *
+         * @param students the list of students
+         * @param parents the list of parents
+         */
         public static void initializeList(List<TOStudent> students, List<TOParent> parents) {
             parentStudentList.clear();
             for (TOStudent student : students) {
@@ -161,7 +191,13 @@ public class ParentStudentPageController implements Initializable {
             }
         }
 
-        public static ParentStudent getStudentWithName (String studentName) {
+        /**
+         * Finds a student in the list by name.
+         *
+         * @param studentName the name of the student
+         * @return the matching ParentStudent object, or null if not found
+         */
+        public static ParentStudent getStudentWithName(String studentName) {
             for (ParentStudent parentStudent : parentStudentList) {
                 if (Objects.equals(parentStudent.studentName, studentName)) {
                     return parentStudent;
@@ -171,6 +207,12 @@ public class ParentStudentPageController implements Initializable {
         }
     }
 
+    /**
+     * Navigates to the specified page.
+     *
+     * @param fxmlPath the path to the FXML file of the target page
+     * @throws IOException if the page fails to load
+     */
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         AnchorPane newPage = loader.load();
@@ -178,32 +220,61 @@ public class ParentStudentPageController implements Initializable {
         currentStage.setScene(new Scene(newPage));
     }
 
-
+    /**
+     * Navigates to the Accounts page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     private void viewAccounts() throws IOException {
         loadPage("/pages/ViewAccountsPage.fxml");
     }
 
+    /**
+     * Navigates to the previous page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     private void goBack() throws IOException {
         loadPage("/pages/ItemsShop.fxml");
     }
 
+    /**
+     * Navigates to the Orders page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     private void viewOrders() throws IOException {
         loadPage("/pages/ViewAllOrders.fxml");
     }
 
+    /**
+     * Reloads the current page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     private void viewAssociations() throws IOException {
         loadPage("/pages/ParentStudentPage.fxml");
     }
 
+    /**
+     * Navigates to the Students page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     private void viewStudents() throws IOException {
         loadPage("/pages/ViewAllStudents.fxml");
     }
 
+    /**
+     * Navigates to the School page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     private void viewSchool() throws IOException {
         loadPage("/pages/GradePage.fxml");

@@ -15,6 +15,13 @@ import java.time.LocalDate;
 import java.util.*;
 import java.sql.Date;
 
+/**
+ * Controller class for creating a new order.
+ * Provides functionality to input order details such as parent, student, level, and ID,
+ * and adds the order to the system.
+ *
+ * @author Shengyi Zhong
+ */
 public class StartOrderWindowController implements Initializable {
 
     @FXML
@@ -25,9 +32,6 @@ public class StartOrderWindowController implements Initializable {
 
     @FXML
     private ChoiceBox<String> levelChoiceBox;
-
-//    @FXML
-//    private Label idLabel;
 
     @FXML
     private TextField idTextField;
@@ -43,6 +47,13 @@ public class StartOrderWindowController implements Initializable {
     private static final List<String> levels = Arrays.asList("Mandatory", "Recommended", "Optional");
     private List<Integer> ids = new ArrayList<>();
 
+    /**
+     * Handles the creation of a new order.
+     * Validates the input fields, ensures a unique order ID, and creates the order in the system.
+     * Resets the form fields and reloads the orders upon successful creation.
+     *
+     * @param event the event triggered by clicking the "Place Order" button
+     */
     @FXML
     private void placeOrder(ActionEvent event) {
         String studentName = studentChoiceBox.getValue();
@@ -91,8 +102,11 @@ public class StartOrderWindowController implements Initializable {
         }
     }
 
-
-
+    /**
+     * Populates the student choice box with students associated with the selected parent.
+     *
+     * @param event the event triggered when a parent is selected
+     */
     private void getParent(ActionEvent event) {
         parentEmail = parentChoiceBox.getValue();
         if (parentEmail != null) {
@@ -106,6 +120,13 @@ public class StartOrderWindowController implements Initializable {
         }
     }
 
+    /**
+     * Initializes the user interface elements and loads initial data.
+     * Called automatically when the FXML file is loaded.
+     *
+     * @param location the location used to resolve relative paths for the root object
+     * @param resources the resources used to localize the root object
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List<TOParent> parents = CoolSuppliesFeatureSet1Controller.getParents();
@@ -123,6 +144,10 @@ public class StartOrderWindowController implements Initializable {
         parentChoiceBox.setOnAction(this::getParent);
     }
 
+    /**
+     * Reloads the list of orders to ensure consistency in the system.
+     * Clears and updates the internal list of order IDs.
+     */
     private void reloadOrders() {
         List<TOOrder> orders = CoolSuppliesFeatureSet8Controller.viewOrders();
         ids.clear();
@@ -130,17 +155,15 @@ public class StartOrderWindowController implements Initializable {
             ids.add(order.getNumber());
         }
         Collections.sort(ids);
-
-//        if (!ids.isEmpty()) {
-//            id = ids.get(ids.size() - 1) + 1;
-//        } else {
-//            id = 1;
-//        }
-//
-//        idLabel.setText(String.valueOf(id));
         idTextField.clear();
     }
 
+    /**
+     * Displays an alert dialog with the specified title and message.
+     *
+     * @param title the title of the alert
+     * @param message the message to display in the alert
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -149,6 +172,12 @@ public class StartOrderWindowController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Navigates to the specified page.
+     *
+     * @param fxmlPath the path to the FXML file of the target page
+     * @throws IOException if the page fails to load
+     */
     private void loadPage(String fxmlPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
         Scene scene = new Scene(loader.load());
@@ -156,23 +185,43 @@ public class StartOrderWindowController implements Initializable {
         stage.setScene(scene);
     }
 
+    /**
+     * Navigates to the Accounts page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     void goToAccount() throws IOException {
         loadPage("/pages/ViewAccountsPage.fxml");
     }
 
+    /**
+     * Navigates to the Items page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     void goToItems() throws IOException {
         loadPage("/pages/ItemsShop.fxml");
     }
 
+    /**
+     * Navigates to the Bundles page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
     void goToBundles() throws IOException {
         loadPage("/pages/Bundles.fxml");
     }
 
+    /**
+     * Navigates to the New Order page.
+     *
+     * @throws IOException if the navigation fails
+     */
     @FXML
-    private void goToNewOrder() throws IOException{
+    private void goToNewOrder() throws IOException {
         loadPage("/pages/StartOrderWindow.fxml");
     }
 }
